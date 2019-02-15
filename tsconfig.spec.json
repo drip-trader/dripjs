@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {},
+  "include": [
+    "modules/**/*.spec.ts",
+    "modules/**/*.d.ts",
+    "projects/**/*.spec.ts",
+    "projects/**/*.d.ts"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
+}

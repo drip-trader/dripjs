@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "es2018",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "strict": true,
+    "types": ["node", "jest"],
+    "typeRoots": ["./node_modules/@types"],
+    "rootDir": "./",
+    "outDir": "dist",
+    "declaration": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "baseUrl": "./",
+    "paths": {
+      "@drip/types": ["modules/types"],
+    },
+    "sourceMap": true
+  },
+  "include": [
+    "modules/**/*.ts",
+    "projects/**/*.ts"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
+}
