@@ -15,6 +15,12 @@
 ## 目录结构
 
 - docs 说明文档
-- modules 系统模块 - common 共通处理 - exchanges 交易所 - crypto 数字货币 - stock 股票 - models 数据模型 - types 接口定义
+- modules 系统模块
+  - common 共通处理
+  - exchanges 交易所
+    - crypto 数字货币
+    - stock 股票
+  - models 数据模型
+  - types 接口定义
 - projects 相对独立的功能性项目
   - intelligence 情报屋
