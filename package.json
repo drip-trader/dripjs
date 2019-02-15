@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/zlq4863947/drip#readme",
   "devDependencies": {
+    "@types/ws": "^6.0.1",
     "import-sort": "^5.2.0",
     "import-sort-cli": "^5.2.0",
     "import-sort-parser-typescript": "^5.0.0",
@@ -42,5 +43,9 @@
     "tslint-eslint-rules": "^5.4.0",
     "typescript": "^3.3.3",
     "yarn": "^1.13.0"
+  },
+  "dependencies": {
+    "rxjs": "^6.4.0",
+    "ws": "^6.1.3"
   }
 }

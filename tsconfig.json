@@ -15,7 +15,9 @@
     "resolveJsonModule": true,
     "baseUrl": "./",
     "paths": {
+      "@drip/common": ["modules/common"],
       "@drip/types": ["modules/types"],
+      "@drip/models": ["modules/models"],
     },
     "sourceMap": true
   },
@@ -25,6 +27,7 @@
   ],
   "exclude": [
     "dist",
-    "node_modules"
+    "node_modules",
+    "./modules/common/websocket/lib/*.*"
   ]
 }
