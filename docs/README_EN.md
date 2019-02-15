@@ -15,6 +15,9 @@ A quantitative trading open source platform that helps traders build a comprehen
 ## Directory Structure
 
 - docs Documentation
-- modules System module - common Common processing - models Data model - types Interface definition
+- modules System module
+  - common Common processing
+  - models Data model
+  - types Interface definition
 - projects Relatively independent functional project
   - intelligence Information house

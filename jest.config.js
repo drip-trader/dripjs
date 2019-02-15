@@ -3,7 +3,6 @@ module.exports = {
   setupTestFrameworkScriptFile: './jest.setup.js',
   moduleFileExtensions: ['js', 'json', 'ts'],
   moduleNameMapper: {
-    '^@drip/common': '<rootDir>/modules/common',
     '^@drip/(.*)': '<rootDir>/modules/$1',
   },
   modulePathIgnorePatterns: ['dist', '.history'],

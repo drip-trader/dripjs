@@ -56,7 +56,7 @@ export abstract class WebsocketBase<T = any, U = any> {
     if (this.config.apiKey && this.config.apiSecret) {
       endpoint += '?' + getWSAuthQuery(this.config.apiKey, this.config.apiSecret);
     }
-    
+
     return endpoint;
   }
 }
