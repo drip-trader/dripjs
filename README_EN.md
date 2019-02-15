@@ -1,2 +1,2 @@
 # Drip
-一个帮助交易者建立全面完善的交易系统的量化交易开源平台
+A quantitative trading open source platform that helps traders build a comprehensive trading system
