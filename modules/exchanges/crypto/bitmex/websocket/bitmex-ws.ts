@@ -1,10 +1,11 @@
 import { Observable } from 'rxjs';
+
+import { IConfig, IOrder, IOrderbook, ITrade } from '../types';
 import { BitmexWsBase } from './bitmex-ws-base';
-import { IOrderbook, ITrade, IConfig, IOrder } from '../types';
-import { Websocket } from './websocket';
-import { Orderbook } from './orderbook';
 import { Order } from './order';
+import { Orderbook } from './orderbook';
 import { Trade } from './trade';
+import { Websocket } from './websocket';
 
 export class BitmexWS extends BitmexWsBase {
   private readonly ws: Websocket;
@@ -40,10 +41,10 @@ export class BitmexWS extends BitmexWsBase {
     this.trade.stopTrade(pair);
   }
 
-  order$(pair: string): Observable<IOrder|undefined> {
+  order$(pair: string): Observable<IOrder | undefined> {
     return this.order.order$(pair);
   }
-  
+
   stopOrder(pair: string): void {
     this.order.stopOrder(pair);
   }

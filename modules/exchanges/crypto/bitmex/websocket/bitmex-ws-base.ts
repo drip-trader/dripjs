@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs';
-import { IConfig, IOrderbook, ITrade, IOrder } from '../types';
+
+import { IConfig, IOrder, IOrderbook, ITrade } from '../types';
 
 export abstract class BitmexWsBase {
   protected config: IConfig;
@@ -9,44 +10,44 @@ export abstract class BitmexWsBase {
       apiKey: '',
       apiSecret: '',
       testnet: false,
-      ...config
+      ...config,
     };
   }
 
   /**
    * get realtime orderbook
-   * 
+   *
    * @param pair pair name
    */
   abstract orderbook$(pair: string): Observable<IOrderbook>;
   /**
    * stop realtime orderbook
-   * 
-   * @param pair 
+   *
+   * @param pair
    */
   abstract stopOrderbook(pair: string): void;
   /**
    * get realtime trades
-   * 
+   *
    * @param pair pair name
    */
   abstract trade$(pair: string): Observable<ITrade>;
   /**
    * stop realtime trades
-   * 
-   * @param pair 
+   *
+   * @param pair
    */
   abstract stopTrade(pair: string): void;
   /**
    * get realtime Order
-   * 
-   * @param pair 
+   *
+   * @param pair
    */
-  abstract order$(pair: string): Observable<IOrder|undefined>;
+  abstract order$(pair: string): Observable<IOrder | undefined>;
   /**
    * stop realtime Order
-   * 
-   * @param pair 
+   *
+   * @param pair
    */
   abstract stopOrder(pair: string): void;
 }

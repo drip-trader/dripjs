@@ -3,10 +3,10 @@ module.exports = {
   setupTestFrameworkScriptFile: './jest.setup.js',
   moduleFileExtensions: ['js', 'json', 'ts'],
   moduleNameMapper: {
-    '^@bronx/depth-manager': '<rootDir>/packages/depth-manager',
-    '^@bronx/(.*)': '<rootDir>/modules/$1',
+    '^@drip/common': '<rootDir>/modules/common',
+    '^@drip/(.*)': '<rootDir>/modules/$1',
   },
-  modulePathIgnorePatterns: ['dist'],
+  modulePathIgnorePatterns: ['dist', '.history'],
   globals: {
     'ts-jest': {
       tsConfig: './tsconfig.spec.json',

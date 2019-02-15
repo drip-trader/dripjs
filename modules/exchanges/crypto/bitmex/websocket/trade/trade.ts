@@ -1,8 +1,9 @@
 import { EMPTY, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 import { ITrade, PublicEndPoints } from '../../types';
 import { Websocket } from '../websocket';
 import { BitmexTradeWebsocketData, adaptBitmexTrade } from './internal';
-import { map } from 'rxjs/operators';
 
 export class Trade {
   /**
@@ -34,6 +35,5 @@ export class Trade {
 }
 
 function getTradeChannel(pair: string): string {
-
   return `${PublicEndPoints.Trade}:${pair}`;
 }

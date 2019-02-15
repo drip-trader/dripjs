@@ -1,9 +1,9 @@
-import { Orderbook } from '../../../../types';
-import { WebsocketData } from '../../../../websocket';
+import { IOrderbook } from '../../../types';
+import { WebsocketData } from '../../types';
 import { BitmexOrderbookWebsocketData } from './types';
 
-export function adaptBitmexOrderbook(orderbookWs: WebsocketData<BitmexOrderbookWebsocketData>): Orderbook {
-  const orderbook: Orderbook = {
+export function adaptBitmexOrderbook(orderbookWs: WebsocketData<BitmexOrderbookWebsocketData>): IOrderbook {
+  const orderbook: IOrderbook = {
     bids: [],
     asks: [],
   };

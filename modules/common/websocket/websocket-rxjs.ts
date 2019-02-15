@@ -1,5 +1,6 @@
 import { Observable, ReplaySubject } from 'rxjs';
-import { take, filter } from 'rxjs/operators';
+import { filter, take } from 'rxjs/operators';
+
 import * as WebSocket from './lib/isomorphic-ws';
 
 /**
@@ -43,9 +44,14 @@ export class WebSocketRxJs<T = any> {
    */
   send(text: string): void {
     // wait until socket open and send the text only once per call
-    this.opened$.pipe(take(1), filter((opened) => opened)).subscribe(() => {
-      this.webSocket.send(text);
-    });
+    this.opened$
+      .pipe(
+        take(1),
+        filter((opened) => opened),
+      )
+      .subscribe(() => {
+        this.webSocket.send(text);
+      });
   }
 
   close(): void {

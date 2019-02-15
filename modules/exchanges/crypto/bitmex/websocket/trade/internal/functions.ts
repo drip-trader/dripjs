@@ -1,7 +1,7 @@
-import { Trade } from '../../../../types';
+import { ITrade } from '../../../types';
 import { BitmexTradeWebsocketData } from './types';
 
-export function adaptBitmexTrade(bitmexTrade: BitmexTradeWebsocketData): Trade {
+export function adaptBitmexTrade(bitmexTrade: BitmexTradeWebsocketData): ITrade {
   return {
     id: 1,
     side: bitmexTrade.side,

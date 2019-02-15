@@ -119,8 +119,7 @@
     "no-string-throw": true,
     "no-submodule-imports": [
       true,
-      "aws-sdk",
-      "@bronx",
+      "@drip",
       "rxjs"
     ],
     "no-switch-case-fall-through": true,

@@ -12,10 +12,12 @@ import { stringify } from 'querystring';
  */
 export function signMessage(secret: string, verb: string, url: string, nonce: number, data?: any) {
   if (!data) data = '';
-  else if (typeof data === 'object' ) data = JSON.stringify(data);
+  else if (typeof data === 'object') data = JSON.stringify(data);
 
-  return createHmac('sha256', secret).update(verb + url + nonce + data).digest('hex');
-};
+  return createHmac('sha256', secret)
+    .update(verb + url + nonce + data)
+    .digest('hex');
+}
 
 let nonceCounter = 0;
 
@@ -24,8 +26,8 @@ export function getWSAuthQuery(apiKey: string, apiSecret: string) {
   const query = {
     'api-nonce': nonce,
     'api-key': apiKey,
-    'api-signature': signMessage(apiSecret, 'GET', '/realtime', nonce)
+    'api-signature': signMessage(apiSecret, 'GET', '/realtime', nonce),
   };
 
   return stringify(query);
-};
+}

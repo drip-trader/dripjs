@@ -1,8 +1,9 @@
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 import { IOrder, PrivateEndPoints } from '../../types';
 import { Websocket } from '../websocket';
 import { BitmexOrderWebsocketData, adaptBitmexOrder } from './internal';
-import { map } from 'rxjs/operators';
 
 export class Order {
   /**
@@ -14,7 +15,7 @@ export class Order {
   /**
    * @param pair
    */
-  order$(pair: string): Observable<IOrder|undefined> {
+  order$(pair: string): Observable<IOrder | undefined> {
     const channel = getOrderChannel(pair);
 
     return this.ws.subscribe<BitmexOrderWebsocketData>(channel).pipe(map((wsData) => adaptBitmexOrder(wsData.data)));
@@ -27,6 +28,5 @@ export class Order {
 }
 
 function getOrderChannel(pair: string): string {
-
   return `${PrivateEndPoints.Order}:${pair}`;
 }

@@ -1,6 +1,6 @@
-
 import { WebSocketRxJs } from '@drip/common';
-import { Config } from '../types';
+
+import { IConfig } from '../types';
 import { getWSAuthQuery } from './authentication';
 
 const Endpoints = {
@@ -16,7 +16,7 @@ const Endpoints = {
  */
 export abstract class WebsocketBase<T = any, U = any> {
   private ws: WebSocketRxJs<U> | null = null;
-  constructor(private readonly config : Config) {}
+  constructor(private readonly config: IConfig) {}
 
   abstract handleMessage(response: U): void;
   abstract onDestroy(): void;
@@ -56,6 +56,7 @@ export abstract class WebsocketBase<T = any, U = any> {
     if (this.config.apiKey && this.config.apiSecret) {
       endpoint += '?' + getWSAuthQuery(this.config.apiKey, this.config.apiSecret);
     }
+    
     return endpoint;
   }
 }

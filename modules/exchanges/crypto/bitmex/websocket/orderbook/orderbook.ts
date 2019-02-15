@@ -1,8 +1,9 @@
 import { Observable, concat } from 'rxjs';
+import { filter, map, scan, take } from 'rxjs/operators';
+
 import { IOrderbook, PublicEndPoints } from '../../types';
 import { Websocket } from '../websocket';
-import { filter, take, scan, map } from 'rxjs/operators';
-import { bitmexUpdateOrderbook, adaptBitmexOrderbook, BitmexOrderbookWebsocketData } from './internal';
+import { BitmexOrderbookWebsocketData, adaptBitmexOrderbook, bitmexUpdateOrderbook } from './internal';
 
 export class Orderbook {
   private readonly pairOderbookStreamMap = new Map<string, Observable<IOrderbook>>();
@@ -36,7 +37,10 @@ export class Orderbook {
     /*
      * Make sure 'partial' come first and then 'insert' 'update' 'delete'
      */
-    const snapshot$ = data$.pipe(filter((orderbookData) => orderbookData.action === 'partial'), take(1));
+    const snapshot$ = data$.pipe(
+      filter((orderbookData) => orderbookData.action === 'partial'),
+      take(1),
+    );
 
     const update$ = data$.pipe(
       filter(
@@ -44,7 +48,10 @@ export class Orderbook {
       ),
     );
 
-    return concat(snapshot$, update$).pipe(scan(bitmexUpdateOrderbook), map(adaptBitmexOrderbook));
+    return concat(snapshot$, update$).pipe(
+      scan(bitmexUpdateOrderbook),
+      map(adaptBitmexOrderbook),
+    );
   }
 }
 
@@ -52,6 +59,5 @@ function getOrderbookChannel(
   pair: string,
   endpoint: PublicEndPoints.OrderBook10 | PublicEndPoints.OrderBookL2 | PublicEndPoints.OrderBookL2T25,
 ): string {
-
   return `${endpoint}:${pair}`;
 }

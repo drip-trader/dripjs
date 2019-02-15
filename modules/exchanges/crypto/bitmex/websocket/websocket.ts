@@ -1,12 +1,13 @@
-import { ReplaySubject, Observable } from 'rxjs';
-import { WebsocketBase } from './websocket-base';
-import { WebsocketRequest, WebsocketResponse, WebsocketData } from './types';
+import { Observable, ReplaySubject } from 'rxjs';
+
 import { IConfig } from '../types';
+import { WebsocketData, WebsocketRequest, WebsocketResponse } from './types';
+import { WebsocketBase } from './websocket-base';
 
 export class Websocket extends WebsocketBase<WebsocketRequest, WebsocketResponse | WebsocketData> {
   private readonly streamTable = new Map<string, ReplaySubject<WebsocketData>>();
 
-  constructor(config : IConfig) {
+  constructor(config: IConfig) {
     super(config);
   }
 
