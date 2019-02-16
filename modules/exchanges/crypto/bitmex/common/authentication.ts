@@ -1,7 +1,7 @@
 import { createHmac } from 'crypto';
-import { stringify } from 'querystring';
 
 import { HttpMethod } from '@drip/types';
+import { stringify } from 'qs';
 
 import { PrivateEndPoints, PublicEndPoints, restApiBasePath } from '../types';
 
@@ -37,14 +37,8 @@ export function getWSAuthQuery(apiKey: string, apiSecret: string): string {
   return stringify(query);
 }
 
-export function getRestAuthHeaders(
-  method: HttpMethod,
-  endpoint: PublicEndPoints | PrivateEndPoints,
-  apiKey: string,
-  apiSecret: string,
-  data?: any,
-): AuthHeaders {
-  const query = method === HttpMethod.GET && Object.keys(data).length !== 0 ? '?' + stringify(data) : '';
+export function getRestAuthHeaders(method: HttpMethod, endpoint: string, apiKey: string, apiSecret: string, data?: any): AuthHeaders {
+  const query = method === HttpMethod.GET && Object.keys(data).length !== 0 ? `?${stringify(data)}` : '';
   const url = `${restApiBasePath}${endpoint}${query}`;
   // 3min timeout
   const expires = Math.round(Date.now() / 1000) + 60 * 3;

@@ -1,13 +1,12 @@
-import { OrderbookL2T25Response, PublicEndPoints } from '../../types';
+import { OrderbookL2Response, OrderbookResponse, PublicEndPoints } from '../../types';
 import { WebsocketData } from '../types';
-import { OrderbookSource } from './types';
 
 /**
- * transform raw websocket data to OrderbookL2T25Response
+ * transform raw websocket data to OrderbookL2Response
  * @param source raw websocket data
  */
-export function transform(source: WebsocketData<OrderbookSource>): OrderbookL2T25Response {
-  const orderbook: OrderbookL2T25Response = {
+export function transform(source: WebsocketData<OrderbookResponse>): OrderbookL2Response {
+  const orderbook: OrderbookL2Response = {
     bids: [],
     asks: [],
   };
@@ -27,9 +26,9 @@ export function transform(source: WebsocketData<OrderbookSource>): OrderbookL2T2
 }
 
 export function update(
-  originSource: WebsocketData<OrderbookSource>,
-  updateSource: WebsocketData<OrderbookSource>,
-): WebsocketData<OrderbookSource> {
+  originSource: WebsocketData<OrderbookResponse>,
+  updateSource: WebsocketData<OrderbookResponse>,
+): WebsocketData<OrderbookResponse> {
   const originData = originSource.data || [];
   const updateData = updateSource.data || [];
 
@@ -73,7 +72,7 @@ export function getChannel(
  * @param updateSource
  * @param fromId
  */
-function findPosition(originSource: OrderbookSource[], updateSource: OrderbookSource, fromId: number = 0): number {
+function findPosition(originSource: OrderbookResponse[], updateSource: OrderbookResponse, fromId: number = 0): number {
   let i = fromId;
   for (; i < originSource.length; i++) {
     if (originSource[i].id >= updateSource.id) {

@@ -1,2 +1,3 @@
 export * from './websocket';
-export * from './types/response';
+export * from './rest';
+export * from './types';

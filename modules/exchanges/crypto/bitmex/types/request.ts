@@ -13,7 +13,24 @@ export interface OrderRequest {
   pegPriceType?: string;
   ordType: OrderType;
   timeInForce?: TimeInForce;
+  orderID?: string;
   execInst: ExecInst;
   ordStatus: OrderStatus;
   text: string;
+}
+
+export interface FetchOrderRequest {
+  symbol: string;
+  filter: { [filterKey: string]: string };
+  columns: string[];
+  count: number;
+  start: number;
+  reverse: boolean;
+  startTime: string;
+  endTime: string;
+}
+
+export interface OrderbookRequest {
+  symbol: string;
+  depth: number;
 }

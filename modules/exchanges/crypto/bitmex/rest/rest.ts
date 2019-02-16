@@ -1,15 +1,14 @@
-import { stringify } from 'querystring';
-
 import { HttpMethod } from '@drip/types';
+import fetch, { RequestInit } from 'node-fetch';
+import { stringify } from 'qs';
 
 import { getRestAuthHeaders } from '../common';
-import { Config, PrivateEndPoints, PublicEndPoints, RestResponse, restEndpoints, restApiBasePath } from '../types';
-import fetch , {RequestInit} from 'node-fetch';
+import { Config, RestResponse, restApiBasePath, restEndpoints } from '../types';
 
 export class Rest {
-  constructor(private config: Config) {}
+  constructor(private readonly config: Config) {}
 
-  async request(method: HttpMethod, endpoint: PrivateEndPoints | PublicEndPoints, data: any): Promise<RestResponse> {
+  protected async request(method: HttpMethod, endpoint: string, data: any): Promise<RestResponse> {
     const authHeaders = getRestAuthHeaders(method, endpoint, this.config.apiKey, this.config.apiSecret, data);
     const request: RequestInit = {
       method,
@@ -18,7 +17,7 @@ export class Rest {
       },
     };
     let query = '';
-    if (method === HttpMethod.POST) {
+    if (method !== HttpMethod.GET) {
       request.body = JSON.stringify(data);
     } else {
       query = Object.keys(data).length !== 0 ? `?${stringify(data)}` : '';

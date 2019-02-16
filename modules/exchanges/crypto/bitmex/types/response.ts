@@ -1,6 +1,7 @@
+import { Headers } from 'node-fetch';
+
 import { RateLimit } from './exchange';
 import { OrderSide } from './order';
-import { Headers } from 'node-fetch';
 
 export interface RestResponse {
   headers: Headers;
@@ -8,16 +9,16 @@ export interface RestResponse {
 }
 
 /**
- * Top 25 levels of level 2 order book
+ * level 2 order book
  */
-export interface OrderbookL2T25Response {
+export interface OrderbookL2Response {
   /**
-   * price and amount of Top 25 ask (asc order)
+   * price and amount of ask (asc order)
    * eg: [[price, amount], ...]
    */
   asks: [string, string][];
   /**
-   * price and amount of Top 25 bid (desc order)
+   * price and amount of bid (desc order)
    * eg: [[price, amount], ...]
    */
   bids: [string, string][];
@@ -76,6 +77,14 @@ export interface OrderResponse extends ErrorResponse {
   timestamp?: string;
 }
 
+export interface OrderbookResponse extends ErrorResponse {
+  symbol: string;
+  id: number;
+  side: string;
+  size: number;
+  price: number;
+}
+
 export interface RestOrderResponse {
   ratelimit: RateLimit;
   order: OrderResponse;
@@ -84,4 +93,9 @@ export interface RestOrderResponse {
 export interface RestOrdersResponse {
   ratelimit: RateLimit;
   orders: OrderResponse[];
+}
+
+export interface RestOrderbookL2Response {
+  ratelimit: RateLimit;
+  orderbook: OrderbookL2Response;
 }

@@ -1,22 +1,28 @@
-import { testnetConfig, testnetReadonlyConfig } from '@drip/testing';
+import { testnetConfig } from '@drip/testing';
 
-import { FetchOrderRequest, OrderRequest, OrderSide, OrderStatus, OrderType } from '../../types';
-import { Orderbook } from '../orderbook';
-import { Order } from './order';
+import { FetchOrderRequest, OrderRequest, OrderSide, OrderStatus, OrderType, OrderbookRequest } from '../types';
+import { BitmexRest } from './bitmex-rest';
 
-describe.skip('Bitmex Rest Order', () => {
+describe('Bitmex Rest', () => {
   const pair = 'XBTUSD';
-  const order = new Order(testnetConfig);
-  const orderbook = new Orderbook(testnetReadonlyConfig);
+  const bitmexRest = new BitmexRest(testnetConfig);
   let orderId: string;
   let price: number;
 
-  it('create order', async () => {
-    const orderbookRes = await orderbook.fetch({
+  it('fetch orderbook', async () => {
+    const request: OrderbookRequest = {
       symbol: pair,
-      depth: 5,
-    });
-    price = +orderbookRes.orderbook.bids[4][0];
+      depth: 25,
+    };
+
+    const res = await bitmexRest.fetchOrderbook(request);
+    price = +res.orderbook.bids[4][0];
+    expect(res.orderbook.bids.length).toEqual(25);
+    expect(res.orderbook.asks.length).toEqual(25);
+    expect(res.ratelimit.limit).toEqual(300);
+  });
+
+  it('create order', async () => {
     const request: Partial<OrderRequest> = {
       symbol: pair,
       side: OrderSide.Buy,
@@ -25,7 +31,7 @@ describe.skip('Bitmex Rest Order', () => {
       ordType: OrderType.Limit,
     };
 
-    const res = await order.create(request);
+    const res = await bitmexRest.createOrder(request);
     orderId = res.order.orderID;
     expect(res.order).toBeDefined();
     expect(res.ratelimit.limit).toEqual(300);
@@ -39,7 +45,7 @@ describe.skip('Bitmex Rest Order', () => {
       },
     };
 
-    const res = await order.fetch(request);
+    const res = await bitmexRest.fetchOrder(request);
     expect(res.orders[0].price).toEqual(price);
     expect(res.ratelimit.limit).toEqual(300);
   });
@@ -50,7 +56,7 @@ describe.skip('Bitmex Rest Order', () => {
       price: price - 1,
     };
 
-    const res = await order.update(request);
+    const res = await bitmexRest.updateOrder(request);
     expect(res.order.price).toEqual(price - 1);
     expect(res.ratelimit.limit).toEqual(300);
   });
@@ -59,7 +65,7 @@ describe.skip('Bitmex Rest Order', () => {
     const request: Partial<OrderRequest> = {
       orderID: orderId,
     };
-    const res = await order.remove(request);
+    const res = await bitmexRest.removeOrder(request);
     expect(res.order.ordStatus).toEqual(OrderStatus.Canceled);
     expect(res.ratelimit.limit).toEqual(300);
   });

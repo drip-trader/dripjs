@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-import { Config, OrderResponse, OrderbookL2T25Response, TradeResponse } from '../types';
+import { Config, OrderResponse, OrderbookL2Response, TradeResponse } from '../types';
 
 export abstract class BitmexWsBase {
   protected config: Config;
@@ -19,7 +19,7 @@ export abstract class BitmexWsBase {
    *
    * @param pair pair name
    */
-  abstract orderbook$(pair: string): Observable<OrderbookL2T25Response>;
+  abstract orderbook$(pair: string): Observable<OrderbookL2Response>;
   /**
    * stop realtime orderbook
    *

@@ -1,5 +1,6 @@
-import { RateLimit } from '../types';
 import { Headers } from 'node-fetch';
+
+import { RateLimit } from '../types';
 
 export function getRateLimit(headers: Headers): RateLimit {
   return {

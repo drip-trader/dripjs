@@ -1,5 +1,8 @@
-import { BitmexWS } from './bitmex-ws';
 import { testnetConfig } from '@drip/testing';
+
+import { BitmexRest } from '../rest/bitmex-rest';
+import { OrderSide, OrderStatus, OrderType, TimeInForce } from '../types';
+import { BitmexWS } from './bitmex-ws';
 
 describe('BitmexWS', () => {
   const pair = 'XBTUSD';
@@ -11,9 +14,11 @@ describe('BitmexWS', () => {
     bitmexWS.orderbook$(pair).subscribe((orderbook) => {
       expect(orderbook.asks.length).toBeGreaterThan(0);
       expect(orderbook.bids.length).toBeGreaterThan(0);
+    });
+    setTimeout(() => {
       bitmexWS.stopOrderbook(pair);
       done();
-    });
+    }, 8000);
   });
   it('subscribe trade', (done) => {
     bitmexWS.trade$(pair).subscribe((trade) => {
@@ -22,11 +27,31 @@ describe('BitmexWS', () => {
       done();
     });
   });
-  it.skip('subscribe order', (done) => {
+  it('subscribe order', async (done) => {
     bitmexWS.order$(pair).subscribe((order) => {
       expect(order).toBeDefined();
-      bitmexWS.stopOrderbook(pair);
-      done();
+      expect(order!.ordStatus).toEqual(OrderStatus.New);
+      bitmexWS.stopOrder(pair);
     });
+    const bitmexRest = new BitmexRest(testnetConfig);
+    const orderbookRes = await bitmexRest.fetchOrderbook({
+      symbol: pair,
+      depth: 5,
+    });
+    const price = +orderbookRes.orderbook.bids[4][0];
+    const res = await bitmexRest.createOrder({
+      symbol: pair,
+      side: OrderSide.Buy,
+      price,
+      orderQty: 25,
+      ordType: OrderType.Limit,
+      timeInForce: TimeInForce.Day,
+    });
+    setTimeout(async () => {
+      await bitmexRest.removeOrder({
+        orderID: res.order.orderID,
+      });
+      done();
+    }, 3000);
   });
 });

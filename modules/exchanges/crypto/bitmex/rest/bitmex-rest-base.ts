@@ -1,7 +1,14 @@
+import {
+  Config,
+  FetchOrderRequest,
+  OrderRequest,
+  OrderbookRequest,
+  RestOrderResponse,
+  RestOrderbookL2Response,
+  RestOrdersResponse,
+} from '../types';
 
-import { Config } from '../types';
-
-export class BitmexRestBase {
+export abstract class BitmexRestBase {
   protected config: Config;
 
   constructor(config?: Config) {
@@ -12,4 +19,10 @@ export class BitmexRestBase {
       ...config,
     };
   }
+
+  abstract async createOrder(request: Partial<OrderRequest>): Promise<RestOrderResponse>;
+  abstract async fetchOrder(request: Partial<FetchOrderRequest>): Promise<RestOrdersResponse>;
+  abstract async updateOrder(request: Partial<OrderRequest>): Promise<RestOrderResponse>;
+  abstract async removeOrder(request: Partial<OrderRequest>): Promise<RestOrderResponse>;
+  abstract async fetchOrderbook(request: OrderbookRequest): Promise<RestOrderbookL2Response>;
 }
