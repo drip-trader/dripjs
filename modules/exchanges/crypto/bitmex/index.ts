@@ -1,2 +1,2 @@
 export * from './websocket';
-export * from './types';
+export * from './types/response';

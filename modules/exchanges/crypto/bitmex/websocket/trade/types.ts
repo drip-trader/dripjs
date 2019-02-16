@@ -1,3 +1,5 @@
+import { OrderSide } from '../../types';
+
 // {
 //   "table": "trade",
 //   "action": "partial",
@@ -42,7 +44,7 @@
 export interface TradeSource {
   timestamp: string;
   symbol: string;
-  side: 'Buy' | 'Sell';
+  side: OrderSide;
   size: number;
   price: number;
   tickDirection: string;

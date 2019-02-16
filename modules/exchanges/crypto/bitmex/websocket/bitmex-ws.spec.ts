@@ -1,12 +1,9 @@
 import { BitmexWS } from './bitmex-ws';
+import { testnetConfig } from '@drip/testing';
 
 describe('BitmexWS', () => {
   const pair = 'XBTUSD';
-  const bitmexWS = new BitmexWS({
-    apiKey: 'xcWx4ts3A5sluYBupjvvNAnO',
-    apiSecret: 'rpeJNuMp-8uAJTae6UUed2kyt-bGfGIGQ_Rh033TFuhheK4l',
-    testnet: true,
-  });
+  const bitmexWS = new BitmexWS(testnetConfig);
   afterAll(() => {
     bitmexWS.destroy();
   });

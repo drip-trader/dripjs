@@ -1,12 +1,7 @@
 import { WebSocketRxJs } from '@drip/common';
 
-import { Config } from '../types';
-import { getWSAuthQuery } from './authentication';
-
-const endpoints = {
-  production: 'wss://www.bitmex.com/realtime',
-  testnet: 'wss://testnet.bitmex.com/realtime',
-};
+import { getWSAuthQuery } from '../common';
+import { Config, wsEndpoints } from '../types';
 
 /**
  * Abstract class for websocket api
@@ -44,15 +39,15 @@ export abstract class WebsocketBase<T = any, U = any> {
     if (this.ws) {
       throw new Error('websocket is already initialized');
     }
-    const endPoint = this.makeEndpoint();
-    this.ws = new WebSocketRxJs<U>(endPoint);
+    const requestUrl = this.makeRequestUrl();
+    this.ws = new WebSocketRxJs(requestUrl);
     this.ws.message$.subscribe((response) => {
       this.handleMessage(response);
     });
   }
 
-  private makeEndpoint(): string {
-    let endpoint = this.config.testnet ? endpoints.testnet : endpoints.production;
+  private makeRequestUrl(): string {
+    let endpoint = this.config.testnet ? wsEndpoints.testnet : wsEndpoints.production;
     if (this.config.apiKey && this.config.apiSecret) {
       endpoint += `?${getWSAuthQuery(this.config.apiKey, this.config.apiSecret)}`;
     }

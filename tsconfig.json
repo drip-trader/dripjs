@@ -18,6 +18,7 @@
       "@drip/common": ["modules/common"],
       "@drip/types": ["modules/types"],
       "@drip/models": ["modules/models"],
+      "@drip/testing": ["modules/testing"],
     },
     "sourceMap": true
   },

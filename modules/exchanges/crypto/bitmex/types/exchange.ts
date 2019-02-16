@@ -1,67 +1,25 @@
 export interface Config {
-  apiKey?: string;
-  apiSecret?: string;
+  apiKey: string;
+  apiSecret: string;
   testnet?: boolean;
 }
 
-/**
- * Top 25 levels of level 2 order book
- */
-export interface OrderbookL2T25Response {
-  /**
-   * price and amount of Top 25 ask (asc order)
-   * eg: [[price, amount], ...]
-   */
-  asks: [string, string][];
-  /**
-   * price and amount of Top 25 bid (desc order)
-   * eg: [[price, amount], ...]
-   */
-  bids: [string, string][];
-}
+export const wsEndpoints = {
+  production: 'wss://www.bitmex.com/realtime',
+  testnet: 'wss://testnet.bitmex.com/realtime',
+};
 
-export interface TradeResponse {
-  id: number;
-  side: 'Buy' | 'Sell';
-  price: number;
-  amount: number;
-  timestamp: number;
-}
+export const restEndpoints = {
+  production: 'https://www.bitmex.com',
+  testnet: 'https://testnet.bitmex.com',
+};
 
-export interface OrderResponse {
-  orderID: string;
-  clOrdID?: string;
-  clOrdLinkID?: string;
-  account?: string;
-  symbol?: string;
-  side?: string;
-  simpleOrderQty?: number;
-  orderQty?: number;
-  price?: number;
-  displayQty?: number;
-  stopPx?: number;
-  pegOffsetValue?: number;
-  pegPriceType?: string;
-  currency?: string;
-  settlCurrency?: string;
-  ordType?: string;
-  timeInForce?: string;
-  execInst?: string;
-  contingencyType?: string;
-  exDestination?: string;
-  ordStatus?: string;
-  triggered?: string;
-  workingIndicator?: boolean;
-  ordRejReason?: string;
-  simpleLeavesQty?: number;
-  leavesQty?: number;
-  simpleCumQty?: number;
-  cumQty?: number;
-  avgPx?: number;
-  multiLegReportingType?: string;
-  text?: string;
-  transactTime?: Date;
-  timestamp?: string;
+export const restApiBasePath = '/api/v1/';
+
+export interface RateLimit {
+  remaining: number;
+  reset: number;
+  limit: number;
 }
 
 //  无需身份验证的连接端点集
