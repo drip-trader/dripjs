@@ -1,4 +1,4 @@
-<p align="center" style="font-size:xx-large">Drip</p>
+<H1><p align="center">Drip</p></H1>
 <p align="center">一个帮助交易者建立全面完善的交易系统的量化交易开源平台</p>
 <p align="center">
   <a href="https://travis-ci.com/zlq4863947/drip"><img src="https://travis-ci.com/zlq4863947/drip.svg?branch=master" alt="Tiavis" /></a>

@@ -1,4 +1,4 @@
-<p align="center" style="font-size:xx-large">Drip</p>
+<H1><p align="center">Drip</p></H1>
 <p align="center">A quantitative trading open source platform that helps traders build a comprehensive trading system</p>
 <p align="center">
   <a href="https://travis-ci.com/zlq4863947/drip"><img src="https://travis-ci.com/zlq4863947/drip.svg?branch=master" alt="Tiavis" /></a>
