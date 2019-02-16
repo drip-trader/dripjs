@@ -1,6 +1,5 @@
 import { Observable, ReplaySubject } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
-
 import * as WebSocket from 'ws';
 
 /**

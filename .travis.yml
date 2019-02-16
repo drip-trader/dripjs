@@ -1,14 +1,18 @@
 language: node_js
 node_js:
-  - "10"
+- '10'
+repo_token: "$COVERALLS_TOKEN"
 before_install:
-  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.13.0
-  - export PATH=$HOME/.yarn/bin:$PATH
-  - export BRANCH="${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}"
+- curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.13.0
+- export PATH=$HOME/.yarn/bin:$PATH
 cache: false
 git:
   depth: 5
 script:
-  - yarn run lint
-  - yarn test
-after_success: yarn run coverage
+- yarn lint
+- yarn test
+after_success:
+- yarn ci:coverage
+env:
+  global:
+  - secure: CczPsWQ/zShmMLjllatNfjaT1LDPLjB9RL8KJz4U6QQkS+V/w823fyfAgi98OHdbJMXTPlWFOCs+LPoWlqyLIhDo3kl77qij/nZ2p/g0/vuNXA6eruSis3eYLdldazFMokZJ5tBUOGvtP2qo6eX4Re2sjspEiD7okTe87lfWtuxbdML1aDDvCJyXGYbA+JtYjh+/LLKlqBIahzYuyRxvFh89La02RcVQANPeX96oo8RGFusmEmirmJawHqBmpauKAcql/2ZBFfKjmMTSKomJ9KIg/uEOwCnSTG3YjVY3iB0IDb8n+vM4OYrXziC5CqEnax5//jRyHKUiWoe5NXRuPzmLly46AVltX/FD2OUQT6zNc4BjPs0drR8mmk2XGhNHFNgrb+a5thpg9DxCHh+ZafD9qiz7oPwvvTwTUZGC1Bzc/Cr5c2CVE78kxuhG/DHFczBvEHWKFHP4gpv9y7KRpqoM9sP+Z8w4249Al1TAcVoh+1eGG5CZkUeHnWWk9PEHyorDIlDh2bxqRKquMMMHR4K3DL2DWru9ery1Mbj77q21Aa+6oZTw/OK3/Ao/l8eUieLg9sbdyx4qrhyEWamysOfms/eGF1vEsGqAHrXYrSojwnywVUqze2LNPcGA+cmpv2DALzU+mI1HLzvqNWFtF4TWdw09kY8ZxP4s7tO7PGo=
