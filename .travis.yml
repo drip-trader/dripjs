@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+  - "8"
+  - "9"
+  - "10"
+cache:
+  directories:
+    - "node_modules"
+git:
+  depth: 5
+script:
+  - yarn run lint
+  - yarn test
+after_success: yarn run coverage

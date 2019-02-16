@@ -1,7 +1,7 @@
 import { Observable, ReplaySubject } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 
-import * as WebSocket from './lib/isomorphic-ws';
+import * as WebSocket from 'ws';
 
 /**
  * RxJs wrapper for websocket
