@@ -1,14 +1,18 @@
-import { IOrderbook } from '../../../types';
-import { WebsocketData } from '../../types';
-import { BitmexOrderbookWebsocketData } from './types';
+import { OrderbookL2T25, PublicEndPoints } from '../../types';
+import { WebsocketData } from '../types';
+import { OrderbookData } from './types';
 
-export function adaptBitmexOrderbook(orderbookWs: WebsocketData<BitmexOrderbookWebsocketData>): IOrderbook {
-  const orderbook: IOrderbook = {
+/**
+ * transform raw websocket data to OrderbookL2T25
+ * @param ws raw websocket data
+ */
+export function transform(ws: WebsocketData<OrderbookData>): OrderbookL2T25 {
+  const orderbook: OrderbookL2T25 = {
     bids: [],
     asks: [],
   };
 
-  for (const item of orderbookWs.data) {
+  for (const item of ws.data) {
     const orderbookItem: [string, string] = [`${item.price}`, `${item.size}`];
     if (item.side === 'Sell') {
       orderbook.asks.push(orderbookItem);
@@ -22,10 +26,7 @@ export function adaptBitmexOrderbook(orderbookWs: WebsocketData<BitmexOrderbookW
   return orderbook;
 }
 
-export function bitmexUpdateOrderbook(
-  origin: WebsocketData<BitmexOrderbookWebsocketData>,
-  update: WebsocketData<BitmexOrderbookWebsocketData>,
-): WebsocketData<BitmexOrderbookWebsocketData> {
+export function update(origin: WebsocketData<OrderbookData>, update: WebsocketData<OrderbookData>): WebsocketData<OrderbookData> {
   const originData = origin.data || [];
   const updateData = update.data || [];
 
@@ -53,6 +54,13 @@ export function bitmexUpdateOrderbook(
   return origin;
 }
 
+export function getChannel(
+  pair: string,
+  endpoint: PublicEndPoints.OrderBook10 | PublicEndPoints.OrderBookL2 | PublicEndPoints.OrderBookL2T25,
+): string {
+  return `${endpoint}:${pair}`;
+}
+
 // [{"symbol":"XBTUSD","id":8799599650,"side":"Sell","size":229425,"price":4003.5},{"symbol":"XBTUSD","id":8799600900,"side":"Buy","size":72647,"price":3991}]}
 
 /**
@@ -62,7 +70,7 @@ export function bitmexUpdateOrderbook(
  * @param update
  * @param fromId
  */
-function findPosition(origin: BitmexOrderbookWebsocketData[], update: BitmexOrderbookWebsocketData, fromId: number = 0): number {
+function findPosition(origin: OrderbookData[], update: OrderbookData, fromId: number = 0): number {
   let i = fromId;
   for (; i < origin.length; i++) {
     if (origin[i].id >= update.id) {

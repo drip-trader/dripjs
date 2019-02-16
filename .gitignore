@@ -62,3 +62,4 @@ dist
 config/**/*.toml
 db/*
 package-lock.json
+.vscode

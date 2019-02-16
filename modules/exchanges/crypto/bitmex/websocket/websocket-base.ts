@@ -23,7 +23,7 @@ export abstract class WebsocketBase<T = any, U = any> {
 
   send(request: T): void {
     if (!this.ws) {
-      this.initWebsocket();
+      this.init();
     }
 
     if (this.ws) {
@@ -40,7 +40,7 @@ export abstract class WebsocketBase<T = any, U = any> {
     this.onDestroy();
   }
 
-  private initWebsocket(): void {
+  private init(): void {
     if (this.ws) {
       throw new Error('websocket is already initialized');
     }

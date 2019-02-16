@@ -4,13 +4,20 @@ export interface IConfig {
   testnet?: boolean;
 }
 
-/*
- * Orderbook
+/**
+ * Top 25 levels of level 2 order book
  */
-export interface IOrderbook {
-  // [price, amount]
-  asks: [string, string][]; // asc order
-  bids: [string, string][]; // des order
+export interface OrderbookL2T25 {
+  /**
+   * price and amount of Top 25 ask (asc order)
+   * eg: [[price, amount], ...]
+   */
+  asks: [string, string][];
+  /**
+   * price and amount of Top 25 bid (desc order)
+   * eg: [[price, amount], ...]
+   */
+  bids: [string, string][];
   lastUpdateId?: number;
   timestamp?: number;
 }

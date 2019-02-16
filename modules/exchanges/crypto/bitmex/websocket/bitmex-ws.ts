@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-import { IConfig, IOrder, IOrderbook, ITrade } from '../types';
+import { IConfig, IOrder, ITrade, OrderbookL2T25 } from '../types';
 import { BitmexWsBase } from './bitmex-ws-base';
 import { Order } from './order';
 import { Orderbook } from './orderbook';
@@ -23,7 +23,7 @@ export class BitmexWS extends BitmexWsBase {
   }
 
   // realtime orderbook
-  orderbook$(pair: string): Observable<IOrderbook> {
+  orderbook$(pair: string): Observable<OrderbookL2T25> {
     return this.orderbook.orderbookL2T25$(pair);
   }
 

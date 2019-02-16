@@ -1,38 +1,36 @@
 import { Observable, concat } from 'rxjs';
 import { filter, map, scan, take } from 'rxjs/operators';
 
-import { IOrderbook, PublicEndPoints } from '../../types';
+import { OrderbookL2T25, PublicEndPoints } from '../../types';
 import { Websocket } from '../websocket';
-import { BitmexOrderbookWebsocketData, adaptBitmexOrderbook, bitmexUpdateOrderbook } from './internal';
+import { getChannel, transform, update } from './helpers';
+import { OrderbookData } from './types';
 
 export class Orderbook {
-  private readonly pairOderbookStreamMap = new Map<string, Observable<IOrderbook>>();
+  private readonly streamMap = new Map<string, Observable<OrderbookL2T25>>();
 
-  /**
-   * @param ws
-   */
   constructor(private readonly ws: Websocket) {}
 
-  orderbookL2T25$(pair: string): Observable<IOrderbook> {
-    let stream = this.pairOderbookStreamMap.get(pair);
+  orderbookL2T25$(pair: string): Observable<OrderbookL2T25> {
+    let stream = this.streamMap.get(pair);
     if (!stream) {
       stream = this.startOrderbookL2T25$(pair);
-      this.pairOderbookStreamMap.set(pair, stream);
+      this.streamMap.set(pair, stream);
     }
 
     return stream;
   }
 
   stopOrderbookL2T25(pair: string): void {
-    const channel = getOrderbookChannel(pair, PublicEndPoints.OrderBookL2T25);
+    const channel = getChannel(pair, PublicEndPoints.OrderBookL2T25);
     this.ws.unsubscribe(channel);
-    this.pairOderbookStreamMap.delete(pair);
+    this.streamMap.delete(pair);
   }
 
-  private startOrderbookL2T25$(pair: string): Observable<IOrderbook> {
-    const channel = getOrderbookChannel(pair, PublicEndPoints.OrderBookL2T25);
+  private startOrderbookL2T25$(pair: string): Observable<OrderbookL2T25> {
+    const channel = getChannel(pair, PublicEndPoints.OrderBookL2T25);
 
-    const data$ = this.ws.subscribe<BitmexOrderbookWebsocketData>(channel);
+    const data$ = this.ws.subscribe<OrderbookData>(channel);
 
     /*
      * Make sure 'partial' come first and then 'insert' 'update' 'delete'
@@ -49,15 +47,8 @@ export class Orderbook {
     );
 
     return concat(snapshot$, update$).pipe(
-      scan(bitmexUpdateOrderbook),
-      map(adaptBitmexOrderbook),
+      scan(update),
+      map(transform),
     );
   }
-}
-
-function getOrderbookChannel(
-  pair: string,
-  endpoint: PublicEndPoints.OrderBook10 | PublicEndPoints.OrderBookL2 | PublicEndPoints.OrderBookL2T25,
-): string {
-  return `${endpoint}:${pair}`;
 }
