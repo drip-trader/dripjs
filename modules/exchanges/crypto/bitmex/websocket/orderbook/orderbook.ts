@@ -1,17 +1,17 @@
 import { Observable, concat } from 'rxjs';
 import { filter, map, scan, take } from 'rxjs/operators';
 
-import { OrderbookL2T25, PublicEndPoints } from '../../types';
+import { OrderbookL2T25Response, PublicEndPoints } from '../../types';
 import { Websocket } from '../websocket';
 import { getChannel, transform, update } from './helpers';
-import { OrderbookData } from './types';
+import { OrderbookSource } from './types';
 
 export class Orderbook {
-  private readonly streamMap = new Map<string, Observable<OrderbookL2T25>>();
+  private readonly streamMap = new Map<string, Observable<OrderbookL2T25Response>>();
 
   constructor(private readonly ws: Websocket) {}
 
-  orderbookL2T25$(pair: string): Observable<OrderbookL2T25> {
+  orderbookL2T25$(pair: string): Observable<OrderbookL2T25Response> {
     let stream = this.streamMap.get(pair);
     if (!stream) {
       stream = this.startOrderbookL2T25$(pair);
@@ -27,10 +27,10 @@ export class Orderbook {
     this.streamMap.delete(pair);
   }
 
-  private startOrderbookL2T25$(pair: string): Observable<OrderbookL2T25> {
+  private startOrderbookL2T25$(pair: string): Observable<OrderbookL2T25Response> {
     const channel = getChannel(pair, PublicEndPoints.OrderBookL2T25);
 
-    const data$ = this.ws.subscribe<OrderbookData>(channel);
+    const data$ = this.ws.subscribe<OrderbookSource>(channel);
 
     /*
      * Make sure 'partial' come first and then 'insert' 'update' 'delete'

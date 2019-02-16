@@ -1,4 +1,4 @@
-export interface IConfig {
+export interface Config {
   apiKey?: string;
   apiSecret?: string;
   testnet?: boolean;
@@ -7,7 +7,7 @@ export interface IConfig {
 /**
  * Top 25 levels of level 2 order book
  */
-export interface OrderbookL2T25 {
+export interface OrderbookL2T25Response {
   /**
    * price and amount of Top 25 ask (asc order)
    * eg: [[price, amount], ...]
@@ -18,11 +18,9 @@ export interface OrderbookL2T25 {
    * eg: [[price, amount], ...]
    */
   bids: [string, string][];
-  lastUpdateId?: number;
-  timestamp?: number;
 }
 
-export interface ITrade {
+export interface TradeResponse {
   id: number;
   side: 'Buy' | 'Sell';
   price: number;
@@ -30,7 +28,7 @@ export interface ITrade {
   timestamp: number;
 }
 
-export interface IOrder {
+export interface OrderResponse {
   orderID: string;
   clOrdID?: string;
   clOrdLinkID?: string;

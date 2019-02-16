@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-import { IConfig, IOrder, ITrade, OrderbookL2T25 } from '../types';
+import { Config, OrderResponse, OrderbookL2T25Response, TradeResponse } from '../types';
 import { BitmexWsBase } from './bitmex-ws-base';
 import { Order } from './order';
 import { Orderbook } from './orderbook';
@@ -13,7 +13,7 @@ export class BitmexWS extends BitmexWsBase {
   private readonly trade: Trade;
   private readonly order: Order;
 
-  constructor(config?: IConfig) {
+  constructor(config?: Config) {
     super(config);
 
     this.ws = new Websocket(config!);
@@ -23,7 +23,7 @@ export class BitmexWS extends BitmexWsBase {
   }
 
   // realtime orderbook
-  orderbook$(pair: string): Observable<OrderbookL2T25> {
+  orderbook$(pair: string): Observable<OrderbookL2T25Response> {
     return this.orderbook.orderbookL2T25$(pair);
   }
 
@@ -32,7 +32,7 @@ export class BitmexWS extends BitmexWsBase {
     this.orderbook.stopOrderbookL2T25(pair);
   }
 
-  trade$(pair: string): Observable<ITrade> {
+  trade$(pair: string): Observable<TradeResponse> {
     return this.trade.trade$(pair);
   }
 
@@ -41,11 +41,15 @@ export class BitmexWS extends BitmexWsBase {
     this.trade.stopTrade(pair);
   }
 
-  order$(pair: string): Observable<IOrder | undefined> {
+  order$(pair: string): Observable<OrderResponse | undefined> {
     return this.order.order$(pair);
   }
 
   stopOrder(pair: string): void {
     this.order.stopOrder(pair);
+  }
+
+  destroy(): void {
+    this.ws.destroy();
   }
 }

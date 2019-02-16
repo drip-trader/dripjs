@@ -39,7 +39,7 @@
 //   ],
 // }
 
-export interface BitmexTradeWebsocketData {
+export interface TradeSource {
   timestamp: string;
   symbol: string;
   side: 'Buy' | 'Sell';

@@ -34,7 +34,7 @@
   "timestamp": "2019-01-02T15:06:15.616Z"
 }*/
 
-export interface BitmexOrderWebsocketData {
+export interface OrderSource {
   orderID: string;
   account: string;
   symbol: string;
