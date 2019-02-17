@@ -1,4 +1,4 @@
-import { testnetConfig } from '@drip/testing';
+import { testnetConfig } from '@dripjs/testing';
 
 import { BitmexRest } from '../rest/bitmex-rest';
 import { OrderSide, OrderStatus, OrderType, TimeInForce } from '../types';

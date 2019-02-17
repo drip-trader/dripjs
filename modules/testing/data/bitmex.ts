@@ -1,4 +1,4 @@
-import { Config } from '@drip/exchanges';
+import { Config } from '@dripjs/exchanges';
 
 export const testnetConfig: Config = {
   apiKey: 'xcWx4ts3A5sluYBupjvvNAnO',

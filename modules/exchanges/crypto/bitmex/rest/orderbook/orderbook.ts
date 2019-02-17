@@ -1,4 +1,4 @@
-import { HttpMethod } from '@drip/types';
+import { HttpMethod } from '@dripjs/types';
 
 import { getRateLimit } from '../../common';
 import { Config, OrderbookRequest, OrderbookResponse, RestOrderbookL2Response, RestResponse } from '../../types';

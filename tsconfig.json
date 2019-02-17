@@ -15,21 +15,27 @@
     "resolveJsonModule": true,
     "baseUrl": "./",
     "paths": {
-      "@drip/common": ["modules/common"],
-      "@drip/types": ["modules/types"],
-      "@drip/models": ["modules/models"],
-      "@drip/exchanges": ["modules/exchanges"],
-      "@drip/testing": ["modules/testing"],
+      "@dripjs/common": ["modules/common"],
+      "@dripjs/types": ["modules/types"],
+      "@dripjs/models": ["modules/models"],
+      "@dripjs/exchanges": ["modules/exchanges"],
+      "@dripjs/testing": ["modules/testing"],
     },
+    "plugins": [
+      {
+        "transform": "@zerollup/ts-transform-paths",
+        "exclude": ["*"]
+      },
+    ],
     "sourceMap": true
   },
   "include": [
     "modules/**/*.ts",
-    "projects/**/*.ts"
+    "projects/**/*.ts",
+    "index.ts"
   ],
   "exclude": [
     "dist",
-    "node_modules",
-    "./modules/common/websocket/lib/*.*"
+    "node_modules"
   ]
 }

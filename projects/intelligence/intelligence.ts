@@ -1,5 +1,5 @@
-import { BitmexRest, RestOrderbookL2Response } from '@drip/exchanges';
-import { testnetConfig } from '@drip/testing';
+import { BitmexRest, RestOrderbookL2Response } from '@dripjs/exchanges';
+import { testnetConfig } from '@dripjs/testing';
 
 export class Intelligence {
   private readonly bitmexRest: BitmexRest;

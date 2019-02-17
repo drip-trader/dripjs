@@ -1,6 +1,6 @@
 import { createHmac } from 'crypto';
 
-import { HttpMethod } from '@drip/types';
+import { HttpMethod } from '@dripjs/types';
 import { stringify } from 'qs';
 
 import { PrivateEndPoints, PublicEndPoints, restApiBasePath } from '../types';

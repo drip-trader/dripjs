@@ -1,4 +1,4 @@
-import { HttpMethod } from '@drip/types';
+import { HttpMethod } from '@dripjs/types';
 import fetch, { RequestInit } from 'node-fetch';
 import { stringify } from 'qs';
 

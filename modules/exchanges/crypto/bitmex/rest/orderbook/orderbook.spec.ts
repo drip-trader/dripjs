@@ -1,4 +1,4 @@
-import { testnetReadonlyConfig } from '@drip/testing';
+import { testnetReadonlyConfig } from '@dripjs/testing';
 
 import { OrderbookRequest } from '../../types';
 import { Orderbook } from './orderbook';

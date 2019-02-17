@@ -1,29 +1,37 @@
 {
-  "name": "drip",
-  "version": "0.1.0",
+  "name": "dripjs",
+  "version": "0.0.10",
   "description": "一个帮助交易者建立全面完善的交易系统的量化开源平台",
   "engines": {
     "node": ">= 10.15.0",
     "npm": ">= 6.4.1",
     "yarn": ">= 1.12.3"
   },
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "scripts": {
-    "bdd": "yarn run jest --watch --onlyChanged",
+    "bdd": "yarn jest --watch --onlyChanged",
+    "build:prod": "yarn build:preprocess && yarn tsc:app && yarn build:postprocess",
+    "build:preprocess": "rm -rf dist",
+    "build:postprocess": "cp package.json README.md README_EN.md dist",
     "coverage": "jest -c jest.config.js --collectCoverage",
     "ci:coverage": "jest -c jest.config.js --coverage --coverageReporters=text-lcov | coveralls",
-    "format": "yarn run format:ts && yarn run format:md",
+    "format": "yarn format:ts && yarn format:md",
     "format:md": "prettier --config .prettierrc --write '{docs,modules,projects}/**/*.md' --parser markdown",
-    "format:ts": "yarn run format:ts:import && prettier --config .prettierrc --write '{modules,projects}/**/*.ts'",
+    "format:ts": "yarn format:ts:import && prettier --config .prettierrc --write '{modules,projects}/**/*.ts'",
     "format:ts:import": "import-sort --write '{modules,projects}/**/*.ts'",
     "jest": "jest -c jest.config.js",
-    "lint": "yarn run lint:md && yarn run lint:ts",
+    "lint": "yarn lint:md && yarn lint:ts",
     "lint:md": "markdownlint **/*.md",
     "lint:ts": "tslint -p tsconfig.json -c tslint.json",
-    "test": "yarn run jest --runInBand"
+    "publish:dist": "yarn build:prod && npm publish dist",
+    "test": "yarn jest --runInBand",
+    "tsc:app": "ttsc -p tsconfig.app.json",
+    "tsc:spec": "ttsc -p tsconfig.spec.json"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zlq4863947/drip.git"
+    "url": "git+https://github.com/zlq4863947/dripjs.git"
   },
   "keywords": [
     "trading platform"
@@ -31,14 +39,14 @@
   "author": "zlq4863947@gmail.com",
   "license": "GPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/zlq4863947/drip/issues"
+    "url": "https://github.com/zlq4863947/dripjs/issues"
   },
-  "homepage": "https://github.com/zlq4863947/drip#readme",
+  "homepage": "https://github.com/zlq4863947/dripjs#readme",
   "devDependencies": {
     "@types/jest": "23.3.13",
-    "@types/node-fetch": "^2.1.6",
     "@types/qs": "^6.5.1",
     "@types/ws": "^6.0.1",
+    "@zerollup/ts-transform-paths": "^1.7.0",
     "coveralls": "^3.0.2",
     "import-sort": "^5.2.0",
     "import-sort-cli": "^5.2.0",
@@ -54,11 +62,13 @@
     "tsconfig-paths": "^3.8.0",
     "tslint": "^5.12.1",
     "tslint-eslint-rules": "^5.4.0",
+    "ttypescript": "^1.5.6",
     "typescript": "^3.3.3",
     "vrsource-tslint-rules": "^6.0.0",
     "yarn": "^1.13.0"
   },
   "dependencies": {
+    "@types/node-fetch": "^2.1.6",
     "node-fetch": "^2.3.0",
     "rxjs": "^6.4.0",
     "ws": "^6.1.3"

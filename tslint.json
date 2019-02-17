@@ -119,7 +119,7 @@
     "no-string-throw": true,
     "no-submodule-imports": [
       true,
-      "@drip",
+      "@dripjs",
       "rxjs"
     ],
     "no-switch-case-fall-through": true,
