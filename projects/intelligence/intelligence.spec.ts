@@ -1,4 +1,4 @@
-import { Intelligence } from './intelligence';
+import { Intelligence } from '../intelligence';
 
 describe.skip('Intelligence', () => {
   const pair = 'XBTUSD';
