@@ -1,6 +1,6 @@
 import { Intelligence } from '../intelligence';
 
-describe.skip('Intelligence', () => {
+describe('Intelligence', () => {
   const pair = 'XBTUSD';
   const intelligence = new Intelligence();
   it('get orderbook', async () => {

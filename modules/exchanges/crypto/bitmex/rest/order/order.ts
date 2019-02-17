@@ -47,7 +47,7 @@ export class Order extends Rest {
     };
   }
 
-  async remove(request: Partial<OrderRequest>): Promise<RestOrderResponse> {
+  async cancel(request: Partial<OrderRequest>): Promise<RestOrderResponse> {
     const res = await this.request(HttpMethod.DELETE, request);
 
     return {

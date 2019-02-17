@@ -34,8 +34,8 @@ export class BitmexRest extends BitmexRestBase {
     return this.order.update(request);
   }
 
-  async removeOrder(request: Partial<OrderRequest>): Promise<RestOrderResponse> {
-    return this.order.remove(request);
+  async cancelOrder(request: Partial<OrderRequest>): Promise<RestOrderResponse> {
+    return this.order.cancel(request);
   }
 
   async fetchOrderbook(request: OrderbookRequest): Promise<RestOrderbookL2Response> {

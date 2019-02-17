@@ -48,7 +48,7 @@ describe('BitmexWS', () => {
       timeInForce: TimeInForce.Day,
     });
     setTimeout(async () => {
-      await bitmexRest.removeOrder({
+      await bitmexRest.cancelOrder({
         orderID: res.order.orderID,
       });
       done();

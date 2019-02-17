@@ -1,6 +1,6 @@
 {
   "name": "dripjs",
-  "version": "0.0.10",
+  "version": "0.0.13",
   "description": "一个帮助交易者建立全面完善的交易系统的量化开源平台",
   "engines": {
     "node": ">= 10.15.0",
@@ -24,7 +24,7 @@
     "lint": "yarn lint:md && yarn lint:ts",
     "lint:md": "markdownlint **/*.md",
     "lint:ts": "tslint -p tsconfig.json -c tslint.json",
-    "publish:dist": "yarn build:prod && npm publish dist",
+    "pub": "yarn build:prod && npm publish dist",
     "test": "yarn jest --runInBand",
     "tsc:app": "ttsc -p tsconfig.app.json",
     "tsc:spec": "ttsc -p tsconfig.spec.json"
@@ -70,6 +70,7 @@
   "dependencies": {
     "@types/node-fetch": "^2.1.6",
     "node-fetch": "^2.3.0",
+    "qs": "^6.6.0",
     "rxjs": "^6.4.0",
     "ws": "^6.1.3"
   }

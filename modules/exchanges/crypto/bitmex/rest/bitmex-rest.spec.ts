@@ -61,11 +61,11 @@ describe('Bitmex Rest', () => {
     expect(res.ratelimit.limit).toEqual(300);
   });
 
-  it('remove order', async () => {
+  it('cancel order', async () => {
     const request: Partial<OrderRequest> = {
       orderID: orderId,
     };
-    const res = await bitmexRest.removeOrder(request);
+    const res = await bitmexRest.cancelOrder(request);
     expect(res.order.ordStatus).toEqual(OrderStatus.Canceled);
     expect(res.ratelimit.limit).toEqual(300);
   });
