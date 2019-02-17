@@ -1,4 +1,4 @@
-<H1><p align="center">Drip</p></H1>
+<H1><p align="center">Drip.js</p></H1>
 <p align="center">A quantitative trading open source platform that helps traders build a comprehensive trading system</p>
 <p align="center">
   <a href="https://travis-ci.com/zlq4863947/dripjs"><img src="https://travis-ci.com/zlq4863947/dripjs.svg?branch=master&t=1" alt="Tiavis" /></a>
