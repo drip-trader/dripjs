@@ -1,3 +1,6 @@
+
+[![Join the chat at https://gitter.im/drip-js/community](https://badges.gitter.im/drip-js/community.svg)](https://gitter.im/drip-js/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 <H1><p  align="center">Drip.js</p></H1>
 <p  align="center">一个帮助交易者建立全面完善的交易系统的量化交易开源平台</p>
 <p  align="center">
