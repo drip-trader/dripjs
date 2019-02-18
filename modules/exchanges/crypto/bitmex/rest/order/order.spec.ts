@@ -55,7 +55,7 @@ describe.skip('Bitmex Rest Order', () => {
     expect(res.ratelimit.limit).toEqual(300);
   });
 
-  it('remove order', async () => {
+  it('cancel order', async () => {
     const request: Partial<OrderRequest> = {
       orderID: orderId,
     };

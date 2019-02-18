@@ -135,8 +135,7 @@
     "yarn": "^1.13.0"
   },
   "dependencies": {
-    "@types/node-fetch": "^2.1.6",
-    "node-fetch": "^2.3.0",
+    "axios": "^0.18.0",
     "qs": "^6.6.0",
     "rxjs": "^6.4.0",
     "ws": "^6.1.3"

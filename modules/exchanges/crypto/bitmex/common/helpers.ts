@@ -1,11 +1,11 @@
-import { Headers } from 'node-fetch';
+import { HttpHeaders } from '@dripjs/types';
 
 import { RateLimit } from '../types';
 
-export function getRateLimit(headers: Headers): RateLimit {
+export function getRateLimit(headers: HttpHeaders): RateLimit {
   return {
-    remaining: Number(headers.get('x-ratelimit-remaining')),
-    reset: Number(headers.get('x-ratelimit-reset')),
-    limit: Number(headers.get('x-ratelimit-limit')),
+    remaining: Number(headers['x-ratelimit-remaining']),
+    reset: Number(headers['x-ratelimit-reset']),
+    limit: Number(headers['x-ratelimit-limit']),
   };
 }

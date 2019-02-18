@@ -4,3 +4,7 @@ export enum HttpMethod {
   PUT = 'PUT',
   DELETE = 'DELETE',
 }
+
+export interface HttpHeaders {
+  [key: string]: string;
+}

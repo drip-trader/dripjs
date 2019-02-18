@@ -1,10 +1,10 @@
-import { Headers } from 'node-fetch';
+import { HttpHeaders } from '@dripjs/types';
 
 import { RateLimit } from './exchange';
 import { OrderSide } from './order';
 
 export interface RestResponse {
-  headers: Headers;
+  headers: HttpHeaders;
   body: { [attr: string]: any };
 }
 
