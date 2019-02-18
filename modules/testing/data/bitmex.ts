@@ -1,13 +1,16 @@
+// tslint:disable-next-line
+require('dotenv').config();
+
 import { Config } from '@dripjs/exchanges';
 
 export const testnetConfig: Config = {
-  apiKey: 'xcWx4ts3A5sluYBupjvvNAnO',
-  apiSecret: 'rpeJNuMp-8uAJTae6UUed2kyt-bGfGIGQ_Rh033TFuhheK4l',
+  apiKey: `${process.env['SPEC_BITMEX_TEST_API_KEY']}`,
+  apiSecret: `${process.env['SPEC_BITMEX_TEST_API_SECRET']}`,
   testnet: true,
 };
 
 export const testnetReadonlyConfig: Config = {
-  apiKey: 'jrykTOY-YzdYjhfV0FrSj_14',
-  apiSecret: 'UEDAlIUmNZ9T7mK7d31ZTrZqvj07RpPTIT5ZpKIDlGNAs7Kw',
+  apiKey: `${process.env['SPEC_BITMEX_TEST_TRADE_API_KEY']}`,
+  apiSecret: `${process.env['SPEC_BITMEX_TEST_TRADE_API_SECRET']}`,
   testnet: true,
 };

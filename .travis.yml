@@ -13,7 +13,10 @@ script:
 - yarn test
 after_success:
 - yarn ci:coverage
-env:
-  global:
-  - secure: "qnvB7VCvkSOJBtgZZsJiNo+ycspyz0PR0d3n5YJSueIXmoyM3e4p3aeGjkuw+ihUfCtfFhlNMwXGEyiQceqk1scAE5PewuXeZODF0RORltwymE2gtpZbPRr93tVWwVsJq245G0h7PD4p3lQHyYArMN1pPB2C4yF5c1UCJ9woryaBRupsVSHOJxYUdywl8VS+ecKAqRPIxVfLnBOe1QC9iK0TcjgTEH3iyHsDLfGFlmMs2lQm0nZBDAu49yrm25eHR98sK1C2AKRU3QHErp2gCnQzlhcA7g+0ncxGGi7ENVI5Mz280W7sCHuArj8pNMD37tNwRm6rFJIGRlU2OCoyII+v6SgW1wO3W6r5GtJU1afKWZR+8xifDmEwFOoijHGGB6Y0nwV/sSNrsKEHx6kNToify0Nvic5DblmYHz/Izeet4HfjYBjNX5siCkSMKcvyrwuaHxdRCYlOLNA3ZMRZANhHaEyn4BHNuzryJkEcCAkqjpqMB3sZ/xAcPOU0YI1OwZM91rdNAM3JoRQgMVLJn4iXBYireqp/prK/TjSAb58iP0cnpQE/qwf+quvOrTWBFL9hjj5Gj8n2qiOr0USueVtaZe9p2+f7ywPTBTHyxVe0qwNoXzNfPI8yUeRkpMkCKWy2Xtmax9NLgnFYZZ7upJtCOLLU9/eayVWqD9hNTUE="
-  
+notifications:
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/e4cbb72a5a86450bd6f5
+    on_success: change
+    on_failure: always
+    on_start: never   
