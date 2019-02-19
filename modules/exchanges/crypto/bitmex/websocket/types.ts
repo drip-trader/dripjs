@@ -11,7 +11,7 @@ export interface WebsocketResponse {
   request?: WebsocketRequest;
 }
 
-export interface WebsocketData<T> {
+export interface WebsocketData<T = any> {
   // Table name / Subscription topic.
   // Could be "trade", "order", "instrument", etc.
   table: string;
