@@ -20,9 +20,9 @@ export abstract class BitmexRestBase {
     };
   }
 
-  abstract async createOrder(request: Partial<OrderRequest>): Promise<RestOrderResponse>;
-  abstract async fetchOrder(request: Partial<FetchOrderRequest>): Promise<RestOrdersResponse>;
-  abstract async updateOrder(request: Partial<OrderRequest>): Promise<RestOrderResponse>;
-  abstract async cancelOrder(request: Partial<OrderRequest>): Promise<RestOrderResponse>;
-  abstract async fetchOrderbook(request: OrderbookRequest): Promise<RestOrderbookL2Response>;
+  abstract createOrder(request: Partial<OrderRequest>): Promise<RestOrderResponse>;
+  abstract fetchOrder(request: Partial<FetchOrderRequest>): Promise<RestOrdersResponse>;
+  abstract updateOrder(request: Partial<OrderRequest>): Promise<RestOrderResponse>;
+  abstract cancelOrder(request: Partial<OrderRequest>): Promise<RestOrderResponse>;
+  abstract fetchOrderbook(request: OrderbookRequest): Promise<RestOrderbookL2Response>;
 }

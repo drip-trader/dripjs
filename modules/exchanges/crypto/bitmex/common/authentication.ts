@@ -3,7 +3,7 @@ import { createHmac } from 'crypto';
 import { HttpMethod } from '@dripjs/types';
 import { stringify } from 'qs';
 
-import { PrivateEndPoints, PublicEndPoints, restApiBasePath } from '../types';
+import { restApiBasePath } from '../types';
 
 /**
  * Sign a message. hex( HMAC_SHA256(secret, verb + url + nonce + data) )
