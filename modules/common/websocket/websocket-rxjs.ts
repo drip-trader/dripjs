@@ -33,7 +33,7 @@ export class WebSocketRxJs<T = any> {
         const data = JSON.parse(<string>e.data);
         this.data$.next(data);
       } catch (error) {
-        console.error(error);
+        this.data$.next(e.data);
       }
     };
   }

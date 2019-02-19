@@ -18,7 +18,7 @@ describe('BitmexWS', () => {
     setTimeout(() => {
       bitmexWS.stopOrderbook(pair);
       done();
-    }, 8000);
+    }, 15000);
   });
   it('subscribe trade', (done) => {
     bitmexWS.trade$(pair).subscribe((trade) => {

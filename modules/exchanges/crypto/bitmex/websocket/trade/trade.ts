@@ -9,11 +9,6 @@ import { TradeSource } from './types';
 export class Trade {
   constructor(private readonly ws: Websocket) {}
 
-  // fetch trades
-  fetchTrades$(pair: string, start?: number, end?: number, limit?: number, sort?: number): Observable<TradeSource[]> {
-    return EMPTY;
-  }
-
   /**
    * latest trade
    *

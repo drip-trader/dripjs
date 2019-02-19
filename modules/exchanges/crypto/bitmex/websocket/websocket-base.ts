@@ -36,9 +36,6 @@ export abstract class WebsocketBase<T = any, U = any> {
   }
 
   private init(): void {
-    if (this.ws) {
-      throw new Error('websocket is already initialized');
-    }
     const requestUrl = this.makeRequestUrl();
     this.ws = new WebSocketRxJs(requestUrl);
     this.ws.message$.subscribe((response) => {
