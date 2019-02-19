@@ -9,7 +9,7 @@ import { Config, wsEndpoints } from '../types';
  * @param T: ws send request type
  * @param U: raw ws response type
  */
-export abstract class WebsocketBase<T = any, U = any> {
+export abstract class WebsocketBase<T, U> {
   private ws: WebSocketRxJs<U> | null = null;
   constructor(private readonly config: Config) {}
 

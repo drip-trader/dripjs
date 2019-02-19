@@ -5,7 +5,7 @@ import * as WebSocket from 'ws';
 /**
  * RxJs wrapper for websocket
  */
-export class WebSocketRxJs<T = any> {
+export class WebSocketRxJs<T> {
   private readonly webSocket: WebSocket;
   private readonly data$ = new ReplaySubject<T>(1);
   private readonly opened$ = new ReplaySubject<boolean>(1);
