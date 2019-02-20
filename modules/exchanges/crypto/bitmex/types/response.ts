@@ -1,7 +1,7 @@
-import { HttpHeaders } from '@dripjs/types';
+import { HttpHeaders } from 'dripjs-types';
 
 import { RateLimit } from './exchange';
-import { OrderSide } from './order';
+import { BitmexOrderSide as OrderSide } from './order';
 
 export interface RestResponse {
   headers: HttpHeaders;

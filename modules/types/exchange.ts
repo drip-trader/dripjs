@@ -18,6 +18,16 @@ export interface Pair {
   pricePrecision: number;
 }
 
+export interface Stock {
+  code: string;
+  name: string;
+  fullName: string;
+  pricePrecision: number;
+  amountPrecision: number;
+}
+
+export type Symbol = Pair | Stock;
+
 export interface Asset {
   name: string;
   precision: number;

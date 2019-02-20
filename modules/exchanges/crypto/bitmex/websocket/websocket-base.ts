@@ -1,4 +1,4 @@
-import { WebSocketRxJs } from '@dripjs/common';
+import { WebSocketRxJs } from 'dripjs-common';
 
 import { getWSAuthQuery } from '../common';
 import { Config, wsEndpoints } from '../types';

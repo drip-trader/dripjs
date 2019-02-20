@@ -1,6 +1,6 @@
 import { createHmac } from 'crypto';
 
-import { HttpMethod } from '@dripjs/types';
+import { HttpMethod } from 'dripjs-types';
 import { stringify } from 'qs';
 
 import { restApiBasePath } from '../types';

@@ -11,4 +11,3 @@ intelligence 提供各种商品的情报获取。
 | getBars         | 获取 K 线    |
 | getDepth        | 获取订单薄   |
 | getTransactions | 获取成交信息 |
-| getSymbolInfo   | 获取商品信息 |

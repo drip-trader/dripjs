@@ -1,4 +1,4 @@
-import { HttpMethod } from '@dripjs/types';
+import { HttpMethod } from 'dripjs-types';
 
 import { getRateLimit } from '../../common';
 import {

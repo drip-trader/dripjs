@@ -1,4 +1,4 @@
-import { OrderSide } from '../../types';
+import { BitmexOrderSide as OrderSide } from '../../types';
 
 // {
 //   "table": "trade",

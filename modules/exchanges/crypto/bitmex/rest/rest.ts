@@ -1,5 +1,5 @@
-import { HttpMethod } from '@dripjs/types';
 import Axios, { AxiosRequestConfig } from 'axios';
+import { HttpMethod } from 'dripjs-types';
 import { stringify } from 'qs';
 
 import { getRestAuthHeaders } from '../common';

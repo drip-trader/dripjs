@@ -1,0 +1,46 @@
+{
+  "name": "dripjs-bitmex",
+  "version": "0.1.0",
+  "description": "drip bitmex api wapper",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "build:prod": "yarn build:preprocess && yarn tsc && yarn build:postprocess",
+    "build:preprocess": "rm -rf dist",
+    "build:postprocess": "cp package.json README.md dist",
+    "pub": "yarn build:prod && npm publish dist",
+    "tsc": "tsc -p tsconfig.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zlq4863947/dripjs.git"
+  },
+  "keywords": [
+    "drip",
+    "dripjs",
+    "drip bitmex",
+    "bitmex api",
+    "bitmex websocket",
+    "bitmex rest api",
+    "bitmex",
+    "BitMEX"
+  ],
+  "author": "zlq4863947@gmail.com",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/zlq4863947/dripjs/issues"
+  },
+  "homepage": "https://github.com/zlq4863947/dripjs/tree/master/modules/exchanges/crypto/bitmex#readme",
+  "devDependencies": {
+    "@types/qs": "^6.5.1",
+    "@types/ws": "^6.0.1"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "drip-common": "^0.1.0",
+    "dripjs-types": "^0.1.0",
+    "qs": "^6.6.0",
+    "rxjs": "^6.4.0",
+    "ws": "^6.1.3"
+  }
+}

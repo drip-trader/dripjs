@@ -1,4 +1,4 @@
-export enum OrderSide {
+export enum BitmexOrderSide {
   Buy = 'Buy',
   Sell = 'Sell',
 }
@@ -45,14 +45,6 @@ export enum ExecInst {
   IndexPrice = 'IndexPrice',
   ReduceOnly = 'ReduceOnly',
   Close = 'Close',
-}
-
-export enum OrderStatus {
-  New = 'New',
-  Filled = 'Filled',
-  Rejected = 'Rejected',
-  PartiallyFilled = 'PartiallyFilled',
-  Canceled = 'Canceled',
 }
 
 export enum TimeInForce {

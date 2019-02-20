@@ -1,6 +1,7 @@
-import { testnetConfig, testnetReadonlyConfig } from '@dripjs/testing';
+import { OrderStatus } from 'dripjs-types';
 
-import { FetchOrderRequest, OrderRequest, OrderSide, OrderStatus, OrderType } from '../../types';
+import { testnetConfig, testnetReadonlyConfig } from '../../common';
+import { FetchOrderRequest, OrderRequest, BitmexOrderSide as OrderSide, OrderType } from '../../types';
 import { Orderbook } from '../orderbook';
 import { Order } from './order';
 

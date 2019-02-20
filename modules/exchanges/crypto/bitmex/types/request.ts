@@ -1,4 +1,6 @@
-import { ExecInst, OrderSide, OrderStatus, OrderType, TimeInForce } from './order';
+import { OrderStatus } from 'dripjs-types';
+
+import { ExecInst, BitmexOrderSide as OrderSide, OrderType, TimeInForce } from './order';
 
 export interface OrderRequest {
   symbol: string;

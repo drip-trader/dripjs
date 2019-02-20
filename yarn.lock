@@ -964,6 +964,19 @@ dotenv@^6.2.0:
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-6.2.0.tgz#941c0410535d942c8becf28d3f357dbd9d476064"
   integrity sha512-HygQCKUBSFl8wKQZBSemMywRWcEDNidvNbjGVyZu3nbZ8qq9ubiPoGLMdRDpfSrpkkm9BXYFkpKxxFX38o/76w==
 
+dripjs-common@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/dripjs-common/-/dripjs-common-0.1.0.tgz#098fe96777503b26bff925cafa48e28753751b53"
+  integrity sha512-qNf91OlaE1mjVDOlyD0uC8urrrF/Csg1ifePbILpth9RqwHE7SvsR9t4Csy1rXFR/AkubHBXzcT0Ic8/XVR6Pg==
+  dependencies:
+    rxjs "^6.4.0"
+    ws "^6.1.3"
+
+dripjs-types@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/dripjs-types/-/dripjs-types-0.1.1.tgz#0dccad29298f7b56caa2667d6896cb4313508502"
+  integrity sha512-8hwg86NeLecsLiWx80a2e6KUHZb707uxKaD9nau7ai/cuvIZDYVnPdgAW6Izdq9OL0dTgVkLn6ytJxe6g3RXTw==
+
 ecc-jsbn@~0.1.1:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/ecc-jsbn/-/ecc-jsbn-0.1.2.tgz#3a83a904e54353287874c564b7549386849a98c9"

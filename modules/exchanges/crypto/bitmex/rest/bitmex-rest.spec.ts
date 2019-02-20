@@ -1,6 +1,10 @@
-import { testnetConfig } from '@dripjs/testing';
+// tslint:disable-next-line
+require('dotenv').config();
 
-import { FetchOrderRequest, OrderRequest, OrderSide, OrderStatus, OrderType, OrderbookRequest } from '../types';
+import { OrderStatus } from 'dripjs-types';
+
+import { testnetConfig } from '../common';
+import { FetchOrderRequest, OrderRequest, BitmexOrderSide as OrderSide, OrderType, OrderbookRequest } from '../types';
 import { BitmexRest } from './bitmex-rest';
 
 describe('Bitmex Rest', () => {

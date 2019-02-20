@@ -1,17 +1,10 @@
-import { BitmexRest, RestOrderbookL2Response } from '@dripjs/exchanges';
-import { testnetConfig } from '@dripjs/testing';
+import { Bar, BarRequest, Depth, Symbol, Ticker } from '@dripjs/types';
+import { Observable } from 'rxjs';
 
-export class Intelligence {
-  private readonly bitmexRest: BitmexRest;
-
-  constructor() {
-    this.bitmexRest = new BitmexRest(testnetConfig);
-  }
-
-  async getOrderbook(symbol: string): Promise<RestOrderbookL2Response> {
-    return this.bitmexRest.fetchOrderbook({
-      symbol,
-      depth: 25,
-    });
-  }
+export abstract class Intelligence {
+  abstract getSymbolInfo(symbol: string): Promise<Symbol>;
+  abstract getTicker(symbol: string): Observable<Ticker>;
+  abstract getBars(request: BarRequest): Promise<Bar[]>;
+  abstract getDepth(symbol: string): Observable<Depth>;
+  abstract getTransactions(symbol: string): Observable<Symbol>;
 }

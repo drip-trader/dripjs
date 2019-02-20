@@ -1,7 +1,11 @@
-import { testnetConfig } from '@dripjs/testing';
+// tslint:disable-next-line
+require('dotenv').config();
 
+import { OrderStatus } from 'dripjs-types';
+
+import { testnetConfig } from '../common';
 import { BitmexRest } from '../rest/bitmex-rest';
-import { OrderSide, OrderStatus, OrderType, TimeInForce } from '../types';
+import { BitmexOrderSide as OrderSide, OrderType, TimeInForce } from '../types';
 import { BitmexWS } from './bitmex-ws';
 
 describe('BitmexWS', () => {

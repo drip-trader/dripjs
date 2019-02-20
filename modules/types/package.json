@@ -1,0 +1,31 @@
+{
+  "name": "dripjs-types",
+  "version": "0.1.1",
+  "description": "dripjs types",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "build:prod": "yarn build:preprocess && yarn tsc && yarn build:postprocess",
+    "build:preprocess": "rm -rf dist",
+    "build:postprocess": "cp package.json README.md dist",
+    "pub": "yarn build:prod && npm publish dist",
+    "tsc": "tsc -p tsconfig.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zlq4863947/dripjs.git"
+  },
+  "keywords": [
+    "drip",
+    "dripjs",
+    "drip types",
+    "drip types",
+    "dripjs types"
+  ],
+  "author": "zlq4863947@gmail.com",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/zlq4863947/dripjs/issues"
+  },
+  "homepage": "https://github.com/zlq4863947/dripjs/tree/master/modules/types#readme"
+}

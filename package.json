@@ -115,7 +115,6 @@
     "@types/ws": "^6.0.1",
     "@zerollup/ts-transform-paths": "^1.7.0",
     "coveralls": "^3.0.2",
-    "dotenv": "^6.2.0",
     "import-sort": "^5.2.0",
     "import-sort-cli": "^5.2.0",
     "import-sort-parser-typescript": "^5.0.0",
@@ -137,6 +136,9 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "dripjs-common": "^0.1.0",
+    "dripjs-types": "^0.1.1",
+    "dotenv": "^6.2.0",
     "qs": "^6.6.0",
     "rxjs": "^6.4.0",
     "ws": "^6.1.3"
