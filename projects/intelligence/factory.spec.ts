@@ -9,13 +9,12 @@ describe('Intelligence factory', () => {
     const bitmex = Factory.create(Bitmex, realConfig);
     bitmex.getTransactions$(pair).subscribe((transactions) => {
       expect(transactions).toBeDefined();
+    });
+    setTimeout(() => {
       bitmex.stopTransactions(pair);
       bitmex.destory();
       done();
-    });
-    /*setTimeout(() => {
-      done();
-    }, 40000);*/
+    }, 2000);
   });
   /*it('create bitmex', (done) => {
     const bitmex = Factory.create(Bitmex, realConfig);
