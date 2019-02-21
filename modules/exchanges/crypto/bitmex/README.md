@@ -2,7 +2,7 @@
 
 > dripjs bitmex api wapper, support for rest api and websocket
 
-<p align="center">
+<p>
 <a href="https://www.npmjs.com/package/dripjs-bitmex"><img src="https://img.shields.io/npm/v/dripjs-bitmex.svg" alt="NPM Version" />
 <a href="https://www.npmjs.com/package/dripjs"><img src="https://img.shields.io/badge/license-GPL_3.0-green.svg" alt="Package License" /></a>
 <a href="https://www.npmjs.com/package/dripjs-bitmex"><img src="https://img.shields.io/npm/dm/dripjs-bitmex.svg" alt="NPM Downloads" /></a>
@@ -84,3 +84,16 @@ The `orderbook$` output as
 | order\$(pair: string)       | Observable`<OrderResponse|undefined>` | realtime order             |
 | stopOrder(pair: string)     | void                                  | stop realtime order        |
 | destroy()                   | void                                  | close websocket connection |
+
+## BitmexRest API
+
+| Method                      | Return                                | Description                |
+| --------------------------- | ------------------------------------- | -------------------------- |
+| createOrder(request: Partial<OrderRequest>)   | `Promise<RestOrderResponse>`     |          |
+| fetchOrder(request: Partial<FetchOrderRequest>): | `Promise<RestOrderResponse>`                                   |     |
+| updateOrder(request: Partial<OrderRequest>)       | `Promise<RestOrderResponse>`            |              |
+| cancelOrder(request: Partial<OrderRequest>)     | `Promise<RestOrderResponse>`                                   |         |
+| fetchOrderbook(request: OrderbookRequest)       | `Promise<RestOrderbookL2Response>` |             |
+
+# api docs
+https://drip-trader.github.io/dripjs-docs/

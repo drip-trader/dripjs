@@ -64,3 +64,4 @@ db/*
 package-lock.json
 .vscode
 .coveralls.yml
+type-docs

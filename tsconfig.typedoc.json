@@ -1,0 +1,26 @@
+{
+  "extends": "./tsconfig",
+  "compilerOptions": {},
+  "typedocOptions": {
+    "name": "dripjs",
+    "mode": "file",
+    "out": "type-docs",
+    "theme": "default",
+    "ignoreCompilerErrors": false,
+    "excludePrivate": true,
+    "excludeNotExported": true,
+    "target": "es2018",
+    "moduleResolution": "node",
+    "preserveConstEnums": true,
+    "stripInternal": true,
+    "suppressExcessPropertyErrors": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "module": "commonjs",
+    "readme": "./README.md",
+    "exclude": [
+      "**/*.spec.ts",
+      "**/*-base.ts",
+      "modules/testing/**/*.ts"
+    ]
+  }
+}
