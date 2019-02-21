@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/zlq4863947/dripjs/tree/master/modules/common#readme",
   "devDependencies": {
-    "@types/ws": "^6.0.1"
+    "@types/ws": "6.0.1"
   },
   "dependencies": {
     "rxjs": "^6.4.0",
