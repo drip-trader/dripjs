@@ -103,7 +103,7 @@
     "coveralls": "3.0.2",
     "import-sort": "6.0.0",
     "import-sort-cli": "5.2.0",
-    "import-sort-parser-typescript": "5.0.0",
+    "import-sort-parser-typescript": "6.0.0",
     "import-sort-style-module-alias": "1.0.4",
     "jest": "23.6.0",
     "markdownlint": "0.12.0",

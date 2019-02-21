@@ -1657,13 +1657,12 @@ import-sort-config@^5.2.0:
     minimatch "^3.0.4"
     resolve-from "^4.0.0"
 
-import-sort-parser-typescript@5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/import-sort-parser-typescript/-/import-sort-parser-typescript-5.0.0.tgz#2f5ab77649f11a9b60ac1cb61f6d00818f39165b"
-  integrity sha1-L1q3dknxGptgrBy2H20AgY85Fls=
+import-sort-parser-typescript@6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/import-sort-parser-typescript/-/import-sort-parser-typescript-6.0.0.tgz#98e73cef9e077d073e798722ed59e215b51c17e2"
+  integrity sha512-pgxnr3I156DonupQriNsgDb2zJN9TxrqCCIN1rwT/6SDO1rkJb+a0fjqshCjlgacTSA92oPAp1eAwmQUeZi3dw==
   dependencies:
-    core-js "^2.5.7"
-    typescript "^2.9.2"
+    typescript "^3.2.4"
 
 import-sort-parser@^5.0.0:
   version "5.0.0"
@@ -4134,15 +4133,10 @@ type-check@~0.3.2:
   dependencies:
     prelude-ls "~1.1.2"
 
-typescript@3.3.3:
+typescript@3.3.3, typescript@^3.2.4:
   version "3.3.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.3.3.tgz#f1657fc7daa27e1a8930758ace9ae8da31403221"
   integrity sha512-Y21Xqe54TBVp+VDSNbuDYdGw0BpoR/Q6wo/+35M8PAU0vipahnyduJWirxxdxjsAkS7hue53x2zp8gz7F05u0A==
-
-typescript@^2.9.2:
-  version "2.9.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.9.2.tgz#1cbf61d05d6b96269244eb6a3bce4bd914e0f00c"
-  integrity sha512-Gr4p6nFNaoufRIY4NMdpQRNmgxVIGMs4Fcu/ujdYk3nAZqk7supzBE9idmvfZIlH/Cuj//dvi+019qEue9lV0w==
 
 uc.micro@^1.0.1, uc.micro@^1.0.5:
   version "1.0.6"
