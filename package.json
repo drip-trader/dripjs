@@ -102,7 +102,7 @@
     "@zerollup/ts-transform-paths": "1.7.0",
     "coveralls": "3.0.2",
     "import-sort": "6.0.0",
-    "import-sort-cli": "5.2.0",
+    "import-sort-cli": "6.0.0",
     "import-sort-parser-typescript": "6.0.0",
     "import-sort-style-module-alias": "1.0.4",
     "jest": "23.6.0",
