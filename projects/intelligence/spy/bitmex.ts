@@ -11,7 +11,7 @@ export class Bitmex extends Intelligence {
   rest: BitmexRest;
   ws: BitmexWS;
 
-  private symbols: Symbol[] = [];
+  private symbols: Pair[] = [];
 
   constructor(config: Config) {
     super();
@@ -23,7 +23,7 @@ export class Bitmex extends Intelligence {
     this.ws.destroy();
   }
 
-  async getSymbols(): Promise<Symbol[]> {
+  async getSymbols(): Promise<Pair[]> {
     if (this.symbols.length === 0) {
       const res = await this.rest.fetchInstrument();
       if (!res.error) {
