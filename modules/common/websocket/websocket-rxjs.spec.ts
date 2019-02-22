@@ -27,6 +27,25 @@ describe('WebSocketRxJs', () => {
       done();
     }, 1000);
   });
+  it('send message', (done) => {
+    const msg = {
+      action: 'test',
+    };
+    wsRxjs.message$.subscribe((o) => {
+      wsRxjs.send(JSON.stringify(msg));
+    });
+    wsServer.on('connection', (ws) => {
+      ws.send(JSON.stringify(msg));
+      ws.on('message', (data) => {
+        expect(data).toEqual(JSON.stringify(msg));
+      });
+    });
+    setTimeout(() => {
+      wsRxjs.close();
+      wsServer.close();
+      done();
+    }, 1000);
+  });
   it('subscribe onmessage to exception', (done) => {
     wsServer.on('connection', (ws) => {
       ws.send('t');

@@ -17,6 +17,7 @@ export class Orderbook extends Rest {
     return {
       ratelimit: res.ratelimit,
       orderbook: transform(<OrderbookResponse[]>res.body),
+      error: res.error,
     };
   }
 

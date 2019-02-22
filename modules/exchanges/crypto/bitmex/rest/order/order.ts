@@ -25,6 +25,7 @@ export class Order extends Rest {
     return {
       ratelimit: res.ratelimit,
       order: <OrderResponse>res.body,
+      error: res.error,
     };
   }
 
@@ -34,6 +35,7 @@ export class Order extends Rest {
     return {
       ratelimit: res.ratelimit,
       orders: <OrderResponse[]>res.body,
+      error: res.error,
     };
   }
 
@@ -43,6 +45,7 @@ export class Order extends Rest {
     return {
       ratelimit: res.ratelimit,
       order: <OrderResponse>res.body,
+      error: res.error,
     };
   }
 
@@ -52,6 +55,7 @@ export class Order extends Rest {
     return {
       ratelimit: res.ratelimit,
       order: <OrderResponse>res.body[0],
+      error: res.error,
     };
   }
 

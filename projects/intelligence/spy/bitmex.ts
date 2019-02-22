@@ -52,7 +52,11 @@ export class Bitmex extends Intelligence {
   }
 
   getTicker$(symbol: string): Observable<Ticker> {
-    return <any>{};
+    return this.ws.trade$(symbol).pipe(
+      map((trade) => {
+        return <Ticker>{};
+      }),
+    );
   }
 
   async getBars(request: BarRequest): Promise<Bar[]> {

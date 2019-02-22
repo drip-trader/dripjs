@@ -70,4 +70,19 @@ describe('Bitmex Rest', () => {
     expect(res.order.ordStatus).toEqual(OrderStatus.Canceled);
     expect(res.ratelimit.limit).toEqual(300);
   });
+
+  it('config is null', async () => {
+    const bitmexRest2 = new BitmexRest(<any>{});
+    const request: Partial<OrderRequest> = {
+      symbol: pair,
+      side: OrderSide.Buy,
+      price,
+      orderQty: 25,
+      ordType: OrderType.Limit,
+    };
+
+    const res = await bitmexRest2.createOrder(request);
+    expect(res.error!.name).toEqual('HTTPError');
+    expect(res.error!.message).toEqual('Missing API key.');
+  });
 });
