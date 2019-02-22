@@ -1,6 +1,5 @@
 import { HttpMethod } from 'dripjs-types';
 
-import { getRateLimit } from '../../common';
 import {
   Config,
   FetchOrderRequest,
@@ -24,7 +23,7 @@ export class Order extends Rest {
     const res = await this.request(HttpMethod.POST, request);
 
     return {
-      ratelimit: getRateLimit(res.headers),
+      ratelimit: res.ratelimit,
       order: <OrderResponse>res.body,
     };
   }
@@ -33,7 +32,7 @@ export class Order extends Rest {
     const res = await this.request(HttpMethod.GET, request);
 
     return {
-      ratelimit: getRateLimit(res.headers),
+      ratelimit: res.ratelimit,
       orders: <OrderResponse[]>res.body,
     };
   }
@@ -42,7 +41,7 @@ export class Order extends Rest {
     const res = await this.request(HttpMethod.PUT, request);
 
     return {
-      ratelimit: getRateLimit(res.headers),
+      ratelimit: res.ratelimit,
       order: <OrderResponse>res.body,
     };
   }
@@ -51,7 +50,7 @@ export class Order extends Rest {
     const res = await this.request(HttpMethod.DELETE, request);
 
     return {
-      ratelimit: getRateLimit(res.headers),
+      ratelimit: res.ratelimit,
       order: <OrderResponse>res.body[0],
     };
   }

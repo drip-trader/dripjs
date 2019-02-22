@@ -3,9 +3,15 @@ import { Observable } from 'rxjs';
 import { Config, OrderResponse, OrderbookL2Response, TradeResponse } from '../types';
 
 export abstract class BitmexWsBase {
-  protected config: Config;
-
-  constructor(config?: Config) {
+  constructor(protected config?: Config) {
+    if (this.config) {
+      if (!this.config.apiKey || this.config.apiKey === 'undefined') {
+        this.config.apiKey = '';
+      }
+      if (!this.config.apiSecret || this.config.apiSecret === 'undefined') {
+        this.config.apiSecret = '';
+      }
+    }
     this.config = {
       apiKey: '',
       apiSecret: '',

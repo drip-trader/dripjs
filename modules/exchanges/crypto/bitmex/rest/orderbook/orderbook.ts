@@ -1,6 +1,5 @@
 import { HttpMethod } from 'dripjs-types';
 
-import { getRateLimit } from '../../common';
 import { Config, OrderbookRequest, OrderbookResponse, RestOrderbookL2Response, RestResponse } from '../../types';
 import { Rest } from '../rest';
 import { transform } from './helpers';
@@ -16,7 +15,7 @@ export class Orderbook extends Rest {
     const res = await this.request(HttpMethod.GET, request);
 
     return {
-      ratelimit: getRateLimit(res.headers),
+      ratelimit: res.ratelimit,
       orderbook: transform(<OrderbookResponse[]>res.body),
     };
   }

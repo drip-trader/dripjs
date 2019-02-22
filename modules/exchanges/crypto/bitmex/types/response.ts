@@ -1,10 +1,17 @@
-import { HttpHeaders } from 'dripjs-types';
-
 import { RateLimit } from './exchange';
 import { BitmexOrderSide as OrderSide } from './order';
 
-export interface RestResponse {
-  headers: HttpHeaders;
+export interface Error {
+  message: string;
+  name: string;
+}
+
+export interface ErrorResponse {
+  error?: Error;
+}
+
+export interface RestResponse extends ErrorResponse {
+  ratelimit: RateLimit;
   body: { [attr: string]: any };
 }
 
@@ -24,16 +31,7 @@ export interface OrderbookL2Response {
   bids: [string, string][];
 }
 
-export interface Error {
-  message: string;
-  name: string;
-}
-
-export interface ErrorResponse {
-  error?: Error;
-}
-
-export interface TradeResponse extends ErrorResponse {
+export interface TradeResponse {
   id: number;
   side: OrderSide;
   price: number;
@@ -41,7 +39,79 @@ export interface TradeResponse extends ErrorResponse {
   timestamp: number;
 }
 
-export interface OrderResponse extends ErrorResponse {
+export interface InstrumentResponse {
+  symbol: string;
+  rootSymbol: string;
+  state: string;
+  typ: string;
+  listing: string;
+  front: string;
+  expiry: string;
+  settle: string;
+  positionCurrency: string;
+  underlying: string;
+  quoteCurrency: string;
+  underlyingSymbol: string;
+  reference: string;
+  referenceSymbol: string;
+  maxOrderQty: number;
+  maxPrice: number;
+  lotSize: number;
+  tickSize: number;
+  settlCurrency: string;
+  isQuanto: boolean;
+  isInverse: boolean;
+  initMargin: number;
+  maintMargin: number;
+  riskLimit: number;
+  riskStep: number;
+  capped: boolean;
+  taxed: boolean;
+  deleverage: boolean;
+  makerFee: boolean;
+  takerFee: boolean;
+  settlementFee: boolean;
+  insuranceFee: boolean;
+  prevClosePrice: number;
+  prevTotalVolume: number;
+  totalVolume: number;
+  volume: number;
+  volume24h: number;
+  prevTotalTurnover: number;
+  totalTurnover: number;
+  turnover: number;
+  turnover24h: number;
+  homeNotional24h: number;
+  foreignNotional24h: number;
+  prevPrice24h: number;
+  vwap: number;
+  highPrice: number;
+  lowPrice: number;
+  lastPrice: number;
+  lastPriceProtected: number;
+  lastTickDirection: string;
+  lastChangePcnt: number;
+  bidPrice: number;
+  midPrice: number;
+  askPrice: number;
+  impactBidPrice: number;
+  impactMidPrice: number;
+  impactAskPrice: number;
+  hasLiquidity: boolean;
+  openInterest: number;
+  openValue: number;
+  fairMethod: string;
+  fairBasisRate: number;
+  fairBasis: number;
+  fairPrice: number;
+  markMethod: string;
+  markPrice: number;
+  indicativeTaxRate: number;
+  indicativeSettlePrice: number;
+  timestamp: string;
+}
+
+export interface OrderResponse {
   orderID: string;
   clOrdID?: string;
   clOrdLinkID?: string;
@@ -77,7 +147,7 @@ export interface OrderResponse extends ErrorResponse {
   timestamp?: string;
 }
 
-export interface OrderbookResponse extends ErrorResponse {
+export interface OrderbookResponse {
   symbol: string;
   id: number;
   side: string;
@@ -85,17 +155,22 @@ export interface OrderbookResponse extends ErrorResponse {
   price: number;
 }
 
-export interface RestOrderResponse {
+export interface RateLimitResponse extends ErrorResponse {
   ratelimit: RateLimit;
+}
+
+export interface RestInstrumentResponse extends RateLimitResponse {
+  instruments: InstrumentResponse[];
+}
+
+export interface RestOrderResponse extends RateLimitResponse {
   order: OrderResponse;
 }
 
-export interface RestOrdersResponse {
-  ratelimit: RateLimit;
+export interface RestOrdersResponse extends RateLimitResponse {
   orders: OrderResponse[];
 }
 
-export interface RestOrderbookL2Response {
-  ratelimit: RateLimit;
+export interface RestOrderbookL2Response extends RateLimitResponse {
   orderbook: OrderbookL2Response;
 }

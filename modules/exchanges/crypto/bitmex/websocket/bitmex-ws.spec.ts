@@ -1,6 +1,3 @@
-// tslint:disable-next-line
-require('dotenv').config();
-
 import { OrderStatus } from 'dripjs-types';
 
 import { testnetConfig } from '../common';

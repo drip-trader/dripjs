@@ -87,13 +87,14 @@ The `orderbook$` output as
 
 ## BitmexRest API
 
-| Method                      | Return                                | Description                |
-| --------------------------- | ------------------------------------- | -------------------------- |
-| createOrder(request: Partial<OrderRequest>)   | `Promise<RestOrderResponse>`     |          |
-| fetchOrder(request: Partial<FetchOrderRequest>): | `Promise<RestOrderResponse>`                                   |     |
-| updateOrder(request: Partial<OrderRequest>)       | `Promise<RestOrderResponse>`            |              |
-| cancelOrder(request: Partial<OrderRequest>)     | `Promise<RestOrderResponse>`                                   |         |
-| fetchOrderbook(request: OrderbookRequest)       | `Promise<RestOrderbookL2Response>` |             |
+| Method                                           | Return                             | Description |
+| ------------------------------------------------ | ---------------------------------- | ----------- |
+| createOrder(request: Partial<OrderRequest>)      | `Promise<RestOrderResponse>`       |             |
+| fetchOrder(request: Partial<FetchOrderRequest>): | `Promise<RestOrderResponse>`       |             |
+| updateOrder(request: Partial<OrderRequest>)      | `Promise<RestOrderResponse>`       |             |
+| cancelOrder(request: Partial<OrderRequest>)      | `Promise<RestOrderResponse>`       |             |
+| fetchOrderbook(request: OrderbookRequest)        | `Promise<RestOrderbookL2Response>` |             |
 
 # api docs
+
 https://drip-trader.github.io/dripjs-docs/

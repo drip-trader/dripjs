@@ -9,6 +9,8 @@ export class Bitmex extends Intelligence {
   rest: BitmexRest;
   ws: BitmexWS;
 
+  // private symbols: Symbol[] = [];
+
   constructor(config: Config) {
     super();
     this.rest = new BitmexRest(config);
@@ -19,7 +21,11 @@ export class Bitmex extends Intelligence {
     this.ws.destroy();
   }
 
-  async getSymbolInfo(symbol: string): Promise<Symbol> {
+  async getSymbols(): Promise<Symbol[]> {
+    return <any>{};
+  }
+
+  async getSymbol(symbol: string): Promise<Symbol> {
     return <any>{};
   }
 

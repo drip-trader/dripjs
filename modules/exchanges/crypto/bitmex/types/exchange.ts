@@ -34,6 +34,8 @@ export enum PublicEndPoints {
   Funding = 'funding',
   /** 产品更新，包括交易量以及报价 */
   Instrument = 'instrument',
+  /** 可交易合约 */
+  InstrumentActive = 'instrument/active',
   /** 每日保险基金的更新 */
   Insurance = 'insurance',
   /** 进入委托列表的强平委托 */
