@@ -37,6 +37,7 @@ export class Bitmex extends Intelligence {
           };
         });
       }
+      // TODO Error handle
     }
 
     return this.symbols;

@@ -46,15 +46,24 @@ export class Rest {
     }
     const baseUrl = this.config.testnet ? restEndpoints.testnet : restEndpoints.production;
     const url = `${baseUrl}${restApiBasePath}${endpoint}${query}`;
-    const response = await Axios(url, request);
 
-    const ratelimit = getRateLimit(<HttpHeaders>response.headers);
-    this.remaining = ratelimit.remaining;
+    try {
+      const response = await Axios(url, request);
 
-    return {
-      ratelimit,
-      body: response.data,
-    };
+      const ratelimit = getRateLimit(<HttpHeaders>response.headers);
+      this.remaining = ratelimit.remaining;
+
+      return {
+        ratelimit,
+        body: response.data,
+      };
+    } catch (error) {
+      return {
+        ratelimit: getRateLimit(<HttpHeaders>error.response.headers),
+        body: {},
+        error: error.response.data.error,
+      };
+    }
   }
 
   private validate(): ErrorResponse {
