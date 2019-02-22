@@ -94,6 +94,7 @@ The `orderbook$` output as
 | updateOrder(request: Partial<OrderRequest>)      | `Promise<RestOrderResponse>`       |             |
 | cancelOrder(request: Partial<OrderRequest>)      | `Promise<RestOrderResponse>`       |             |
 | fetchOrderbook(request: OrderbookRequest)        | `Promise<RestOrderbookL2Response>` |             |
+| fetchInstrument()                                | `Promise<RestInstrumentResponse>`  |             |
 
 # api docs
 

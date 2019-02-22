@@ -124,6 +124,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "bignumber.js": "^8.0.2",
     "dotenv": "^6.2.0",
     "dripjs-common": "^0.1.0",
     "dripjs-types": "^0.1.1",

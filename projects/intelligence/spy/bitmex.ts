@@ -1,5 +1,7 @@
 import { BitmexOrderSide, BitmexRest, BitmexWS, Config } from '@dripjs/exchanges';
 import { Bar, BarRequest, Depth, OrderSide, Symbol, Ticker, Transaction } from '@dripjs/types';
+import { BigNumber } from 'bignumber.js';
+import { Pair } from 'dripjs-types';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -9,7 +11,7 @@ export class Bitmex extends Intelligence {
   rest: BitmexRest;
   ws: BitmexWS;
 
-  // private symbols: Symbol[] = [];
+  private symbols: Symbol[] = [];
 
   constructor(config: Config) {
     super();
@@ -22,11 +24,30 @@ export class Bitmex extends Intelligence {
   }
 
   async getSymbols(): Promise<Symbol[]> {
-    return <any>{};
+    if (this.symbols.length === 0) {
+      const res = await this.rest.fetchInstrument();
+      if (!res.error) {
+        this.symbols = res.instruments.map((o) => {
+          return {
+            name: o.symbol,
+            baseAsset: o.rootSymbol,
+            quoteAsset: o.quoteCurrency,
+            amountPrecision: o.lotSize,
+            pricePrecision: new BigNumber(o.tickSize).dp(),
+          };
+        });
+      }
+    }
+
+    return this.symbols;
   }
 
-  async getSymbol(symbol: string): Promise<Symbol> {
-    return <any>{};
+  async getSymbol(symbol: string): Promise<Pair | undefined> {
+    if (this.symbols.length === 0) {
+      await this.getSymbols();
+    }
+
+    return this.symbols.find((o) => o.name === symbol);
   }
 
   getTicker$(symbol: string): Observable<Ticker> {

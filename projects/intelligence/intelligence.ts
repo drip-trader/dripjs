@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 
 export abstract class Intelligence {
   abstract getSymbols(): Promise<Symbol[]>;
-  abstract getSymbol(symbol: string): Promise<Symbol>;
+  abstract getSymbol(symbol: string): Promise<Symbol | undefined>;
   abstract getTicker$(symbol: string): Observable<Ticker>;
   abstract getBars(request: BarRequest): Promise<Bar[]>;
   abstract getDepth$(symbol: string): Observable<Depth>;
