@@ -1,12 +1,16 @@
-import { BitmexOrderSide, BitmexRest, BitmexWS, Config } from '@dripjs/exchanges';
+import { BitmexOrderSide, BitmexResolution, BitmexRest, BitmexWS, Config } from '@dripjs/exchanges';
 import { Bar, BarRequest, Depth, OrderSide, Ticker, Transaction } from '@dripjs/types';
 import { BigNumber } from 'bignumber.js';
 import { Pair } from 'dripjs-types';
+import * as moment from 'moment';
 import { Observable, zip } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Intelligence } from '../intelligence';
 
+export interface BitmexBarRequest extends BarRequest {
+  resolution: BitmexResolution;
+}
 export class Bitmex extends Intelligence {
   rest: BitmexRest;
   ws: BitmexWS;
@@ -75,8 +79,28 @@ export class Bitmex extends Intelligence {
     this.ws.stopQuote(symbol);
   }
 
-  async getBars(request: BarRequest): Promise<Bar[]> {
-    return <any>{};
+  async getBars(request: BitmexBarRequest): Promise<Bar[]> {
+    const res = await this.rest.fetchBar({
+      symbol: request.symbol,
+      binSize: request.resolution,
+      startTime: moment(request.start).toISOString(),
+      endTime: moment(request.end).toISOString(),
+    });
+    let bars: Bar[] = [];
+    if (res.bars.length > 0) {
+      bars = res.bars.map((o) => {
+        return {
+          time: moment(o.timestamp).unix() * 1000,
+          open: o.open,
+          high: o.high,
+          low: o.low,
+          close: o.close,
+          volume: o.volume,
+        };
+      });
+    }
+
+    return bars;
   }
 
   getDepth$(symbol: string): Observable<Depth> {

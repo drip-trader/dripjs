@@ -129,6 +129,22 @@ export interface InstrumentResponse {
   timestamp: string;
 }
 
+export interface BarResponse {
+  timestamp: string;
+  symbol: string;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+  trades: number;
+  volume: number;
+  vwap: number;
+  lastSize: number;
+  turnover: number;
+  homeNotional: number;
+  foreignNotional: number;
+}
+
 export interface OrderResponse {
   orderID: string;
   clOrdID?: string;
@@ -179,6 +195,10 @@ export interface RateLimitResponse extends ErrorResponse {
 
 export interface RestInstrumentResponse extends RateLimitResponse {
   instruments: InstrumentResponse[];
+}
+
+export interface RestBarResponse extends RateLimitResponse {
+  bars: BarResponse[];
 }
 
 export interface RestOrderResponse extends RateLimitResponse {

@@ -101,6 +101,7 @@ The `orderbook$` output as
 | cancelOrder(request: Partial<OrderRequest>)      | `Promise<RestOrderResponse>`       |             |
 | fetchOrderbook(request: OrderbookRequest)        | `Promise<RestOrderbookL2Response>` |             |
 | fetchInstrument()                                | `Promise<RestInstrumentResponse>`  |             |
+| fetchBar(request: BarRequest)                    | `Promise<RestBarResponse>`         |             |
 
 # api docs
 

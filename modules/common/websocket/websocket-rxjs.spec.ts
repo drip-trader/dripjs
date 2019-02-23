@@ -68,6 +68,7 @@ describe('WebSocketRxJs', () => {
     setTimeout(() => {
       wsRxjs.close();
       wsServer.close();
+      ws.close();
       done();
     }, 1000);
   });

@@ -1,13 +1,16 @@
 import {
+  BarRequest,
   Config,
   FetchOrderRequest,
   OrderRequest,
   OrderbookRequest,
+  RestBarResponse,
   RestInstrumentResponse,
   RestOrderResponse,
   RestOrderbookL2Response,
   RestOrdersResponse,
 } from '../types';
+import { Bar } from './bar';
 import { BitmexRestBase } from './bitmex-rest-base';
 import { Instrument } from './instrument';
 import { Order } from './order';
@@ -17,6 +20,7 @@ export class BitmexRest extends BitmexRestBase {
   private readonly instrument: Instrument;
   private readonly order: Order;
   private readonly orderbook: Orderbook;
+  private readonly bar: Bar;
 
   constructor(config: Config) {
     super(config);
@@ -24,6 +28,7 @@ export class BitmexRest extends BitmexRestBase {
     this.instrument = new Instrument(config);
     this.order = new Order(config);
     this.orderbook = new Orderbook(config);
+    this.bar = new Bar(config);
   }
 
   async createOrder(request: Partial<OrderRequest>): Promise<RestOrderResponse> {
@@ -48,5 +53,9 @@ export class BitmexRest extends BitmexRestBase {
 
   async fetchInstrument(): Promise<RestInstrumentResponse> {
     return this.instrument.fetch();
+  }
+
+  async fetchBar(request: BarRequest): Promise<RestBarResponse> {
+    return this.bar.fetch(request);
   }
 }

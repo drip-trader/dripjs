@@ -1,6 +1,6 @@
 {
   "name": "dripjs",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "一个帮助交易者建立全面完善的交易系统的量化开源平台",
   "engines": {
     "node": ">= 10.15.0",
@@ -128,6 +128,7 @@
     "dotenv": "^6.2.0",
     "dripjs-common": "^0.1.0",
     "dripjs-types": "^0.1.1",
+    "moment": "^2.24.0",
     "qs": "^6.6.0",
     "rxjs": "^6.4.0",
     "ws": "^6.1.3"
