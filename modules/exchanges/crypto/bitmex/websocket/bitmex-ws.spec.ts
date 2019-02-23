@@ -82,7 +82,8 @@ describe('BitmexWS', () => {
     const bitmexWS2 = new BitmexWS(<any>{});
     bitmexWS2.quote$(pair).subscribe((quote) => {
       expect(quote).toBeDefined();
-      bitmexWS.stopQuote(pair);
+      bitmexWS2.stopQuote(pair);
+      bitmexWS2.destroy();
       done();
     });
   });
