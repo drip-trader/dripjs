@@ -14,16 +14,16 @@
 
 # Introduction
 
-**Drip.js** aims to provide an **out-of-the-box quantitative trading program architecture** allows developers to easily create highly available, scalable, and easy to maintain **quantitative trading applications**.
+**Drip.js** aims to provide an out-of-the-box quantitative trading program architecture allows developers to easily create highly available, scalable, and easy to maintain quantitative trading applications.
 
 # Philosophy
 
-Let quantitative developers spend most of their **energy and time** at the core: **the development of trading strategies**.
-**Drip.js** provides everything else, so developers no longer have to worry about **re-creating wheels**
+Let quantitative developers spend most of their energy and time at the core: the development of trading strategies.
+**Drip.js** provides everything else, so developers no longer have to worry about re-creating wheels
 
 # Install
 
-This framework is **fully modular**, you can install it into your program using **the following command**
+This framework is fully modular, you can install it into your program using the following command
 
 ```shell
 npm install dripjs
