@@ -48,7 +48,7 @@ const bitmex = IntelligenceFactory.create(Bitmex, {
   testnet: false,
 });
 bitmex.getTransaction$(pair).subscribe((transaction) => {
-  expect(transaction).toBeDefined();
+  console.log(transaction);
 });
 setTimeout(() => {
   bitmex.stopTransaction(pair);
