@@ -3,7 +3,13 @@ import { OrderSide } from './order';
 export interface Ticker {
   ask: number;
   bid: number;
+  /**
+   * 0 is not supported by the exchange
+   */
   high: number;
+  /**
+   * 0 is not supported by the exchange
+   */
   low: number;
   last: number;
   volume: number;

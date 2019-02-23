@@ -75,17 +75,21 @@ The `orderbook$` output as
 
 ## BitmexWS API
 
-| Method                      | Return                                | Description                |
-| --------------------------- | ------------------------------------- | -------------------------- |
-| orderbook\$(pair: string)   | Observable`<OrderbookL2Response>`     | realtime orderbook         |
-| stopOrderbook(pair: string) | void                                  | stop realtime orderbook    |
-| trade\$(pair: string)       | Observable`<TradeResponse>`           | realtime trade             |
-| stopTrade(pair: string)     | void                                  | stop realtime trade        |
-| quote\$(pair: string)       | Observable`<QuoteResponse>`           | realtime quote             |
-| stopQuote(pair: string)     | void                                  | stop realtime quote        |
-| order\$(pair: string)       | Observable`<OrderResponse|undefined>` | realtime order             |
-| stopOrder(pair: string)     | void                                  | stop realtime order        |
-| destroy()                   | void                                  | close websocket connection |
+| Method                       | Return                                | Description                    |
+| ---------------------------- | ------------------------------------- | ------------------------------ |
+| orderbook\$(pair: string)    | Observable`<OrderbookL2Response>`     | realtime orderbook             |
+| stopOrderbook(pair: string)  | void                                  | stop realtime orderbook        |
+| trade\$(pair: string)        | Observable`<TradeResponse>`           | realtime trade                 |
+| stopTrade(pair: string)      | void                                  | stop realtime trade            |
+| tradeBin1d\$(pair: string)   | Observable`<TradeResponse>`           | realtime 1-day trade bins      |
+| stopTradeBin1d(pair: string) | void                                  | stop realtime 1-day trade bins |
+| quote\$(pair: string)        | Observable`<QuoteResponse>`           | realtime quote                 |
+| stopQuote(pair: string)      | void                                  | stop realtime quote            |
+| settlement\$(pair: string)   | Observable`<SettlementResponse>`      | realtime settlement            |
+| stopSettlement(pair: string) | void                                  | stop realtime settlement       |
+| order\$(pair: string)        | Observable`<OrderResponse|undefined>` | realtime order                 |
+| stopOrder(pair: string)      | void                                  | stop realtime order            |
+| destroy()                    | void                                  | close websocket connection     |
 
 ## BitmexRest API
 

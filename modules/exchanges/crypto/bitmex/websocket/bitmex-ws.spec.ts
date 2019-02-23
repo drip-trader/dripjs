@@ -28,10 +28,26 @@ describe('BitmexWS', () => {
       done();
     });
   });
+  it('subscribe tradeBin1d', (done) => {
+    bitmexWS.tradeBin1d$(pair).subscribe((trade) => {
+      expect(trade).toBeDefined();
+    });
+    setTimeout(() => {
+      bitmexWS.stopTradeBin1d(pair);
+      done();
+    }, 1000);
+  });
   it('subscribe quote', (done) => {
     bitmexWS.quote$(pair).subscribe((quote) => {
       expect(quote).toBeDefined();
       bitmexWS.stopQuote(pair);
+      done();
+    });
+  });
+  it('subscribe settlement', (done) => {
+    bitmexWS.settlement$(pair).subscribe((settlement) => {
+      expect(settlement).toBeDefined();
+      bitmexWS.stopSettlement(pair);
       done();
     });
   });
@@ -61,5 +77,13 @@ describe('BitmexWS', () => {
       });
       done();
     }, 3000);
+  });
+  it('config is null', (done) => {
+    const bitmexWS2 = new BitmexWS(<any>{});
+    bitmexWS2.quote$(pair).subscribe((quote) => {
+      expect(quote).toBeDefined();
+      bitmexWS.stopQuote(pair);
+      done();
+    });
   });
 });

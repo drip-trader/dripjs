@@ -32,7 +32,6 @@ export interface OrderbookL2Response {
 }
 
 export interface TradeResponse {
-  id: number;
   side: OrderSide;
   price: number;
   amount: number;
@@ -47,6 +46,17 @@ export interface QuoteResponse {
   askPrice: number;
 }
 
+export interface SettlementResponse {
+  timestamp: number;
+  symbol: string;
+  settlementType: string;
+  settledPrice: number;
+  optionStrikePrice: any;
+  optionUnderlyingPrice: any;
+  bankrupt: any;
+  taxBase: any;
+  taxRate: any;
+}
 export interface InstrumentResponse {
   symbol: string;
   rootSymbol: string;

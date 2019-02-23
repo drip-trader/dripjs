@@ -26,14 +26,14 @@ export class Trade {
     this.ws.unsubscribe(channel);
   }
 
-  tradeBucketed$(pair: string): Observable<TradeResponse> {
-    const channel = getTradeChannel(pair, PublicEndPoints.TradeBucketed);
+  tradeBin1d$(pair: string): Observable<TradeResponse> {
+    const channel = getTradeChannel(pair, PublicEndPoints.TradeBin1d);
 
     return this.ws.subscribe<TradeSource>(channel).pipe(map((wsData) => transform(wsData.data[0])));
   }
 
-  stopTradeBucketed(pair: string): void {
-    const channel = getTradeChannel(pair, PublicEndPoints.TradeBucketed);
+  stopTradeBin1d(pair: string): void {
+    const channel = getTradeChannel(pair, PublicEndPoints.TradeBin1d);
     this.ws.unsubscribe(channel);
   }
 }

@@ -1,31 +1,59 @@
-import { testnetConfig } from '@dripjs/testing';
+import { realConfig } from '@dripjs/testing';
 
+import { Spy } from './factory';
 import { Bitmex } from './spy';
 import { Factory } from '.';
 
 describe('Intelligence factory', () => {
   describe('Spy bitmex', () => {
+    let bitmex: Spy;
     let pair = 'XBTUSD';
+
+    beforeAll(() => {
+      bitmex = Factory.create(Bitmex, realConfig);
+    });
+
+    afterAll(() => {
+      bitmex.destory();
+    });
+
     it('bitmex getTransactions$', (done) => {
-      const bitmex = Factory.create(Bitmex, testnetConfig);
       bitmex.getTransactions$(pair).subscribe((transactions) => {
         expect(transactions).toBeDefined();
       });
       setTimeout(() => {
         bitmex.stopTransactions(pair);
-        bitmex.destory();
+        done();
+      }, 2000);
+    });
+
+    it('bitmex getTicker$', async (done) => {
+      bitmex.getTicker$(pair).subscribe((res) => {
+        expect(res.time).toBeGreaterThan(0);
+      });
+      setTimeout(() => {
+        bitmex.stopTicker(pair);
+        done();
+      }, 2000);
+    });
+
+    it('bitmex getDepth$', async (done) => {
+      bitmex.getDepth$(pair).subscribe((res) => {
+        expect(res.asks.length).toBeGreaterThan(20);
+        expect(res.bids.length).toBeGreaterThan(20);
+      });
+      setTimeout(() => {
+        bitmex.stopDepth(pair);
         done();
       }, 2000);
     });
 
     it('bitmex getSymbols', async () => {
-      const bitmex = Factory.create(Bitmex, testnetConfig);
       const symbols = await bitmex.getSymbols();
       expect(symbols.length).toBeGreaterThan(0);
     });
 
     it('bitmex getSymbol', async () => {
-      const bitmex = Factory.create(Bitmex, testnetConfig);
       pair = 'ETHUSD';
       const symbol = await bitmex.getSymbol(pair);
       expect(symbol!.name).toEqual(pair);
@@ -35,16 +63,4 @@ describe('Intelligence factory', () => {
       expect(symbol!.pricePrecision).toEqual(2);
     });
   });
-  /*it('create bitmex', (done) => {
-    const bitmex = Factory.create(Bitmex, realConfig);
-    bitmex.getTransactions$(pair).subscribe((transactions) => {
-      expect(transactions).toBeDefined();
-      bitmex.stopTransactions(pair);
-      bitmex.destory();
-      done();
-    });
-    setTimeout(() => {
-      done();
-    }, 40000);
-  });*/
 });

@@ -3,7 +3,6 @@ import { TradeSource } from './types';
 
 export function transform(source: TradeSource): TradeResponse {
   return {
-    id: 1,
     side: source.side,
     price: source.price,
     amount: source.size,

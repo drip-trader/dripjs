@@ -1,10 +1,11 @@
 import { Observable } from 'rxjs';
 
-import { Config, OrderResponse, OrderbookL2Response, QuoteResponse, TradeResponse } from '../types';
+import { Config, OrderResponse, OrderbookL2Response, QuoteResponse, SettlementResponse, TradeResponse } from '../types';
 import { BitmexWsBase } from './bitmex-ws-base';
 import { Order } from './order';
 import { Orderbook } from './orderbook';
 import { Quote } from './quote';
+import { Settlement } from './settlement';
 import { Trade } from './trade';
 import { Websocket } from './websocket';
 
@@ -14,6 +15,7 @@ export class BitmexWS extends BitmexWsBase {
   private readonly quote: Quote;
   private readonly trade: Trade;
   private readonly order: Order;
+  private readonly settlement: Settlement;
 
   constructor(config?: Config) {
     super(config);
@@ -23,6 +25,7 @@ export class BitmexWS extends BitmexWsBase {
     this.quote = new Quote(this.ws);
     this.trade = new Trade(this.ws);
     this.order = new Order(this.ws);
+    this.settlement = new Settlement(this.ws);
   }
 
   // realtime orderbook
@@ -44,6 +47,15 @@ export class BitmexWS extends BitmexWsBase {
     this.trade.stopTrade(pair);
   }
 
+  tradeBin1d$(pair: string): Observable<TradeResponse> {
+    return this.trade.tradeBin1d$(pair);
+  }
+
+  // stop realtime trade
+  stopTradeBin1d(pair: string): void {
+    this.trade.stopTradeBin1d(pair);
+  }
+
   quote$(pair: string): Observable<QuoteResponse> {
     return this.quote.quote$(pair);
   }
@@ -51,6 +63,15 @@ export class BitmexWS extends BitmexWsBase {
   // stop realtime quote
   stopQuote(pair: string): void {
     this.quote.stopQuote(pair);
+  }
+
+  settlement$(pair: string): Observable<SettlementResponse> {
+    return this.settlement.settlement$(pair);
+  }
+
+  // stop realtime settlement
+  stopSettlement(pair: string): void {
+    this.settlement.stopSettlement(pair);
   }
 
   order$(pair: string): Observable<OrderResponse | undefined> {

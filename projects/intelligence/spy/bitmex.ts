@@ -1,8 +1,8 @@
 import { BitmexOrderSide, BitmexRest, BitmexWS, Config } from '@dripjs/exchanges';
-import { Bar, BarRequest, Depth, OrderSide, Symbol, Ticker, Transaction } from '@dripjs/types';
+import { Bar, BarRequest, Depth, OrderSide, Ticker, Transaction } from '@dripjs/types';
 import { BigNumber } from 'bignumber.js';
 import { Pair } from 'dripjs-types';
-import { Observable } from 'rxjs';
+import { Observable, zip } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Intelligence } from '../intelligence';
@@ -52,19 +52,27 @@ export class Bitmex extends Intelligence {
   }
 
   getTicker$(symbol: string): Observable<Ticker> {
-    return this.ws.trade$(symbol).pipe(
-      map((trade) => {
-        return <Ticker>{
-          /*ask: trade.price;
-          bid: number;
-          high: number;
-          low: number;
-          last: trade.price,
-          volume: trade.amount,
-          time: trade.timestamp*/
+    const trade$ = this.ws.trade$(symbol);
+    const quote$ = this.ws.quote$(symbol);
+
+    return zip(trade$, quote$).pipe(
+      map((res) => {
+        return {
+          ask: res[1].askPrice,
+          bid: res[1].bidPrice,
+          high: 0,
+          low: 0,
+          last: res[0].price,
+          volume: res[0].amount,
+          time: res[0].timestamp,
         };
       }),
     );
+  }
+
+  stopTicker(symbol: string): void {
+    this.ws.stopTrade(symbol);
+    this.ws.stopQuote(symbol);
   }
 
   async getBars(request: BarRequest): Promise<Bar[]> {
@@ -82,7 +90,7 @@ export class Bitmex extends Intelligence {
     );
   }
 
-  stopDepths(symbol: string): void {
+  stopDepth(symbol: string): void {
     this.ws.stopOrderbook(symbol);
   }
 
