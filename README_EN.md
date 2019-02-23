@@ -1,6 +1,6 @@
-<H1><p align="center">Drip.js</p></H1>
-<p align="center">A quantitative trading open source platform that helps traders build a comprehensive trading system</p>
-<p align="center">
+<H1><p  align="center">Drip.js</p></H1>
+<p  align="center">A progressive Node.js Open source quantitative framework for building efficient and scalable quantitative trading applications</p>
+<p  align="center">
 <a href="https://www.npmjs.com/package/dripjs"><img src="https://img.shields.io/npm/v/dripjs.svg" alt="NPM Version" />
 <a href="https://www.npmjs.com/package/dripjs"><img src="https://img.shields.io/badge/license-GPL_3.0-green.svg" alt="Package License" /></a>
 <a href="https://www.npmjs.com/package/dripjs"><img src="https://img.shields.io/npm/dm/dripjs.svg" alt="NPM Downloads" /></a>
@@ -9,3 +9,75 @@
 <a href="https://gitter.im/drip-js/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img src="https://badges.gitter.im/drip-js.svg" alt="Gitter" /></a>
 <a  href="https://www.paypal.me/zlq4863947"><img  src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
 </p>
+
+查看<a href="https://github.com/zlq4863947/dripjs/blob/master/README.md">中文</a>
+
+# Introduction
+
+**Drip.js** aims to provide an **out-of-the-box quantitative trading program architecture** allows developers to easily create highly available, scalable, and easy to maintain **quantitative trading applications**.
+
+# Philosophy
+
+Let quantitative developers spend most of their **energy and time** at the core: **the development of trading strategies**.
+**Drip.js** provides everything else, so developers no longer have to worry about **re-creating wheels**
+
+# Install
+
+This framework is **fully modular**, you can install it into your program using **the following command**
+
+```shell
+npm install dripjs
+```
+
+If you only want to use a submodule in the framework
+
+```shell
+npm install dripjs-bitmex
+```
+
+# Use
+
+```typescript
+import { IntelligenceFactory } from 'dripjs';
+
+const pair = 'XBTUSD';
+const bitmex = IntelligenceFactory.create(Bitmex, {
+  apiKey: `xx`,
+  apiSecret: `zz`,
+  testnet: false,
+});
+bitmex.getTransaction$(pair).subscribe((transaction) => {
+  expect(transaction).toBeDefined();
+});
+setTimeout(() => {
+  bitmex.stopTransaction(pair);
+  bitmex.destory();
+}, 2000);
+```
+
+## Module list
+
+| Module Name                                                  | Description                                                                        |
+| ------------------------------------------------------------ | ---------------------------------------------------------------------------------- |
+| [dripjs](https://www.npmjs.com/package/dripjs)               | Frame main module, all submodules can be used                                      |
+| [dripjs-common](https://www.npmjs.com/package/dripjs-common) | General function module                                                            |
+| [dripjs-types](https://www.npmjs.com/package/dripjs-types)   | Type definition module                                                             |
+| [dripjs-bitmex](https://www.npmjs.com/package/dripjs-bitmex) | Bitmex trading interface module (including rest interface and websocket interface) |
+
+## Reference document
+
+- Design [document](https://github.com/zlq4863947/dripjs/tree/master/docs)
+- Interface [document](https://drip-trader.github.io/dripjs-docs)
+
+## Framework feature
+
+> This framework is under development, and the following functions are tentatively implemented. Other feature will be added in the future.
+
+- data collection
+  - Via exchanges, databases (when backtesting)
+- Data local save
+  - Convenient for future testing
+- Backtest
+- Generate a strategy model
+- Transaction rating
+- Real trading

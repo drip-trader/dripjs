@@ -1,5 +1,5 @@
 <H1><p  align="center">Drip.js</p></H1>
-<p  align="center">一个帮助交易者建立全面完善的交易系统的量化交易开源平台</p>
+<p  align="center">用于构架高效且可扩展的交易程序的渐进式Node.js开源量化框架</p>
 <p  align="center">
 <a href="https://www.npmjs.com/package/dripjs"><img src="https://img.shields.io/npm/v/dripjs.svg" alt="NPM Version" />
 <a href="https://www.npmjs.com/package/dripjs"><img src="https://img.shields.io/badge/license-GPL_3.0-green.svg" alt="Package License" /></a>
@@ -9,3 +9,75 @@
 <a href="https://gitter.im/drip-js/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img src="https://badges.gitter.im/drip-js.svg" alt="Gitter" /></a>
 <a  href="https://www.paypal.me/zlq4863947"><img  src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
 </p>
+
+see the <a href="https://github.com/zlq4863947/dripjs/blob/master/README_EN.md">English</a>
+
+# 简介
+
+**Drip.js**旨在提供一个**开箱即用的量化交易程序体系架构**，允许开发者轻松创建高可用、可扩展且易于维护的**量化交易程序**。
+
+# 设计哲学
+
+让量化开发者将大部分**精力、时间**花费在核心:**交易策略的开发**上。
+**Drip.js**提供除此之外的**一切**，使得**开发者**不必再为**重复造轮子**而苦恼
+
+# 安装
+
+由于此框架**全部模块化**，可以使用**下面命令**安装到您的程序中
+
+```shell
+npm install dripjs
+```
+
+如果只想用框架中的某子模块
+
+```shell
+// 假设想要使用bitmex api模块时
+npm install dripjs-bitmex
+```
+
+# 使用
+
+```typescript
+import { IntelligenceFactory } from 'dripjs';
+
+const pair = 'XBTUSD';
+const bitmex = IntelligenceFactory.create(Bitmex, {
+  apiKey: `xx`,
+  apiSecret: `zz`,
+  testnet: false,
+});
+bitmex.getTransaction$(pair).subscribe((transaction) => {
+  expect(transaction).toBeDefined();
+});
+setTimeout(() => {
+  bitmex.stopTransaction(pair);
+  bitmex.destory();
+}, 2000);
+```
+
+## 模块列表
+
+| 模块名                                                       | 描述                                                 |
+| ------------------------------------------------------------ | ---------------------------------------------------- |
+| [dripjs](https://www.npmjs.com/package/dripjs)               | 框架主模块，可使用全部子模块                         |
+| [dripjs-common](https://www.npmjs.com/package/dripjs-common) | 通用函数模块                                         |
+| [dripjs-types](https://www.npmjs.com/package/dripjs-types)   | 类型定义模块                                         |
+| [dripjs-bitmex](https://www.npmjs.com/package/dripjs-bitmex) | bitmex 交易接口模块(包含 rest 接口和 websocket 接口) |
+
+## 参考文档
+
+- 设计[文档](https://github.com/zlq4863947/dripjs/tree/master/docs)
+- 接口[文档](https://drip-trader.github.io/dripjs-docs)
+
+## 框架功能
+
+> 此框架正在开发中，暂定实现如下功能，以后会陆续增加其他功能
+
+- 数据获取 - 通过交易所、数据库(回测时)
+- 数据本地保存
+  - 方便日后回测
+- 回测
+- 生成策略模型
+- 交易评级
+- 实盘交易
