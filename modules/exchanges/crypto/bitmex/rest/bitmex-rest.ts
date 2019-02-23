@@ -1,5 +1,5 @@
 import {
-  BarRequest,
+  BitmexRestBarRequest,
   Config,
   FetchOrderRequest,
   OrderRequest,
@@ -55,7 +55,7 @@ export class BitmexRest extends BitmexRestBase {
     return this.instrument.fetch();
   }
 
-  async fetchBar(request: BarRequest): Promise<RestBarResponse> {
+  async fetchBar(request: BitmexRestBarRequest): Promise<RestBarResponse> {
     return this.bar.fetch(request);
   }
 }

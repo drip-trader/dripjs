@@ -44,7 +44,7 @@ export enum BitmexResolution {
   day = '1d',
 }
 
-export interface BarRequest {
+export interface BitmexRestBarRequest {
   binSize: BitmexResolution;
   symbol: string;
   count?: number;

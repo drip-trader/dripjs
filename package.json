@@ -15,6 +15,7 @@
     "build:preprocess": "rm -rf dist",
     "build:postprocess": "cp package.json README.md README_EN.md dist",
     "build:typedoc": "typedoc --tsconfig ./tsconfig.typedoc.json",
+    "cp:doc": "rm -rf type-docs && yarn build:typedoc && cp -rf type-docs/* ../dripjs-docs",
     "coverage": "jest -c jest.config.js --collectCoverage",
     "ci:coverage": "jest -c jest.config.js --coverage --coverageReporters=text-lcov | coveralls",
     "dev:bitmex": "ts-node --files -r tsconfig-paths/register ./projects/intelligence/main.ts",

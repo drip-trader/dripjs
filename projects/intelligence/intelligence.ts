@@ -9,6 +9,6 @@ export abstract class Intelligence {
   abstract getBars(request: BarRequest): Promise<Bar[]>;
   abstract getDepth$(symbol: string): Observable<Depth>;
   abstract stopDepth(symbol: string): void;
-  abstract getTransactions$(symbol: string): Observable<Transaction>;
-  abstract stopTransactions(symbol: string): void;
+  abstract getTransaction$(symbol: string): Observable<Transaction>;
+  abstract stopTransaction(symbol: string): void;
 }

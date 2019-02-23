@@ -118,7 +118,7 @@ export class Bitmex extends Intelligence {
     this.ws.stopOrderbook(symbol);
   }
 
-  getTransactions$(symbol: string): Observable<Transaction> {
+  getTransaction$(symbol: string): Observable<Transaction> {
     return this.ws.trade$(symbol).pipe(
       map((res) => {
         return <Transaction>{
@@ -131,7 +131,7 @@ export class Bitmex extends Intelligence {
     );
   }
 
-  stopTransactions(symbol: string): void {
+  stopTransaction(symbol: string): void {
     this.ws.stopTrade(symbol);
   }
 }

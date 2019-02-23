@@ -1,6 +1,6 @@
 import { HttpMethod } from 'dripjs-types';
 
-import { BarRequest, BarResponse, Config, PublicEndPoints, RestBarResponse, RestResponse } from '../../types';
+import { BarResponse, BitmexRestBarRequest, Config, PublicEndPoints, RestBarResponse, RestResponse } from '../../types';
 import { Rest } from '../rest';
 
 export class Bar extends Rest {
@@ -10,7 +10,7 @@ export class Bar extends Rest {
     super(config);
   }
 
-  async fetch(request: BarRequest): Promise<RestBarResponse> {
+  async fetch(request: BitmexRestBarRequest): Promise<RestBarResponse> {
     const res = await this.request(HttpMethod.GET, request);
 
     return {

@@ -1,9 +1,9 @@
 import { BitmexResolution } from '@dripjs/exchanges';
 import { realConfig } from '@dripjs/testing';
 
-import { Spy } from './factory';
+import { Spy } from './intelligence-factory';
 import { Bitmex } from './spy';
-import { Factory } from '.';
+import { IntelligenceFactory } from '.';
 
 describe('Intelligence factory', () => {
   describe('Spy bitmex', () => {
@@ -11,19 +11,19 @@ describe('Intelligence factory', () => {
     let pair = 'XBTUSD';
 
     beforeAll(() => {
-      bitmex = Factory.create(Bitmex, realConfig);
+      bitmex = IntelligenceFactory.create(Bitmex, realConfig);
     });
 
     afterAll(() => {
       bitmex.destory();
     });
 
-    it('bitmex getTransactions$', (done) => {
-      bitmex.getTransactions$(pair).subscribe((transactions) => {
-        expect(transactions).toBeDefined();
+    it('bitmex getTransaction$', (done) => {
+      bitmex.getTransaction$(pair).subscribe((transaction) => {
+        expect(transaction).toBeDefined();
       });
       setTimeout(() => {
-        bitmex.stopTransactions(pair);
+        bitmex.stopTransaction(pair);
         done();
       }, 2000);
     });
