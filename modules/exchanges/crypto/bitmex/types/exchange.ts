@@ -62,6 +62,7 @@ export enum PublicEndPoints {
   Settlement = 'settlement',
   /** 实时交易 */
   Trade = 'trade',
+  TradeBucketed = 'trade/bucketed',
   /** 每分钟交易数据 */
   TradeBin1m = 'tradeBin1m',
   /** 每5分钟交易数据 */

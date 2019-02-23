@@ -1,15 +1,17 @@
 import { Observable } from 'rxjs';
 
-import { Config, OrderResponse, OrderbookL2Response, TradeResponse } from '../types';
+import { Config, OrderResponse, OrderbookL2Response, QuoteResponse, TradeResponse } from '../types';
 import { BitmexWsBase } from './bitmex-ws-base';
 import { Order } from './order';
 import { Orderbook } from './orderbook';
+import { Quote } from './quote';
 import { Trade } from './trade';
 import { Websocket } from './websocket';
 
 export class BitmexWS extends BitmexWsBase {
   private readonly ws: Websocket;
   private readonly orderbook: Orderbook;
+  private readonly quote: Quote;
   private readonly trade: Trade;
   private readonly order: Order;
 
@@ -18,6 +20,7 @@ export class BitmexWS extends BitmexWsBase {
 
     this.ws = new Websocket(config!);
     this.orderbook = new Orderbook(this.ws);
+    this.quote = new Quote(this.ws);
     this.trade = new Trade(this.ws);
     this.order = new Order(this.ws);
   }
@@ -39,6 +42,15 @@ export class BitmexWS extends BitmexWsBase {
   // stop realtime trade
   stopTrade(pair: string): void {
     this.trade.stopTrade(pair);
+  }
+
+  quote$(pair: string): Observable<QuoteResponse> {
+    return this.quote.quote$(pair);
+  }
+
+  // stop realtime quote
+  stopQuote(pair: string): void {
+    this.quote.stopQuote(pair);
   }
 
   order$(pair: string): Observable<OrderResponse | undefined> {

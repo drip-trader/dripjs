@@ -81,6 +81,8 @@ The `orderbook$` output as
 | stopOrderbook(pair: string) | void                                  | stop realtime orderbook    |
 | trade\$(pair: string)       | Observable`<TradeResponse>`           | realtime trade             |
 | stopTrade(pair: string)     | void                                  | stop realtime trade        |
+| quote\$(pair: string)       | Observable`<QuoteResponse>`           | realtime quote             |
+| stopQuote(pair: string)     | void                                  | stop realtime quote        |
 | order\$(pair: string)       | Observable`<OrderResponse|undefined>` | realtime order             |
 | stopOrder(pair: string)     | void                                  | stop realtime order        |
 | destroy()                   | void                                  | close websocket connection |

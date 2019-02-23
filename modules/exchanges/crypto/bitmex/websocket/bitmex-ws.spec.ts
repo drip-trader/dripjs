@@ -28,6 +28,13 @@ describe('BitmexWS', () => {
       done();
     });
   });
+  it('subscribe quote', (done) => {
+    bitmexWS.quote$(pair).subscribe((quote) => {
+      expect(quote).toBeDefined();
+      bitmexWS.stopQuote(pair);
+      done();
+    });
+  });
   it('subscribe order', async (done) => {
     bitmexWS.order$(pair).subscribe((order) => {
       expect(order).toBeDefined();

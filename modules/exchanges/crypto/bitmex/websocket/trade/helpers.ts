@@ -1,4 +1,4 @@
-import { PublicEndPoints, TradeResponse } from '../../types';
+import { PrivateEndPoints, PublicEndPoints, TradeResponse } from '../../types';
 import { TradeSource } from './types';
 
 export function transform(source: TradeSource): TradeResponse {
@@ -11,6 +11,6 @@ export function transform(source: TradeSource): TradeResponse {
   };
 }
 
-export function getTradeChannel(pair: string): string {
-  return `${PublicEndPoints.Trade}:${pair}`;
+export function getTradeChannel(pair: string, endPoint?: PublicEndPoints | PrivateEndPoints): string {
+  return `${endPoint ? endPoint : PublicEndPoints.Trade}:${pair}`;
 }

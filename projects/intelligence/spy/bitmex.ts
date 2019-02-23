@@ -54,7 +54,15 @@ export class Bitmex extends Intelligence {
   getTicker$(symbol: string): Observable<Ticker> {
     return this.ws.trade$(symbol).pipe(
       map((trade) => {
-        return <Ticker>{};
+        return <Ticker>{
+          /*ask: trade.price;
+          bid: number;
+          high: number;
+          low: number;
+          last: trade.price,
+          volume: trade.amount,
+          time: trade.timestamp*/
+        };
       }),
     );
   }

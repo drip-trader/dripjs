@@ -1,6 +1,7 @@
-import { EMPTY, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { PublicEndPoints } from '../../types';
 import { TradeResponse } from '../../types/response';
 import { Websocket } from '../websocket';
 import { getTradeChannel, transform } from './helpers';
@@ -22,6 +23,17 @@ export class Trade {
 
   stopTrade(pair: string): void {
     const channel = getTradeChannel(pair);
+    this.ws.unsubscribe(channel);
+  }
+
+  tradeBucketed$(pair: string): Observable<TradeResponse> {
+    const channel = getTradeChannel(pair, PublicEndPoints.TradeBucketed);
+
+    return this.ws.subscribe<TradeSource>(channel).pipe(map((wsData) => transform(wsData.data[0])));
+  }
+
+  stopTradeBucketed(pair: string): void {
+    const channel = getTradeChannel(pair, PublicEndPoints.TradeBucketed);
     this.ws.unsubscribe(channel);
   }
 }

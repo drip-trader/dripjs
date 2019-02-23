@@ -7,6 +7,7 @@ export interface Ticker {
   low: number;
   last: number;
   volume: number;
+  time: number;
 }
 
 export interface Bar {

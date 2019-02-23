@@ -39,6 +39,14 @@ export interface TradeResponse {
   timestamp: number;
 }
 
+export interface QuoteResponse {
+  timestamp: number;
+  bidAmount: number;
+  bidPrice: number;
+  askAmount: number;
+  askPrice: number;
+}
+
 export interface InstrumentResponse {
   symbol: string;
   rootSymbol: string;
