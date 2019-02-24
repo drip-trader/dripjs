@@ -15,4 +15,4 @@ intelligence 提供各种商品的情报获取。
 
 ## 结构图
 
-<p align="center"><img src="../assets/image/intelligence_diagram.png"></p>
+<p align="center"><img src="../../assets/image/intelligence_diagram.png"></p>
