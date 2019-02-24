@@ -1,5 +1,7 @@
 <p align="center">
-  <img src="assets/image/dripjs.svg" width="320" alt="Dripjs Logo" />
+  <a href="https://github.com/zlq4863947/dripjs" target="blank">
+    <img src="https://cdn.jsdelivr.net/npm/dripjs/dripjs.svg" width="320" alt="Dripjs Logo" />
+  </a>
 </p>
 <p align="center">A progressive Node.js Open source quantitative framework for building efficient and scalable quantitative trading applications</p>
 <p align="center">

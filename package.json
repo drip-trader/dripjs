@@ -1,6 +1,6 @@
 {
   "name": "dripjs",
-  "version": "0.0.19",
+  "version": "0.0.22",
   "description": "用于构架高效且可扩展的交易程序的渐进式Node.js开源量化框架",
   "engines": {
     "node": ">= 10.15.0",
@@ -13,7 +13,7 @@
     "bdd": "yarn jest --watch --onlyChanged",
     "build:prod": "yarn build:preprocess && yarn tsc:app && yarn build:postprocess",
     "build:preprocess": "rm -rf dist",
-    "build:postprocess": "cp package.json README.md README_EN.md dist",
+    "build:postprocess": "cp package.json README.md README_EN.md dripjs.svg dist",
     "build:typedoc": "rm -rf type-docs && typedoc --tsconfig ./tsconfig.typedoc.json",
     "cp:docs": "yarn build:typedoc && cp -rf type-docs/* ../dripjs-docs",
     "coverage": "jest -c jest.config.js --collectCoverage",
