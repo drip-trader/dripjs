@@ -103,6 +103,6 @@ The `orderbook$` output as
 | fetchInstrument()                                          | `Promise<BitmexRestInstrumentResponse>` |             |
 | fetchBar(request: BitmexRestBarRequest)                    | `Promise<BitmexRestBarResponse>`        |             |
 
-# api docs
+## api docs
 
-https://drip-trader.github.io/dripjs-docs/
+see <https://drip-trader.github.io/dripjs-docs>
