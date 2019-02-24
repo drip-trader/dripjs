@@ -5,10 +5,10 @@ import { testnetConfig } from '../common';
 import {
   BitmexOrderSide,
   BitmexOrderType,
+  BitmexResolution,
   BitmexRestFetchOrderRequest,
   BitmexRestOrderRequest,
   BitmexRestOrderbookRequest,
-  BitmexResolution,
 } from '../types';
 import { BitmexRest } from './bitmex-rest';
 
