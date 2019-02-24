@@ -1,4 +1,6 @@
-<H1><p align="center">Drip.js</p></H1>
+<p align="center">
+  <a href="https://github.com/zlq4863947/dripjs" target="blank"><img src="assets/image/dripjs.svg" width="320" alt="Dripjs Logo" /></a>
+</p>
 <p align="center">用于构架高效且可扩展的交易程序的渐进式Node.js开源量化框架</p>
 <p align="center">
 <a href="https://www.npmjs.com/package/dripjs"><img src="https://img.shields.io/npm/v/dripjs.svg" alt="NPM Version" />
