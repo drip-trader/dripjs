@@ -1,7 +1,13 @@
 import { OrderStatus } from 'dripjs-types';
 
 import { testnetConfig } from '../common';
-import { FetchOrderRequest, OrderRequest, BitmexOrderSide as OrderSide, OrderType, OrderbookRequest } from '../types';
+import {
+  BitmexOrderSide,
+  BitmexOrderType,
+  BitmexRestFetchOrderRequest,
+  BitmexRestOrderRequest,
+  BitmexRestOrderbookRequest,
+} from '../types';
 import { BitmexRest } from './bitmex-rest';
 
 describe('Bitmex Rest', () => {
@@ -11,7 +17,7 @@ describe('Bitmex Rest', () => {
   let price: number;
 
   it('fetch orderbook', async () => {
-    const request: OrderbookRequest = {
+    const request: BitmexRestOrderbookRequest = {
       symbol: pair,
       depth: 25,
     };
@@ -24,12 +30,12 @@ describe('Bitmex Rest', () => {
   });
 
   it('create order', async () => {
-    const request: Partial<OrderRequest> = {
+    const request: Partial<BitmexRestOrderRequest> = {
       symbol: pair,
-      side: OrderSide.Buy,
+      side: BitmexOrderSide.Buy,
       price,
       orderQty: 25,
-      ordType: OrderType.Limit,
+      ordType: BitmexOrderType.Limit,
     };
 
     const res = await bitmexRest.createOrder(request);
@@ -39,7 +45,7 @@ describe('Bitmex Rest', () => {
   });
 
   it('fetch order', async () => {
-    const request: Partial<FetchOrderRequest> = {
+    const request: Partial<BitmexRestFetchOrderRequest> = {
       symbol: pair,
       filter: {
         orderID: orderId,
@@ -52,7 +58,7 @@ describe('Bitmex Rest', () => {
   });
 
   it('update order', async () => {
-    const request: Partial<OrderRequest> = {
+    const request: Partial<BitmexRestOrderRequest> = {
       orderID: orderId,
       price: price - 1,
     };
@@ -63,7 +69,7 @@ describe('Bitmex Rest', () => {
   });
 
   it('cancel order', async () => {
-    const request: Partial<OrderRequest> = {
+    const request: Partial<BitmexRestOrderRequest> = {
       orderID: orderId,
     };
     const res = await bitmexRest.cancelOrder(request);
@@ -73,12 +79,12 @@ describe('Bitmex Rest', () => {
 
   it('config is null', async () => {
     const bitmexRest2 = new BitmexRest(<any>{});
-    const request: Partial<OrderRequest> = {
+    const request: Partial<BitmexRestOrderRequest> = {
       symbol: pair,
-      side: OrderSide.Buy,
+      side: BitmexOrderSide.Buy,
       price,
       orderQty: 25,
-      ordType: OrderType.Limit,
+      ordType: BitmexOrderType.Limit,
     };
 
     const res = await bitmexRest2.createOrder(request);

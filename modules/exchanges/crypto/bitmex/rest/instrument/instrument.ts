@@ -1,33 +1,21 @@
 import { HttpMethod } from 'dripjs-types';
 
-import { getRateLimit } from '../../common';
-import {
-  Config,
-  FetchOrderRequest,
-  InstrumentResponse,
-  OrderRequest,
-  OrderResponse,
-  PublicEndPoints,
-  RestInstrumentResponse,
-  RestOrderResponse,
-  RestOrdersResponse,
-  RestResponse,
-} from '../../types';
+import { BitmexConfig, BitmexInstrumentResponse, BitmexPublicEndPoints, BitmexRestInstrumentResponse, RestResponse } from '../../types';
 import { Rest } from '../rest';
 
 export class Instrument extends Rest {
-  private readonly endpoint = PublicEndPoints.InstrumentActive;
+  private readonly endpoint = BitmexPublicEndPoints.InstrumentActive;
 
-  constructor(config: Config) {
+  constructor(config: BitmexConfig) {
     super(config);
   }
 
-  async fetch(): Promise<RestInstrumentResponse> {
+  async fetch(): Promise<BitmexRestInstrumentResponse> {
     const res = await this.request(HttpMethod.GET, {});
 
     return {
       ratelimit: res.ratelimit,
-      instruments: <InstrumentResponse[]>res.body,
+      instruments: <BitmexInstrumentResponse[]>res.body,
       error: res.error,
     };
   }

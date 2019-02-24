@@ -1,7 +1,7 @@
-import { PublicEndPoints, SettlementResponse } from '../../types';
+import { BitmexPublicEndPoints, BitmexSettlementResponse } from '../../types';
 import { SettlementSource } from './types';
 
-export function transform(source: SettlementSource): SettlementResponse {
+export function transform(source: SettlementSource): BitmexSettlementResponse {
   return {
     ...source,
     timestamp: new Date(source.timestamp).getTime(),
@@ -9,5 +9,5 @@ export function transform(source: SettlementSource): SettlementResponse {
 }
 
 export function getTradeChannel(pair: string): string {
-  return `${PublicEndPoints.Settlement}:${pair}`;
+  return `${BitmexPublicEndPoints.Settlement}:${pair}`;
 }

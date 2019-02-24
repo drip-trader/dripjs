@@ -1,8 +1,8 @@
 import { HttpHeaders } from 'dripjs-types';
 
-import { Config, RateLimit } from '../types';
+import { BitmexConfig, BitmexRateLimit } from '../types';
 
-export function getRateLimit(headers: HttpHeaders): RateLimit {
+export function getRateLimit(headers: HttpHeaders): BitmexRateLimit {
   return {
     remaining: Number(headers['x-ratelimit-remaining']),
     reset: Number(headers['x-ratelimit-reset']),
@@ -10,13 +10,13 @@ export function getRateLimit(headers: HttpHeaders): RateLimit {
   };
 }
 
-export const testnetConfig: Config = {
+export const testnetConfig: BitmexConfig = {
   apiKey: `${process.env['SPEC_BITMEX_TEST_API_KEY']}`,
   apiSecret: `${process.env['SPEC_BITMEX_TEST_API_SECRET']}`,
   testnet: true,
 };
 
-export const testnetReadonlyConfig: Config = {
+export const testnetReadonlyConfig: BitmexConfig = {
   apiKey: `${process.env['SPEC_BITMEX_TEST_TRADE_API_KEY']}`,
   apiSecret: `${process.env['SPEC_BITMEX_TEST_TRADE_API_SECRET']}`,
   testnet: true,

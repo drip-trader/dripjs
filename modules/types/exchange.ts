@@ -35,5 +35,5 @@ export interface Asset {
 
 export interface Credential {
   apiKey: string;
-  secret: string;
+  apiSecret: string;
 }

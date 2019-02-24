@@ -1,8 +1,8 @@
 import { OrderStatus } from 'dripjs-types';
 
-import { ExecInst, BitmexOrderSide as OrderSide, OrderType, TimeInForce } from './order';
+import { BitmexExecInst, BitmexOrderType, BitmexTimeInForce, BitmexOrderSide as OrderSide } from './order';
 
-export interface OrderRequest {
+export interface BitmexRestOrderRequest {
   symbol: string;
   side: OrderSide;
   orderQty: number;
@@ -13,15 +13,15 @@ export interface OrderRequest {
   clOrdLinkID?: string;
   pegOffsetValue?: number;
   pegPriceType?: string;
-  ordType: OrderType;
-  timeInForce?: TimeInForce;
+  ordType: BitmexOrderType;
+  timeInForce?: BitmexTimeInForce;
   orderID?: string;
-  execInst: ExecInst;
+  execInst: BitmexExecInst;
   ordStatus: OrderStatus;
   text: string;
 }
 
-export interface FetchOrderRequest {
+export interface BitmexRestFetchOrderRequest {
   symbol: string;
   filter: { [filterKey: string]: string };
   columns: string[];
@@ -32,7 +32,7 @@ export interface FetchOrderRequest {
   endTime: string;
 }
 
-export interface OrderbookRequest {
+export interface BitmexRestOrderbookRequest {
   symbol: string;
   depth: number;
 }

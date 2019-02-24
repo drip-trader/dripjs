@@ -1,12 +1,12 @@
-import { OrderbookL2Response, OrderbookResponse, PublicEndPoints } from '../../types';
+import { BitmexOrderbookL2Response, BitmexOrderbookResponse, BitmexPublicEndPoints } from '../../types';
 import { WebsocketData } from '../types';
 
 /**
  * transform raw websocket data to OrderbookL2Response
  * @param source raw websocket data
  */
-export function transform(source: WebsocketData<OrderbookResponse>): OrderbookL2Response {
-  const orderbook: OrderbookL2Response = {
+export function transform(source: WebsocketData<BitmexOrderbookResponse>): BitmexOrderbookL2Response {
+  const orderbook: BitmexOrderbookL2Response = {
     bids: [],
     asks: [],
   };
@@ -26,9 +26,9 @@ export function transform(source: WebsocketData<OrderbookResponse>): OrderbookL2
 }
 
 export function update(
-  originSource: WebsocketData<OrderbookResponse>,
-  updateSource: WebsocketData<OrderbookResponse>,
-): WebsocketData<OrderbookResponse> {
+  originSource: WebsocketData<BitmexOrderbookResponse>,
+  updateSource: WebsocketData<BitmexOrderbookResponse>,
+): WebsocketData<BitmexOrderbookResponse> {
   const originData = originSource.data || [];
   const updateData = updateSource.data || [];
 
@@ -58,7 +58,7 @@ export function update(
 
 export function getChannel(
   pair: string,
-  endpoint: PublicEndPoints.OrderBook10 | PublicEndPoints.OrderBookL2 | PublicEndPoints.OrderBookL2T25,
+  endpoint: BitmexPublicEndPoints.OrderBook10 | BitmexPublicEndPoints.OrderBookL2 | BitmexPublicEndPoints.OrderBookL2T25,
 ): string {
   return `${endpoint}:${pair}`;
 }
@@ -72,7 +72,7 @@ export function getChannel(
  * @param updateSource
  * @param fromId
  */
-function findPosition(originSource: OrderbookResponse[], updateSource: OrderbookResponse, fromId: number = 0): number {
+function findPosition(originSource: BitmexOrderbookResponse[], updateSource: BitmexOrderbookResponse, fromId: number = 0): number {
   let i = fromId;
   for (; i < originSource.length; i++) {
     if (originSource[i].id >= updateSource.id) {

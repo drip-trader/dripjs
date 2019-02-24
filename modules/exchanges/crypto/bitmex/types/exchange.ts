@@ -1,29 +1,29 @@
-export interface Config {
+export interface BitmexConfig {
   apiKey: string;
   apiSecret: string;
   testnet?: boolean;
 }
 
-export const wsEndpoints = {
+export const bitmexWsEndpoints = {
   production: 'wss://www.bitmex.com/realtime',
   testnet: 'wss://testnet.bitmex.com/realtime',
 };
 
-export const restEndpoints = {
+export const bitmexRestEndpoints = {
   production: 'https://www.bitmex.com',
   testnet: 'https://testnet.bitmex.com',
 };
 
-export const restApiBasePath = '/api/v1/';
+export const bitmexRestApiBasePath = '/api/v1/';
 
-export interface RateLimit {
+export interface BitmexRateLimit {
   remaining: number;
   reset: number;
   limit: number;
 }
 
 //  无需身份验证的连接端点集
-export enum PublicEndPoints {
+export enum BitmexPublicEndPoints {
   /** 公告 */
   Announcement = 'announcement',
   /** Trollbox聊天室 */
@@ -74,7 +74,7 @@ export enum PublicEndPoints {
 }
 
 //  要求进行身份验证的连接端点集
-export enum PrivateEndPoints {
+export enum BitmexPrivateEndPoints {
   /** 邀请人状态，已邀请用户及分红比率 */
   Affiliate = 'affiliate',
   /** 个别成交，可能是多个成交 */

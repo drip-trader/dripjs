@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { QuoteResponse } from '../../types/response';
+import { BitmexQuoteResponse } from '../../types';
 import { Websocket } from '../websocket';
 import { getTradeChannel, transform } from './helpers';
 import { QuoteSource } from './types';
@@ -14,7 +14,7 @@ export class Quote {
    *
    * @param pair
    */
-  quote$(pair: string): Observable<QuoteResponse> {
+  quote$(pair: string): Observable<BitmexQuoteResponse> {
     const channel = getTradeChannel(pair);
 
     return this.ws.subscribe<QuoteSource>(channel).pipe(map((wsData) => transform(wsData.data[0])));

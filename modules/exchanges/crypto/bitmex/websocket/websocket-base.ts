@@ -1,7 +1,7 @@
 import { WebSocketRxJs } from 'dripjs-common';
 
 import { getWSAuthQuery } from '../common';
-import { Config, wsEndpoints } from '../types';
+import { BitmexConfig, bitmexWsEndpoints } from '../types';
 
 /**
  * Abstract class for websocket api
@@ -11,7 +11,7 @@ import { Config, wsEndpoints } from '../types';
  */
 export abstract class WebsocketBase<T, U> {
   private ws: WebSocketRxJs<U> | null = null;
-  constructor(private readonly config: Config) {}
+  constructor(private readonly config: BitmexConfig) {}
 
   abstract handleMessage(response: U): void;
   abstract onDestroy(): void;
@@ -44,7 +44,7 @@ export abstract class WebsocketBase<T, U> {
   }
 
   private makeRequestUrl(): string {
-    let endpoint = this.config.testnet ? wsEndpoints.testnet : wsEndpoints.production;
+    let endpoint = this.config.testnet ? bitmexWsEndpoints.testnet : bitmexWsEndpoints.production;
     if (this.config.apiKey && this.config.apiSecret) {
       endpoint += `?${getWSAuthQuery(this.config.apiKey, this.config.apiSecret)}`;
     }

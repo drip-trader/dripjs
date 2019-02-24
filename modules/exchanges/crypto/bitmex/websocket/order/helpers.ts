@@ -1,12 +1,5 @@
-import { OrderResponse, PrivateEndPoints } from '../../types';
-import { OrderSource } from './types';
-
-export function transform(orderList: OrderSource[]): OrderResponse | undefined {
-  if (orderList.length > 0) {
-    return { ...orderList[orderList.length - 1] };
-  }
-}
+import { BitmexPrivateEndPoints } from '../../types';
 
 export function getOrderChannel(pair: string): string {
-  return `${PrivateEndPoints.Order}:${pair}`;
+  return `${BitmexPrivateEndPoints.Order}:${pair}`;
 }

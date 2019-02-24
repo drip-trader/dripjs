@@ -1,8 +1,6 @@
-import { OrderStatus } from 'dripjs-types';
-
 import { testnetConfig } from '../common';
 import { BitmexRest } from '../rest/bitmex-rest';
-import { BitmexOrderSide as OrderSide, OrderType, TimeInForce } from '../types';
+import { BitmexOrderSide, BitmexOrderType, BitmexTimeInForce } from '../types';
 import { BitmexWS } from './bitmex-ws';
 
 describe('BitmexWS', () => {
@@ -54,7 +52,6 @@ describe('BitmexWS', () => {
   it('subscribe order', async (done) => {
     bitmexWS.order$(pair).subscribe((order) => {
       expect(order).toBeDefined();
-      expect(order!.ordStatus).toEqual(OrderStatus.New);
       bitmexWS.stopOrder(pair);
     });
     const bitmexRest = new BitmexRest(testnetConfig);
@@ -65,11 +62,11 @@ describe('BitmexWS', () => {
     const price = +orderbookRes.orderbook.bids[4][0];
     const res = await bitmexRest.createOrder({
       symbol: pair,
-      side: OrderSide.Buy,
+      side: BitmexOrderSide.Buy,
       price,
       orderQty: 25,
-      ordType: OrderType.Limit,
-      timeInForce: TimeInForce.Day,
+      ordType: BitmexOrderType.Limit,
+      timeInForce: BitmexTimeInForce.Day,
     });
     setTimeout(async () => {
       await bitmexRest.cancelOrder({

@@ -1,7 +1,7 @@
 import { OrderStatus } from 'dripjs-types';
 
 import { testnetConfig, testnetReadonlyConfig } from '../../common';
-import { FetchOrderRequest, OrderRequest, BitmexOrderSide as OrderSide, OrderType } from '../../types';
+import { BitmexOrderSide, BitmexOrderType, BitmexRestFetchOrderRequest, BitmexRestOrderRequest } from '../../types';
 import { Orderbook } from '../orderbook';
 import { Order } from './order';
 
@@ -18,12 +18,12 @@ describe.skip('Bitmex Rest Order', () => {
       depth: 5,
     });
     price = +orderbookRes.orderbook.bids[4][0];
-    const request: Partial<OrderRequest> = {
+    const request: Partial<BitmexRestOrderRequest> = {
       symbol: pair,
-      side: OrderSide.Buy,
+      side: BitmexOrderSide.Buy,
       price,
       orderQty: 25,
-      ordType: OrderType.Limit,
+      ordType: BitmexOrderType.Limit,
     };
 
     const res = await order.create(request);
@@ -33,7 +33,7 @@ describe.skip('Bitmex Rest Order', () => {
   });
 
   it('fetch order', async () => {
-    const request: Partial<FetchOrderRequest> = {
+    const request: Partial<BitmexRestFetchOrderRequest> = {
       symbol: pair,
       filter: {
         orderID: orderId,
@@ -46,7 +46,7 @@ describe.skip('Bitmex Rest Order', () => {
   });
 
   it('update order', async () => {
-    const request: Partial<OrderRequest> = {
+    const request: Partial<BitmexRestOrderRequest> = {
       orderID: orderId,
       price: price - 1,
     };
@@ -57,7 +57,7 @@ describe.skip('Bitmex Rest Order', () => {
   });
 
   it('cancel order', async () => {
-    const request: Partial<OrderRequest> = {
+    const request: Partial<BitmexRestOrderRequest> = {
       orderID: orderId,
     };
     const res = await order.cancel(request);

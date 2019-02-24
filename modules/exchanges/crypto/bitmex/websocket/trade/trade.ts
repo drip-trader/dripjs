@@ -1,8 +1,7 @@
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { PublicEndPoints } from '../../types';
-import { TradeResponse } from '../../types/response';
+import { BitmexPublicEndPoints, BitmexTradeResponse } from '../../types';
 import { Websocket } from '../websocket';
 import { getTradeChannel, transform } from './helpers';
 import { TradeSource } from './types';
@@ -15,7 +14,7 @@ export class Trade {
    *
    * @param pair
    */
-  trade$(pair: string): Observable<TradeResponse> {
+  trade$(pair: string): Observable<BitmexTradeResponse> {
     const channel = getTradeChannel(pair);
 
     return this.ws.subscribe<TradeSource>(channel).pipe(map((wsData) => transform(wsData.data[0])));
@@ -26,14 +25,14 @@ export class Trade {
     this.ws.unsubscribe(channel);
   }
 
-  tradeBin1d$(pair: string): Observable<TradeResponse> {
-    const channel = getTradeChannel(pair, PublicEndPoints.TradeBin1d);
+  tradeBin1d$(pair: string): Observable<BitmexTradeResponse> {
+    const channel = getTradeChannel(pair, BitmexPublicEndPoints.TradeBin1d);
 
     return this.ws.subscribe<TradeSource>(channel).pipe(map((wsData) => transform(wsData.data[0])));
   }
 
   stopTradeBin1d(pair: string): void {
-    const channel = getTradeChannel(pair, PublicEndPoints.TradeBin1d);
+    const channel = getTradeChannel(pair, BitmexPublicEndPoints.TradeBin1d);
     this.ws.unsubscribe(channel);
   }
 }

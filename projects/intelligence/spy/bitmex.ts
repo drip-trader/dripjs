@@ -1,4 +1,4 @@
-import { BitmexOrderSide, BitmexResolution, BitmexRest, BitmexWS, Config } from '@dripjs/exchanges';
+import { BitmexConfig, BitmexOrderSide, BitmexResolution, BitmexRest, BitmexWS } from '@dripjs/exchanges';
 import { Bar, BarRequest, Depth, OrderSide, Ticker, Transaction } from '@dripjs/types';
 import { BigNumber } from 'bignumber.js';
 import { Pair } from 'dripjs-types';
@@ -17,7 +17,7 @@ export class Bitmex extends Intelligence {
 
   private symbols: Pair[] = [];
 
-  constructor(config: Config) {
+  constructor(config: BitmexConfig) {
     super();
     this.rest = new BitmexRest(config);
     this.ws = new BitmexWS(config);
@@ -41,7 +41,7 @@ export class Bitmex extends Intelligence {
           };
         });
       }
-      // TODO Error handle
+      // TODO BitmexError handle
     }
 
     return this.symbols;

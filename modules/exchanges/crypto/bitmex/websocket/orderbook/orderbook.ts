@@ -1,16 +1,16 @@
 import { Observable, concat } from 'rxjs';
 import { filter, map, scan, take } from 'rxjs/operators';
 
-import { OrderbookL2Response, OrderbookResponse, PublicEndPoints } from '../../types';
+import { BitmexOrderbookL2Response, BitmexOrderbookResponse, BitmexPublicEndPoints } from '../../types';
 import { Websocket } from '../websocket';
 import { getChannel, transform, update } from './helpers';
 
 export class Orderbook {
-  private readonly streamMap = new Map<string, Observable<OrderbookL2Response>>();
+  private readonly streamMap = new Map<string, Observable<BitmexOrderbookL2Response>>();
 
   constructor(private readonly ws: Websocket) {}
 
-  orderbookL2T25$(pair: string): Observable<OrderbookL2Response> {
+  orderbookL2T25$(pair: string): Observable<BitmexOrderbookL2Response> {
     let stream = this.streamMap.get(pair);
     if (!stream) {
       stream = this.startOrderbookL2T25$(pair);
@@ -21,15 +21,15 @@ export class Orderbook {
   }
 
   stopOrderbookL2T25(pair: string): void {
-    const channel = getChannel(pair, PublicEndPoints.OrderBookL2T25);
+    const channel = getChannel(pair, BitmexPublicEndPoints.OrderBookL2T25);
     this.ws.unsubscribe(channel);
     this.streamMap.delete(pair);
   }
 
-  private startOrderbookL2T25$(pair: string): Observable<OrderbookL2Response> {
-    const channel = getChannel(pair, PublicEndPoints.OrderBookL2T25);
+  private startOrderbookL2T25$(pair: string): Observable<BitmexOrderbookL2Response> {
+    const channel = getChannel(pair, BitmexPublicEndPoints.OrderBookL2T25);
 
-    const data$ = this.ws.subscribe<OrderbookResponse>(channel);
+    const data$ = this.ws.subscribe<BitmexOrderbookResponse>(channel);
 
     /*
      * Make sure 'partial' come first and then 'insert' 'update' 'delete'

@@ -1,12 +1,12 @@
 import { testnetReadonlyConfig } from '../../common';
-import { OrderbookRequest } from '../../types';
+import { BitmexRestOrderbookRequest } from '../../types';
 import { Orderbook } from './orderbook';
 
 describe.skip('Bitmex Rest Orderbook', () => {
   const pair = 'XBTUSD';
   const orderbook = new Orderbook(testnetReadonlyConfig);
   it('fetch orderbook', async () => {
-    const request: OrderbookRequest = {
+    const request: BitmexRestOrderbookRequest = {
       symbol: pair,
       depth: 25,
     };

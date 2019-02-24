@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { SettlementResponse } from '../../types';
+import { BitmexSettlementResponse } from '../../types';
 import { Websocket } from '../websocket';
 import { getTradeChannel, transform } from './helpers';
 import { SettlementSource } from './types';
@@ -14,7 +14,7 @@ export class Settlement {
    *
    * @param pair
    */
-  settlement$(pair: string): Observable<SettlementResponse> {
+  settlement$(pair: string): Observable<BitmexSettlementResponse> {
     const channel = getTradeChannel(pair);
 
     return this.ws.subscribe<SettlementSource>(channel).pipe(map((wsData) => transform(wsData.data[0])));

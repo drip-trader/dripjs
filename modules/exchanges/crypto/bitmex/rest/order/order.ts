@@ -1,60 +1,60 @@
 import { HttpMethod } from 'dripjs-types';
 
 import {
-  Config,
-  FetchOrderRequest,
-  OrderRequest,
-  OrderResponse,
-  PrivateEndPoints,
-  RestOrderResponse,
-  RestOrdersResponse,
+  BitmexConfig,
+  BitmexOrderResponse,
+  BitmexPrivateEndPoints,
+  BitmexRestFetchOrderRequest,
+  BitmexRestOrderRequest,
+  BitmexRestOrderResponse,
+  BitmexRestOrdersResponse,
   RestResponse,
 } from '../../types';
 import { Rest } from '../rest';
 
 export class Order extends Rest {
-  private readonly endpoint = PrivateEndPoints.Order;
+  private readonly endpoint = BitmexPrivateEndPoints.Order;
 
-  constructor(config: Config) {
+  constructor(config: BitmexConfig) {
     super(config);
   }
 
-  async create(request: Partial<OrderRequest>): Promise<RestOrderResponse> {
+  async create(request: Partial<BitmexRestOrderRequest>): Promise<BitmexRestOrderResponse> {
     const res = await this.request(HttpMethod.POST, request);
 
     return {
       ratelimit: res.ratelimit,
-      order: <OrderResponse>res.body,
+      order: <BitmexOrderResponse>res.body,
       error: res.error,
     };
   }
 
-  async fetch(request: Partial<FetchOrderRequest>): Promise<RestOrdersResponse> {
+  async fetch(request: Partial<BitmexRestFetchOrderRequest>): Promise<BitmexRestOrdersResponse> {
     const res = await this.request(HttpMethod.GET, request);
 
     return {
       ratelimit: res.ratelimit,
-      orders: <OrderResponse[]>res.body,
+      orders: <BitmexOrderResponse[]>res.body,
       error: res.error,
     };
   }
 
-  async update(request: Partial<OrderRequest>): Promise<RestOrderResponse> {
+  async update(request: Partial<BitmexRestOrderRequest>): Promise<BitmexRestOrderResponse> {
     const res = await this.request(HttpMethod.PUT, request);
 
     return {
       ratelimit: res.ratelimit,
-      order: <OrderResponse>res.body,
+      order: <BitmexOrderResponse>res.body,
       error: res.error,
     };
   }
 
-  async cancel(request: Partial<OrderRequest>): Promise<RestOrderResponse> {
+  async cancel(request: Partial<BitmexRestOrderRequest>): Promise<BitmexRestOrderResponse> {
     const res = await this.request(HttpMethod.DELETE, request);
 
     return {
       ratelimit: res.ratelimit,
-      order: <OrderResponse>res.body[0],
+      order: <BitmexOrderResponse>res.body[0],
       error: res.error,
     };
   }

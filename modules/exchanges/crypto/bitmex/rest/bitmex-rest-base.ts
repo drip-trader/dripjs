@@ -1,17 +1,20 @@
 import {
-  Config,
-  FetchOrderRequest,
-  OrderRequest,
-  OrderbookRequest,
-  RestOrderResponse,
-  RestOrderbookL2Response,
-  RestOrdersResponse,
+  BitmexConfig,
+  BitmexRestBarRequest,
+  BitmexRestBarResponse,
+  BitmexRestFetchOrderRequest,
+  BitmexRestInstrumentResponse,
+  BitmexRestOrderRequest,
+  BitmexRestOrderResponse,
+  BitmexRestOrderbookL2Response,
+  BitmexRestOrderbookRequest,
+  BitmexRestOrdersResponse,
 } from '../types';
 
 export abstract class BitmexRestBase {
-  protected config: Config;
+  protected config: BitmexConfig;
 
-  constructor(config?: Config) {
+  constructor(config?: BitmexConfig) {
     this.config = {
       apiKey: '',
       apiSecret: '',
@@ -20,9 +23,11 @@ export abstract class BitmexRestBase {
     };
   }
 
-  abstract createOrder(request: Partial<OrderRequest>): Promise<RestOrderResponse>;
-  abstract fetchOrder(request: Partial<FetchOrderRequest>): Promise<RestOrdersResponse>;
-  abstract updateOrder(request: Partial<OrderRequest>): Promise<RestOrderResponse>;
-  abstract cancelOrder(request: Partial<OrderRequest>): Promise<RestOrderResponse>;
-  abstract fetchOrderbook(request: OrderbookRequest): Promise<RestOrderbookL2Response>;
+  abstract createOrder(request: Partial<BitmexRestOrderRequest>): Promise<BitmexRestOrderResponse>;
+  abstract fetchOrder(request: Partial<BitmexRestFetchOrderRequest>): Promise<BitmexRestOrdersResponse>;
+  abstract updateOrder(request: Partial<BitmexRestOrderRequest>): Promise<BitmexRestOrderResponse>;
+  abstract cancelOrder(request: Partial<BitmexRestOrderRequest>): Promise<BitmexRestOrderResponse>;
+  abstract fetchOrderbook(request: BitmexRestOrderbookRequest): Promise<BitmexRestOrderbookL2Response>;
+  abstract fetchInstrument(): Promise<BitmexRestInstrumentResponse>;
+  abstract fetchBar(request: BitmexRestBarRequest): Promise<BitmexRestBarResponse>;
 }

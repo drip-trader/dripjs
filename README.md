@@ -19,7 +19,7 @@ see the <a href="https://github.com/zlq4863947/dripjs/blob/master/README_EN.md">
 ## 设计哲学
 
 让量化开发者将大部分精力、时间花费在核心:交易策略的开发上。
-**Drip.js**提供除此之外的一切，使得开发者不必再为*重复造轮子而苦恼
+**Drip.js**提供除此之外的一切，使得开发者不必再为重复造轮子而苦恼
 
 ## 安装
 

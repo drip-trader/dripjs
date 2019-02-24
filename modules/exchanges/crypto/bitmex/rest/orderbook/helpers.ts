@@ -1,11 +1,11 @@
-import { OrderbookL2Response, OrderbookResponse } from '../../types';
+import { BitmexOrderbookL2Response, BitmexOrderbookResponse } from '../../types';
 
 /**
  * transform raw websocket data to OrderbookL2Response
  * @param source raw websocket data
  */
-export function transform(source: OrderbookResponse[]): OrderbookL2Response {
-  const orderbook: OrderbookL2Response = {
+export function transform(source: BitmexOrderbookResponse[]): BitmexOrderbookL2Response {
+  const orderbook: BitmexOrderbookL2Response = {
     bids: [],
     asks: [],
   };
