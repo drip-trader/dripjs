@@ -1,4 +1,6 @@
-<H1><p align="center">Drip.js</p></H1>
+<p align="center">
+  <img src="assets/image/dripjs.svg" width="320" alt="Dripjs Logo" />
+</p>
 <p align="center">A progressive Node.js Open source quantitative framework for building efficient and scalable quantitative trading applications</p>
 <p align="center">
 <a href="https://www.npmjs.com/package/dripjs"><img src="https://img.shields.io/npm/v/dripjs.svg" alt="NPM Version" />
