@@ -10,11 +10,8 @@ import {
   BitmexRestOrderbookRequest,
   BitmexRestOrdersResponse,
 } from '../types';
-import { Bar } from './bar';
 import { BitmexRestBase } from './bitmex-rest-base';
-import { Instrument } from './instrument';
-import { Order } from './order';
-import { Orderbook } from './orderbook';
+import { Bar, Instrument, Order, Orderbook } from './internal';
 
 export class BitmexRest extends BitmexRestBase {
   private readonly instrument: Instrument;

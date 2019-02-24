@@ -1,18 +1,18 @@
-<H1><p  align="center">Drip.js</p></H1>
-<p  align="center">用于构架高效且可扩展的交易程序的渐进式Node.js开源量化框架</p>
-<p  align="center">
+<H1><p align="center">Drip.js</p></H1>
+<p align="center">用于构架高效且可扩展的交易程序的渐进式Node.js开源量化框架</p>
+<p align="center">
 <a href="https://www.npmjs.com/package/dripjs"><img src="https://img.shields.io/npm/v/dripjs.svg" alt="NPM Version" />
 <a href="https://www.npmjs.com/package/dripjs"><img src="https://img.shields.io/badge/license-GPL_3.0-green.svg" alt="Package License" /></a>
 <a href="https://www.npmjs.com/package/dripjs"><img src="https://img.shields.io/npm/dm/dripjs.svg" alt="NPM Downloads" /></a>
-<a  href="https://travis-ci.com/zlq4863947/dripjs"><img  src="https://travis-ci.com/zlq4863947/dripjs.svg?branch=master&t=6"  alt="Tiavis" /></a>
-<a  href="https://coveralls.io/github/zlq4863947/dripjs?branch=master"><img  src="https://coveralls.io/repos/github/zlq4863947/dripjs/badge.svg?branch=master&t=6"  alt="Coverage" /></a>
+<a href="https://travis-ci.com/zlq4863947/dripjs"><img src="https://travis-ci.com/zlq4863947/dripjs.svg?branch=master&t=6" alt="Tiavis" /></a>
+<a href="https://coveralls.io/github/zlq4863947/dripjs?branch=master"><img src="https://coveralls.io/repos/github/zlq4863947/dripjs/badge.svg?branch=master&t=6" alt="Coverage" /></a>
 <a href="https://gitter.im/drip-js/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img src="https://badges.gitter.im/drip-js.svg" alt="Gitter" /></a>
-<a  href="https://www.paypal.me/zlq4863947"><img  src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
+<a href="https://www.paypal.me/zlq4863947"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
 </p>
 
-see the <a href="https://github.com/zlq4863947/dripjs/blob/master/README_EN.md">English</a>
-
 # 简介
+
+see the <a href="https://github.com/zlq4863947/dripjs/blob/master/README_EN.md">English</a>
 
 **Drip.js**旨在提供一个开箱即用的量化交易程序体系架构，允许开发者轻松创建高可用、可扩展且易于维护的量化交易程序。
 
@@ -76,7 +76,7 @@ setTimeout(() => {
 
 - 数据获取 - 通过交易所、数据库(回测时)
 - 数据本地保存
-  - 方便日后回测
+- 方便日后回测
 - 回测
 - 生成策略模型
 - 交易评级

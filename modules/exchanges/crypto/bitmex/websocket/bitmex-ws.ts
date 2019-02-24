@@ -9,12 +9,8 @@ import {
   BitmexTradeResponse,
 } from '../types';
 import { BitmexWsBase } from './bitmex-ws-base';
-import { Order } from './order';
-import { Orderbook } from './orderbook';
-import { Quote } from './quote';
-import { Settlement } from './settlement';
-import { Trade } from './trade';
-import { Websocket } from './websocket';
+import { Order, Orderbook, Quote, Settlement, Trade } from './internal';
+import { Websocket } from './internal/websocket/websocket';
 
 export class BitmexWS extends BitmexWsBase {
   private readonly ws: Websocket;

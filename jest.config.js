@@ -18,7 +18,7 @@ module.exports = {
   testMatch: ['<rootDir>/modules/**/*.spec.ts', '<rootDir>/projects/**/*.spec.ts'],
   testURL: 'http://localhost/',
   collectCoverageFrom: ['modules/**/*.{js,ts}', 'projects/**/*.{js,ts}', '!projects/**/main.{js,ts}', '!modules/**/index.{js,ts}', '!**/node_modules/**', '!**/vendor/**'],
-  coveragePathIgnorePatterns: ['/node_modules/', '/test-helpers/', '/main.{js,ts}'],
+  coveragePathIgnorePatterns: ['/node_modules/', '/test-helpers/', '/main.{js,ts}', '/dist/'],
   coverageReporters: ['json', 'lcov'],
   verbose: true,
   preset: 'ts-jest',

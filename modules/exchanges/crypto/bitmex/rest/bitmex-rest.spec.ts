@@ -1,4 +1,5 @@
 import { OrderStatus } from 'dripjs-types';
+import * as moment from 'moment';
 
 import { testnetConfig } from '../common';
 import {
@@ -7,6 +8,7 @@ import {
   BitmexRestFetchOrderRequest,
   BitmexRestOrderRequest,
   BitmexRestOrderbookRequest,
+  BitmexResolution,
 } from '../types';
 import { BitmexRest } from './bitmex-rest';
 
@@ -90,5 +92,23 @@ describe('Bitmex Rest', () => {
     const res = await bitmexRest2.createOrder(request);
     expect(res.error!.name).toEqual('HTTPError');
     expect(res.error!.message).toEqual('Missing API key.');
+  });
+
+  it('fetch instrument', async () => {
+    const res = await bitmexRest.fetchInstrument();
+    expect(res.instruments.length).toBeGreaterThan(0);
+    expect(res.ratelimit.limit).toEqual(300);
+  });
+
+  it('fetch bar', async () => {
+    const time = Date.now();
+    const res = await bitmexRest.fetchBar({
+      symbol: pair,
+      binSize: BitmexResolution.day,
+      startTime: moment(time - 1000 * 60 * 60 * 24 * 60).toISOString(),
+      endTime: moment(time).toISOString(),
+    });
+    expect(res.bars.length).toEqual(60);
+    expect(res.ratelimit.limit).toEqual(300);
   });
 });

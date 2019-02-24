@@ -1,6 +1,6 @@
 {
   "name": "dripjs",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "用于构架高效且可扩展的交易程序的渐进式Node.js开源量化框架",
   "engines": {
     "node": ">= 10.15.0",
@@ -18,6 +18,7 @@
     "cp:doc": "yarn build:typedoc && cp -rf type-docs/* ../dripjs-docs",
     "coverage": "jest -c jest.config.js --collectCoverage",
     "ci:coverage": "jest -c jest.config.js --coverage --coverageReporters=text-lcov | coveralls",
+    "docs": "yarn build:typedoc && http-server type-docs",
     "dev:bitmex": "ts-node --files -r tsconfig-paths/register ./projects/intelligence/main.ts",
     "format": "yarn format:ts && yarn format:md",
     "format:md": "prettier --config .prettierrc --write '{docs/**/*.md,modules/**/*.md,projects/**/*.md,./README*.md}' --parser markdown",
@@ -25,7 +26,7 @@
     "format:ts:import": "import-sort --write '{modules,projects}/**/*.ts'",
     "jest": "jest -c jest.config.js",
     "lint": "yarn lint:md && yarn lint:ts",
-    "lint:md": "markdownlint **/*.md",
+    "lint:md": "markdownlint {docs/**/*.md,modules/**/*.md,projects/**/*.md,./README*.md}",
     "lint:ts": "tslint -p tsconfig.json -c tslint.json",
     "pub": "yarn build:prod && npm publish dist",
     "test": "yarn jest --runInBand",
@@ -115,7 +116,7 @@
     "ts-loader": "5.3.3",
     "ts-node": "8.0.2",
     "tsconfig-paths": "3.8.0",
-    "tslint": "5.13.0",
+    "tslint": "^5.13.0",
     "tslint-eslint-rules": "5.4.0",
     "ttypescript": "1.5.6",
     "typedoc": "0.14.2",
@@ -125,13 +126,13 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "bignumber.js": "^8.0.2",
+    "bignumber.js": "^8.1.0",
     "dotenv": "^6.2.0",
     "dripjs-common": "^0.1.0",
     "dripjs-types": "^0.1.1",
     "moment": "^2.24.0",
     "qs": "^6.6.0",
     "rxjs": "^6.4.0",
-    "ws": "^6.1.3"
+    "ws": "^6.1.4"
   }
 }

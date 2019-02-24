@@ -20,7 +20,9 @@
     "exclude": [
       "**/*.spec.ts",
       "**/*-base.ts",
-      "modules/testing/**/*.ts"
+      "**/internal/**/*.ts",
+      "modules/testing/**/*.ts",
+      "modules/common/websocket/**/*.ts"
     ]
   }
 }
