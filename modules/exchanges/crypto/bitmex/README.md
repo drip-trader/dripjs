@@ -93,15 +93,15 @@ The `orderbook$` output as
 
 ## BitmexRest API
 
-| Method                                               | Return                             | Description |
-| ---------------------------------------------------- | ---------------------------------- | ----------- |
-| createOrder(request: Partial<RestOrderRequest>)      | `Promise<RestOrderResponse>`       |             |
-| fetchOrder(request: Partial<RestFetchOrderRequest>): | `Promise<RestOrderResponse>`       |             |
-| updateOrder(request: Partial<RestOrderRequest>)      | `Promise<RestOrderResponse>`       |             |
-| cancelOrder(request: Partial<RestOrderRequest>)      | `Promise<RestOrderResponse>`       |             |
-| fetchOrderbook(request: RestOrderbookRequest)        | `Promise<RestOrderbookL2Response>` |             |
-| fetchInstrument()                                    | `Promise<RestInstrumentResponse>`  |             |
-| fetchBar(request: RestBarRequest)                    | `Promise<RestBarResponse>`         |             |
+| Method                                                 | Return                             | Description |
+| ------------------------------------------------------ | ---------------------------------- | ----------- |
+| createOrder(request: `Partial<RestOrderRequest>`)      | `Promise<RestOrderResponse>`       |             |
+| fetchOrder(request: `Partial<RestFetchOrderRequest>`): | `Promise<RestOrderResponse>`       |             |
+| updateOrder(request: `Partial<RestOrderRequest>`)      | `Promise<RestOrderResponse>`       |             |
+| cancelOrder(request: `Partial<RestOrderRequest>`)      | `Promise<RestOrderResponse>`       |             |
+| fetchOrderbook(request: `RestOrderbookRequest`)        | `Promise<RestOrderbookL2Response>` |             |
+| fetchInstrument()                                      | `Promise<RestInstrumentResponse>`  |             |
+| fetchBar(request: `RestBarRequest`)                    | `Promise<RestBarResponse>`         |             |
 
 ## api docs
 
