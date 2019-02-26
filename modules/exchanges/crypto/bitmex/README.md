@@ -75,33 +75,33 @@ The `orderbook$` output as
 
 ## BitmexWS API
 
-| Method                       | Return                                  | Description                    |
-| ---------------------------- | --------------------------------------- | ------------------------------ |
-| orderbook\$(pair: string)    | Observable`<BitmexOrderbookL2Response>` | realtime orderbook             |
-| stopOrderbook(pair: string)  | void                                    | stop realtime orderbook        |
-| trade\$(pair: string)        | Observable`<BitmexTradeResponse>`       | realtime trade                 |
-| stopTrade(pair: string)      | void                                    | stop realtime trade            |
-| tradeBin1d\$(pair: string)   | Observable`<BitmexTradeResponse>`       | realtime 1-day trade bins      |
-| stopTradeBin1d(pair: string) | void                                    | stop realtime 1-day trade bins |
-| quote\$(pair: string)        | Observable`<BitmexQuoteResponse>`       | realtime quote                 |
-| stopQuote(pair: string)      | void                                    | stop realtime quote            |
-| settlement\$(pair: string)   | Observable`<BitmexSettlementResponse>`  | realtime settlement            |
-| stopSettlement(pair: string) | void                                    | stop realtime settlement       |
-| order\$(pair: string)        | Observable`<BitmexOrderResponse>`       | realtime order                 |
-| stopOrder(pair: string)      | void                                    | stop realtime order            |
-| destroy()                    | void                                    | close websocket connection     |
+| Method                       | Return                            | Description                    |
+| ---------------------------- | --------------------------------- | ------------------------------ |
+| orderbook\$(pair: string)    | Observable`<OrderbookL2Response>` | realtime orderbook             |
+| stopOrderbook(pair: string)  | void                              | stop realtime orderbook        |
+| trade\$(pair: string)        | Observable`<TradeResponse>`       | realtime trade                 |
+| stopTrade(pair: string)      | void                              | stop realtime trade            |
+| tradeBin1d\$(pair: string)   | Observable`<TradeResponse>`       | realtime 1-day trade bins      |
+| stopTradeBin1d(pair: string) | void                              | stop realtime 1-day trade bins |
+| quote\$(pair: string)        | Observable`<QuoteResponse>`       | realtime quote                 |
+| stopQuote(pair: string)      | void                              | stop realtime quote            |
+| settlement\$(pair: string)   | Observable`<SettlementResponse>`  | realtime settlement            |
+| stopSettlement(pair: string) | void                              | stop realtime settlement       |
+| order\$(pair: string)        | Observable`<OrderResponse>`       | realtime order                 |
+| stopOrder(pair: string)      | void                              | stop realtime order            |
+| destroy()                    | void                              | close websocket connection     |
 
 ## BitmexRest API
 
-| Method                                                     | Return                                  | Description |
-| ---------------------------------------------------------- | --------------------------------------- | ----------- |
-| createOrder(request: Partial<BitmexRestOrderRequest>)      | `Promise<BitmexRestOrderResponse>`      |             |
-| fetchOrder(request: Partial<BitmexRestFetchOrderRequest>): | `Promise<BitmexRestOrderResponse>`      |             |
-| updateOrder(request: Partial<BitmexRestOrderRequest>)      | `Promise<BitmexRestOrderResponse>`      |             |
-| cancelOrder(request: Partial<BitmexRestOrderRequest>)      | `Promise<BitmexRestOrderResponse>`      |             |
-| fetchOrderbook(request: BitmexRestOrderbookRequest)        | `Promise<RestOrderbookL2Response>`      |             |
-| fetchInstrument()                                          | `Promise<BitmexRestInstrumentResponse>` |             |
-| fetchBar(request: BitmexRestBarRequest)                    | `Promise<BitmexRestBarResponse>`        |             |
+| Method                                               | Return                             | Description |
+| ---------------------------------------------------- | ---------------------------------- | ----------- |
+| createOrder(request: Partial<RestOrderRequest>)      | `Promise<RestOrderResponse>`       |             |
+| fetchOrder(request: Partial<RestFetchOrderRequest>): | `Promise<RestOrderResponse>`       |             |
+| updateOrder(request: Partial<RestOrderRequest>)      | `Promise<RestOrderResponse>`       |             |
+| cancelOrder(request: Partial<RestOrderRequest>)      | `Promise<RestOrderResponse>`       |             |
+| fetchOrderbook(request: RestOrderbookRequest)        | `Promise<RestOrderbookL2Response>` |             |
+| fetchInstrument()                                    | `Promise<RestInstrumentResponse>`  |             |
+| fetchBar(request: RestBarRequest)                    | `Promise<RestBarResponse>`         |             |
 
 ## api docs
 

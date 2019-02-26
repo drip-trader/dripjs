@@ -1,1 +1,2 @@
-export * from './bitmex';
+import * as Bitmex from './bitmex';
+export { Bitmex };

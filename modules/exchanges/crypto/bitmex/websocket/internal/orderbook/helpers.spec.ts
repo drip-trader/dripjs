@@ -1,9 +1,9 @@
-import { BitmexOrderbookResponse } from '../../../types';
+import { OrderbookResponse } from '../../../types';
 import { WebsocketData } from '../websocket';
 import { update } from './helpers';
 
 describe('BitmexWS orderbook helpers', () => {
-  let originSource: WebsocketData<BitmexOrderbookResponse>;
+  let originSource: WebsocketData<OrderbookResponse>;
 
   beforeEach(() => {
     originSource = {
@@ -48,7 +48,7 @@ describe('BitmexWS orderbook helpers', () => {
   });
 
   it('orderbook update: action=insert', () => {
-    const insertData: WebsocketData<BitmexOrderbookResponse> = {
+    const insertData: WebsocketData<OrderbookResponse> = {
       table: 'orderBookL2_25',
       action: 'insert',
       data: [
@@ -66,7 +66,7 @@ describe('BitmexWS orderbook helpers', () => {
     expect(targetData.data[1]).toEqual(insertData.data[0]);
   });
   it('orderbook update: action=update', () => {
-    const updateData: WebsocketData<BitmexOrderbookResponse> = {
+    const updateData: WebsocketData<OrderbookResponse> = {
       table: 'orderBookL2_25',
       action: 'update',
       data: [
@@ -84,7 +84,7 @@ describe('BitmexWS orderbook helpers', () => {
     expect(targetData.data[0].size).toEqual(updateData.data[0].size);
   });
   it('orderbook update: action=delete', () => {
-    const deleteData: WebsocketData<BitmexOrderbookResponse> = {
+    const deleteData: WebsocketData<OrderbookResponse> = {
       table: 'orderBookL2_25',
       action: 'delete',
       data: [

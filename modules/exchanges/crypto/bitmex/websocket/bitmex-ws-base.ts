@@ -1,9 +1,9 @@
 import { Observable } from 'rxjs';
 
-import { BitmexConfig, BitmexOrderResponse, BitmexOrderbookL2Response, BitmexTradeResponse } from '../types';
+import { Config, OrderResponse, OrderbookL2Response, TradeResponse } from '../types';
 
 export abstract class BitmexWsBase {
-  constructor(protected config?: BitmexConfig) {
+  constructor(protected config?: Config) {
     if (this.config) {
       if (!this.config.apiKey || this.config.apiKey === 'undefined') {
         this.config.apiKey = '';
@@ -25,7 +25,7 @@ export abstract class BitmexWsBase {
    *
    * @param pair pair name
    */
-  abstract orderbook$(pair: string): Observable<BitmexOrderbookL2Response>;
+  abstract orderbook$(pair: string): Observable<OrderbookL2Response>;
   /**
    * stop realtime orderbook
    *
@@ -37,7 +37,7 @@ export abstract class BitmexWsBase {
    *
    * @param pair pair name
    */
-  abstract trade$(pair: string): Observable<BitmexTradeResponse>;
+  abstract trade$(pair: string): Observable<TradeResponse>;
   /**
    * stop realtime trades
    *
@@ -49,7 +49,7 @@ export abstract class BitmexWsBase {
    *
    * @param pair
    */
-  abstract order$(pair: string): Observable<BitmexOrderResponse | undefined>;
+  abstract order$(pair: string): Observable<OrderResponse | undefined>;
   /**
    * stop realtime Order
    *

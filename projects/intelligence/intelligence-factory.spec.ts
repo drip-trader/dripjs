@@ -1,8 +1,8 @@
-import { BitmexResolution } from '@dripjs/exchanges';
+import { Bitmex } from '@dripjs/exchanges';
 import { realConfig } from '@dripjs/testing';
 
 import { Spy } from './intelligence-factory';
-import { Bitmex } from './spy';
+import { BitmexSpy } from './spy';
 import { IntelligenceFactory } from '.';
 
 describe('Intelligence factory', () => {
@@ -11,7 +11,7 @@ describe('Intelligence factory', () => {
     let pair = 'XBTUSD';
 
     beforeAll(() => {
-      bitmex = IntelligenceFactory.create(Bitmex, realConfig);
+      bitmex = IntelligenceFactory.create(BitmexSpy, realConfig);
     });
 
     afterAll(() => {
@@ -53,7 +53,7 @@ describe('Intelligence factory', () => {
       const time = Date.now();
       const bars = await bitmex.getBars({
         symbol: pair,
-        resolution: BitmexResolution.day,
+        resolution: Bitmex.Resolution.day,
         start: time - 1000 * 60 * 60 * 24 * 60,
         end: time,
       });

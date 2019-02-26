@@ -2,14 +2,7 @@ import { OrderStatus } from 'dripjs-types';
 import * as moment from 'moment';
 
 import { testnetConfig } from '../common';
-import {
-  BitmexOrderSide,
-  BitmexOrderType,
-  BitmexResolution,
-  BitmexRestFetchOrderRequest,
-  BitmexRestOrderRequest,
-  BitmexRestOrderbookRequest,
-} from '../types';
+import { OrderSide, OrderType, Resolution, RestFetchOrderRequest, RestOrderRequest, RestOrderbookRequest } from '../types';
 import { BitmexRest } from './bitmex-rest';
 
 describe('Bitmex Rest', () => {
@@ -19,7 +12,7 @@ describe('Bitmex Rest', () => {
   let price: number;
 
   it('fetch orderbook', async () => {
-    const request: BitmexRestOrderbookRequest = {
+    const request: RestOrderbookRequest = {
       symbol: pair,
       depth: 25,
     };
@@ -32,12 +25,12 @@ describe('Bitmex Rest', () => {
   });
 
   it('create order', async () => {
-    const request: Partial<BitmexRestOrderRequest> = {
+    const request: Partial<RestOrderRequest> = {
       symbol: pair,
-      side: BitmexOrderSide.Buy,
+      side: OrderSide.Buy,
       price,
       orderQty: 25,
-      ordType: BitmexOrderType.Limit,
+      ordType: OrderType.Limit,
     };
 
     const res = await bitmexRest.createOrder(request);
@@ -47,7 +40,7 @@ describe('Bitmex Rest', () => {
   });
 
   it('fetch order', async () => {
-    const request: Partial<BitmexRestFetchOrderRequest> = {
+    const request: Partial<RestFetchOrderRequest> = {
       symbol: pair,
       filter: {
         orderID: orderId,
@@ -60,7 +53,7 @@ describe('Bitmex Rest', () => {
   });
 
   it('update order', async () => {
-    const request: Partial<BitmexRestOrderRequest> = {
+    const request: Partial<RestOrderRequest> = {
       orderID: orderId,
       price: price - 1,
     };
@@ -71,7 +64,7 @@ describe('Bitmex Rest', () => {
   });
 
   it('cancel order', async () => {
-    const request: Partial<BitmexRestOrderRequest> = {
+    const request: Partial<RestOrderRequest> = {
       orderID: orderId,
     };
     const res = await bitmexRest.cancelOrder(request);
@@ -81,12 +74,12 @@ describe('Bitmex Rest', () => {
 
   it('config is null', async () => {
     const bitmexRest2 = new BitmexRest(<any>{});
-    const request: Partial<BitmexRestOrderRequest> = {
+    const request: Partial<RestOrderRequest> = {
       symbol: pair,
-      side: BitmexOrderSide.Buy,
+      side: OrderSide.Buy,
       price,
       orderQty: 25,
-      ordType: BitmexOrderType.Limit,
+      ordType: OrderType.Limit,
     };
 
     const res = await bitmexRest2.createOrder(request);
@@ -104,7 +97,7 @@ describe('Bitmex Rest', () => {
     const time = Date.now();
     const res = await bitmexRest.fetchBar({
       symbol: pair,
-      binSize: BitmexResolution.day,
+      binSize: Resolution.day,
       startTime: moment(time - 1000 * 60 * 60 * 24 * 60).toISOString(),
       endTime: moment(time).toISOString(),
     });

@@ -3,7 +3,7 @@
     <img src="https://cdn.jsdelivr.net/npm/dripjs/dripjs.svg" width="320" alt="Dripjs Logo" />
   </a>
 </p>
-<p align="center">用于构架高效且可扩展的交易程序的渐进式Node.js开源量化框架</p>
+<p align="center">用于构建高效且可扩展的交易程序的渐进式Node.js开源量化框架</p>
 <p align="center">
 <a href="https://www.npmjs.com/package/dripjs"><img src="https://img.shields.io/npm/v/dripjs.svg" alt="NPM Version" />
 <a href="https://www.npmjs.com/package/dripjs"><img src="https://img.shields.io/badge/license-GPL_3.0-green.svg" alt="Package License" /></a>

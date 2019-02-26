@@ -1,6 +1,6 @@
 import { testnetConfig } from '../common';
 import { BitmexRest } from '../rest/bitmex-rest';
-import { BitmexOrderSide, BitmexOrderType, BitmexTimeInForce } from '../types';
+import { OrderSide, OrderType, TimeInForce } from '../types';
 import { BitmexWS } from './bitmex-ws';
 
 describe('BitmexWS', () => {
@@ -62,11 +62,11 @@ describe('BitmexWS', () => {
     const price = +orderbookRes.orderbook.bids[4][0];
     const res = await bitmexRest.createOrder({
       symbol: pair,
-      side: BitmexOrderSide.Buy,
+      side: OrderSide.Buy,
       price,
       orderQty: 25,
-      ordType: BitmexOrderType.Limit,
-      timeInForce: BitmexTimeInForce.Day,
+      ordType: OrderType.Limit,
+      timeInForce: TimeInForce.Day,
     });
     setTimeout(async () => {
       await bitmexRest.cancelOrder({

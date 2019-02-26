@@ -1,20 +1,20 @@
 import {
-  BitmexConfig,
-  BitmexRestBarRequest,
-  BitmexRestBarResponse,
-  BitmexRestFetchOrderRequest,
-  BitmexRestInstrumentResponse,
-  BitmexRestOrderRequest,
-  BitmexRestOrderResponse,
-  BitmexRestOrderbookL2Response,
-  BitmexRestOrderbookRequest,
-  BitmexRestOrdersResponse,
+  Config,
+  RestBarRequest,
+  RestBarResponse,
+  RestFetchOrderRequest,
+  RestInstrumentResponse,
+  RestOrderRequest,
+  RestOrderResponse,
+  RestOrderbookL2Response,
+  RestOrderbookRequest,
+  RestOrdersResponse,
 } from '../types';
 
 export abstract class BitmexRestBase {
-  protected config: BitmexConfig;
+  protected config: Config;
 
-  constructor(config?: BitmexConfig) {
+  constructor(config?: Config) {
     this.config = {
       apiKey: '',
       apiSecret: '',
@@ -23,11 +23,11 @@ export abstract class BitmexRestBase {
     };
   }
 
-  abstract createOrder(request: Partial<BitmexRestOrderRequest>): Promise<BitmexRestOrderResponse>;
-  abstract fetchOrder(request: Partial<BitmexRestFetchOrderRequest>): Promise<BitmexRestOrdersResponse>;
-  abstract updateOrder(request: Partial<BitmexRestOrderRequest>): Promise<BitmexRestOrderResponse>;
-  abstract cancelOrder(request: Partial<BitmexRestOrderRequest>): Promise<BitmexRestOrderResponse>;
-  abstract fetchOrderbook(request: BitmexRestOrderbookRequest): Promise<BitmexRestOrderbookL2Response>;
-  abstract fetchInstrument(): Promise<BitmexRestInstrumentResponse>;
-  abstract fetchBar(request: BitmexRestBarRequest): Promise<BitmexRestBarResponse>;
+  abstract createOrder(request: Partial<RestOrderRequest>): Promise<RestOrderResponse>;
+  abstract fetchOrder(request: Partial<RestFetchOrderRequest>): Promise<RestOrdersResponse>;
+  abstract updateOrder(request: Partial<RestOrderRequest>): Promise<RestOrderResponse>;
+  abstract cancelOrder(request: Partial<RestOrderRequest>): Promise<RestOrderResponse>;
+  abstract fetchOrderbook(request: RestOrderbookRequest): Promise<RestOrderbookL2Response>;
+  abstract fetchInstrument(): Promise<RestInstrumentResponse>;
+  abstract fetchBar(request: RestBarRequest): Promise<RestBarResponse>;
 }

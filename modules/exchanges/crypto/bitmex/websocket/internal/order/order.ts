@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 
-import { BitmexOrderResponse } from '../../../types';
+import { OrderResponse } from '../../../types';
 import { Websocket } from '../websocket';
 import { getOrderChannel } from './helpers';
 import { OrderSource } from './types';
@@ -12,7 +12,7 @@ export class Order {
   /**
    * @param pair
    */
-  order$(pair: string): Observable<BitmexOrderResponse> {
+  order$(pair: string): Observable<OrderResponse> {
     const channel = getOrderChannel(pair);
 
     return this.ws.subscribe<OrderSource>(channel).pipe(

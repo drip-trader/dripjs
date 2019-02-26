@@ -1,7 +1,7 @@
-import { BitmexPrivateEndPoints, BitmexPublicEndPoints, BitmexTradeResponse } from '../../../types';
+import { PrivateEndPoints, PublicEndPoints, TradeResponse } from '../../../types';
 import { TradeSource } from './types';
 
-export function transform(source: TradeSource): BitmexTradeResponse {
+export function transform(source: TradeSource): TradeResponse {
   return {
     side: source.side,
     price: source.price,
@@ -10,6 +10,6 @@ export function transform(source: TradeSource): BitmexTradeResponse {
   };
 }
 
-export function getTradeChannel(pair: string, endPoint?: BitmexPublicEndPoints | BitmexPrivateEndPoints): string {
-  return `${endPoint ? endPoint : BitmexPublicEndPoints.Trade}:${pair}`;
+export function getTradeChannel(pair: string, endPoint?: PublicEndPoints | PrivateEndPoints): string {
+  return `${endPoint ? endPoint : PublicEndPoints.Trade}:${pair}`;
 }

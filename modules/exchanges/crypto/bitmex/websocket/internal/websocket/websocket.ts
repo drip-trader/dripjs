@@ -1,13 +1,13 @@
 import { Observable, ReplaySubject } from 'rxjs';
 
-import { BitmexConfig } from '../../../types';
+import { Config } from '../../../types';
 import { WebsocketData, WebsocketRequest, WebsocketResponse } from './types';
 import { WebsocketBase } from './websocket-base';
 
 export class Websocket extends WebsocketBase<WebsocketRequest, WebsocketResponse | WebsocketData> {
   private readonly streamTable = new Map<string, ReplaySubject<WebsocketData>>();
 
-  constructor(config: BitmexConfig) {
+  constructor(config: Config) {
     super(config);
   }
 

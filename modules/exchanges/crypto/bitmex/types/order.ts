@@ -1,9 +1,9 @@
-export enum BitmexOrderSide {
+export enum OrderSide {
   Buy = 'Buy',
   Sell = 'Sell',
 }
 
-export enum BitmexOrderType {
+export enum OrderType {
   /**
    * The default order type. Specify an orderQty and price
    */
@@ -38,7 +38,7 @@ export enum BitmexOrderType {
  * Execution Instructions
  * If using multiple, separate with a comma (e.g. LastPrice,Close).
  */
-export enum BitmexExecInst {
+export enum ExecInst {
   ParticipateDoNotInitiate = 'ParticipateDoNotInitiate',
   MarkPrice = 'MarkPrice',
   LastPrice = 'LastPrice',
@@ -47,7 +47,7 @@ export enum BitmexExecInst {
   Close = 'Close',
 }
 
-export enum BitmexTimeInForce {
+export enum TimeInForce {
   Day = 'Day',
   GoodTillCancel = 'GoodTillCancel',
   ImmediateOrCancel = 'ImmediateOrCancel',

@@ -1,28 +1,23 @@
-import { BitmexRateLimit } from './exchange';
-import { BitmexOrderSide } from './order';
+import { RateLimit } from './exchange';
+import { OrderSide } from './order';
 
-export interface BitmexError {
-  message: string;
-  name: string;
+export interface ErrorResponse {
+  error?: Error;
 }
 
-export interface BitmexErrorResponse {
-  error?: BitmexError;
-}
-
-export interface RestResponse extends BitmexErrorResponse {
-  ratelimit: BitmexRateLimit;
+export interface RestResponse extends ErrorResponse {
+  ratelimit: RateLimit;
   body: { [attr: string]: any };
 }
 
-export interface BitmexTradeResponse {
-  side: BitmexOrderSide;
+export interface TradeResponse {
+  side: OrderSide;
   price: number;
   amount: number;
   timestamp: number;
 }
 
-export interface BitmexQuoteResponse {
+export interface QuoteResponse {
   timestamp: number;
   bidAmount: number;
   bidPrice: number;
@@ -30,7 +25,7 @@ export interface BitmexQuoteResponse {
   askPrice: number;
 }
 
-export interface BitmexSettlementResponse {
+export interface SettlementResponse {
   timestamp: number;
   symbol: string;
   settlementType: string;
@@ -41,7 +36,7 @@ export interface BitmexSettlementResponse {
   taxBase: any;
   taxRate: any;
 }
-export interface BitmexInstrumentResponse {
+export interface InstrumentResponse {
   symbol: string;
   rootSymbol: string;
   state: string;
@@ -113,7 +108,7 @@ export interface BitmexInstrumentResponse {
   timestamp: string;
 }
 
-export interface BitmexBarResponse {
+export interface BarResponse {
   timestamp: string;
   symbol: string;
   open: number;
@@ -129,7 +124,7 @@ export interface BitmexBarResponse {
   foreignNotional: number;
 }
 
-export interface BitmexOrderResponse {
+export interface OrderResponse {
   orderID: string;
   clOrdID?: string;
   clOrdLinkID?: string;
@@ -165,7 +160,7 @@ export interface BitmexOrderResponse {
   timestamp?: string;
 }
 
-export interface BitmexOrderbookResponse {
+export interface OrderbookResponse {
   symbol: string;
   id: number;
   side: string;
@@ -176,7 +171,7 @@ export interface BitmexOrderbookResponse {
 /**
  * level 2 order book
  */
-export interface BitmexOrderbookL2Response {
+export interface OrderbookL2Response {
   /**
    * price and amount of ask (asc order)
    * eg: [[price, amount], ...]
@@ -189,26 +184,26 @@ export interface BitmexOrderbookL2Response {
   bids: [string, string][];
 }
 
-export interface BitmexRestRateLimitResponse extends BitmexErrorResponse {
-  ratelimit: BitmexRateLimit;
+export interface RestRateLimitResponse extends ErrorResponse {
+  ratelimit: RateLimit;
 }
 
-export interface BitmexRestInstrumentResponse extends BitmexRestRateLimitResponse {
-  instruments: BitmexInstrumentResponse[];
+export interface RestInstrumentResponse extends RestRateLimitResponse {
+  instruments: InstrumentResponse[];
 }
 
-export interface BitmexRestBarResponse extends BitmexRestRateLimitResponse {
-  bars: BitmexBarResponse[];
+export interface RestBarResponse extends RestRateLimitResponse {
+  bars: BarResponse[];
 }
 
-export interface BitmexRestOrderResponse extends BitmexRestRateLimitResponse {
-  order: BitmexOrderResponse;
+export interface RestOrderResponse extends RestRateLimitResponse {
+  order: OrderResponse;
 }
 
-export interface BitmexRestOrdersResponse extends BitmexRestRateLimitResponse {
-  orders: BitmexOrderResponse[];
+export interface RestOrdersResponse extends RestRateLimitResponse {
+  orders: OrderResponse[];
 }
 
-export interface BitmexRestOrderbookL2Response extends BitmexRestRateLimitResponse {
-  orderbook: BitmexOrderbookL2Response;
+export interface RestOrderbookL2Response extends RestRateLimitResponse {
+  orderbook: OrderbookL2Response;
 }

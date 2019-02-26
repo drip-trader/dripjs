@@ -1,28 +1,22 @@
 import { HttpMethod } from 'dripjs-types';
 
-import {
-  BitmexConfig,
-  BitmexOrderbookResponse,
-  BitmexRestOrderbookL2Response,
-  BitmexRestOrderbookRequest,
-  RestResponse,
-} from '../../../types';
+import { Config, OrderbookResponse, RestOrderbookL2Response, RestOrderbookRequest, RestResponse } from '../../../types';
 import { Rest } from '../rest';
 import { transform } from './helpers';
 
 export class Orderbook extends Rest {
   private readonly endpoint = 'orderBook/L2';
 
-  constructor(config: BitmexConfig) {
+  constructor(config: Config) {
     super(config);
   }
 
-  async fetch(request: BitmexRestOrderbookRequest): Promise<BitmexRestOrderbookL2Response> {
+  async fetch(request: RestOrderbookRequest): Promise<RestOrderbookL2Response> {
     const res = await this.request(HttpMethod.GET, request);
 
     return {
       ratelimit: res.ratelimit,
-      orderbook: transform(<BitmexOrderbookResponse[]>res.body),
+      orderbook: transform(<OrderbookResponse[]>res.body),
       error: res.error,
     };
   }

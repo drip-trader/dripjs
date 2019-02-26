@@ -1,8 +1,8 @@
 import { OrderStatus } from 'dripjs-types';
 
-import { BitmexExecInst, BitmexOrderType, BitmexTimeInForce, BitmexOrderSide as OrderSide } from './order';
+import { ExecInst, OrderSide, OrderType, TimeInForce } from './order';
 
-export interface BitmexRestOrderRequest {
+export interface RestOrderRequest {
   symbol: string;
   side: OrderSide;
   orderQty: number;
@@ -13,15 +13,15 @@ export interface BitmexRestOrderRequest {
   clOrdLinkID?: string;
   pegOffsetValue?: number;
   pegPriceType?: string;
-  ordType: BitmexOrderType;
-  timeInForce?: BitmexTimeInForce;
+  ordType: OrderType;
+  timeInForce?: TimeInForce;
   orderID?: string;
-  execInst: BitmexExecInst;
+  execInst: ExecInst;
   ordStatus: OrderStatus;
   text: string;
 }
 
-export interface BitmexRestFetchOrderRequest {
+export interface RestFetchOrderRequest {
   symbol: string;
   filter: { [filterKey: string]: string };
   columns: string[];
@@ -32,20 +32,20 @@ export interface BitmexRestFetchOrderRequest {
   endTime: string;
 }
 
-export interface BitmexRestOrderbookRequest {
+export interface RestOrderbookRequest {
   symbol: string;
   depth: number;
 }
 
-export enum BitmexResolution {
+export enum Resolution {
   min1 = '1m',
   min5 = '5m',
   hour = '1h',
   day = '1d',
 }
 
-export interface BitmexRestBarRequest {
-  binSize: BitmexResolution;
+export interface RestBarRequest {
+  binSize: Resolution;
   symbol: string;
   count?: number;
   reverse?: boolean;

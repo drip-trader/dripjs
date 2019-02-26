@@ -1,4 +1,4 @@
-import { BitmexConfig, BitmexOrderSide, BitmexResolution, BitmexRest, BitmexWS } from '@dripjs/exchanges';
+import { Bitmex } from '@dripjs/exchanges';
 import { Bar, BarRequest, Depth, OrderSide, Ticker, Transaction } from '@dripjs/types';
 import { BigNumber } from 'bignumber.js';
 import { Pair } from 'dripjs-types';
@@ -9,18 +9,19 @@ import { map } from 'rxjs/operators';
 import { Intelligence } from '../intelligence';
 
 export interface BitmexBarRequest extends BarRequest {
-  resolution: BitmexResolution;
+  resolution: Bitmex.Resolution;
 }
-export class Bitmex extends Intelligence {
-  rest: BitmexRest;
-  ws: BitmexWS;
+
+export class BitmexSpy extends Intelligence {
+  rest: Bitmex.BitmexRest;
+  ws: Bitmex.BitmexWS;
 
   private symbols: Pair[] = [];
 
-  constructor(config: BitmexConfig) {
+  constructor(config: Bitmex.Config) {
     super();
-    this.rest = new BitmexRest(config);
-    this.ws = new BitmexWS(config);
+    this.rest = new Bitmex.BitmexRest(config);
+    this.ws = new Bitmex.BitmexWS(config);
   }
 
   destory(): void {
@@ -121,9 +122,9 @@ export class Bitmex extends Intelligence {
   getTransaction$(symbol: string): Observable<Transaction> {
     return this.ws.trade$(symbol).pipe(
       map((res) => {
-        return <Transaction>{
+        return {
           time: res.timestamp,
-          side: res.side === BitmexOrderSide.Buy ? OrderSide.Buy : OrderSide.Sell,
+          side: res.side === Bitmex.OrderSide.Buy ? OrderSide.Buy : OrderSide.Sell,
           price: res.price,
           amount: res.amount,
         };

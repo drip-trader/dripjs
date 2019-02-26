@@ -1,7 +1,7 @@
-import { BitmexPrivateEndPoints, BitmexPublicEndPoints, BitmexQuoteResponse } from '../../../types';
+import { PrivateEndPoints, PublicEndPoints, QuoteResponse } from '../../../types';
 import { QuoteSource } from './types';
 
-export function transform(source: QuoteSource): BitmexQuoteResponse {
+export function transform(source: QuoteSource): QuoteResponse {
   return {
     timestamp: new Date(source.timestamp).getTime(),
     bidAmount: source.bidSize,
@@ -11,6 +11,6 @@ export function transform(source: QuoteSource): BitmexQuoteResponse {
   };
 }
 
-export function getTradeChannel(pair: string, endPoint?: BitmexPublicEndPoints | BitmexPrivateEndPoints): string {
-  return `${endPoint ? endPoint : BitmexPublicEndPoints.Quote}:${pair}`;
+export function getTradeChannel(pair: string, endPoint?: PublicEndPoints | PrivateEndPoints): string {
+  return `${endPoint ? endPoint : PublicEndPoints.Quote}:${pair}`;
 }

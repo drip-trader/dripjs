@@ -1,14 +1,14 @@
 import {
-  BitmexConfig,
-  BitmexRestBarRequest,
-  BitmexRestBarResponse,
-  BitmexRestFetchOrderRequest,
-  BitmexRestInstrumentResponse,
-  BitmexRestOrderRequest,
-  BitmexRestOrderResponse,
-  BitmexRestOrderbookL2Response,
-  BitmexRestOrderbookRequest,
-  BitmexRestOrdersResponse,
+  Config,
+  RestBarRequest,
+  RestBarResponse,
+  RestFetchOrderRequest,
+  RestInstrumentResponse,
+  RestOrderRequest,
+  RestOrderResponse,
+  RestOrderbookL2Response,
+  RestOrderbookRequest,
+  RestOrdersResponse,
 } from '../types';
 import { BitmexRestBase } from './bitmex-rest-base';
 import { Bar, Instrument, Order, Orderbook } from './internal';
@@ -19,7 +19,7 @@ export class BitmexRest extends BitmexRestBase {
   private readonly orderbook: Orderbook;
   private readonly bar: Bar;
 
-  constructor(config: BitmexConfig) {
+  constructor(config: Config) {
     super(config);
 
     this.instrument = new Instrument(config);
@@ -28,31 +28,31 @@ export class BitmexRest extends BitmexRestBase {
     this.bar = new Bar(config);
   }
 
-  async createOrder(request: Partial<BitmexRestOrderRequest>): Promise<BitmexRestOrderResponse> {
+  async createOrder(request: Partial<RestOrderRequest>): Promise<RestOrderResponse> {
     return this.order.create(request);
   }
 
-  async fetchOrder(request: Partial<BitmexRestFetchOrderRequest>): Promise<BitmexRestOrdersResponse> {
+  async fetchOrder(request: Partial<RestFetchOrderRequest>): Promise<RestOrdersResponse> {
     return this.order.fetch(request);
   }
 
-  async updateOrder(request: Partial<BitmexRestOrderRequest>): Promise<BitmexRestOrderResponse> {
+  async updateOrder(request: Partial<RestOrderRequest>): Promise<RestOrderResponse> {
     return this.order.update(request);
   }
 
-  async cancelOrder(request: Partial<BitmexRestOrderRequest>): Promise<BitmexRestOrderResponse> {
+  async cancelOrder(request: Partial<RestOrderRequest>): Promise<RestOrderResponse> {
     return this.order.cancel(request);
   }
 
-  async fetchOrderbook(request: BitmexRestOrderbookRequest): Promise<BitmexRestOrderbookL2Response> {
+  async fetchOrderbook(request: RestOrderbookRequest): Promise<RestOrderbookL2Response> {
     return this.orderbook.fetch(request);
   }
 
-  async fetchInstrument(): Promise<BitmexRestInstrumentResponse> {
+  async fetchInstrument(): Promise<RestInstrumentResponse> {
     return this.instrument.fetch();
   }
 
-  async fetchBar(request: BitmexRestBarRequest): Promise<BitmexRestBarResponse> {
+  async fetchBar(request: RestBarRequest): Promise<RestBarResponse> {
     return this.bar.fetch(request);
   }
 }

@@ -1,28 +1,21 @@
 import { HttpMethod } from 'dripjs-types';
 
-import {
-  BitmexBarResponse,
-  BitmexConfig,
-  BitmexPublicEndPoints,
-  BitmexRestBarRequest,
-  BitmexRestBarResponse,
-  RestResponse,
-} from '../../../types';
+import { BarResponse, Config, PublicEndPoints, RestBarRequest, RestBarResponse, RestResponse } from '../../../types';
 import { Rest } from '../rest';
 
 export class Bar extends Rest {
-  private readonly endpoint = BitmexPublicEndPoints.TradeBucketed;
+  private readonly endpoint = PublicEndPoints.TradeBucketed;
 
-  constructor(config: BitmexConfig) {
+  constructor(config: Config) {
     super(config);
   }
 
-  async fetch(request: BitmexRestBarRequest): Promise<BitmexRestBarResponse> {
+  async fetch(request: RestBarRequest): Promise<RestBarResponse> {
     const res = await this.request(HttpMethod.GET, request);
 
     return {
       ratelimit: res.ratelimit,
-      bars: <BitmexBarResponse[]>res.body,
+      bars: <BarResponse[]>res.body,
       error: res.error,
     };
   }

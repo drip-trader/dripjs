@@ -1,5 +1,5 @@
-import { BitmexPrivateEndPoints } from '../../../types';
+import { PrivateEndPoints } from '../../../types';
 
 export function getOrderChannel(pair: string): string {
-  return `${BitmexPrivateEndPoints.Order}:${pair}`;
+  return `${PrivateEndPoints.Order}:${pair}`;
 }

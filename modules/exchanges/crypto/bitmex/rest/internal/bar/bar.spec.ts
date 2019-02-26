@@ -1,5 +1,5 @@
 import { testnetConfig } from '../../../common';
-import { BitmexResolution } from '../../../types';
+import { Resolution } from '../../../types';
 import { Bar } from './bar';
 
 describe('Bitmex Rest Bar', () => {
@@ -7,7 +7,7 @@ describe('Bitmex Rest Bar', () => {
 
   it('fetch instrument', async () => {
     const res = await bar.fetch({
-      binSize: BitmexResolution.day,
+      binSize: Resolution.day,
       symbol: 'XBTUSD',
     });
     expect(res.bars.length).toEqual(100);

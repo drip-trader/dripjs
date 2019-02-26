@@ -1,13 +1,6 @@
 import { Observable } from 'rxjs';
 
-import {
-  BitmexConfig,
-  BitmexOrderResponse,
-  BitmexOrderbookL2Response,
-  BitmexQuoteResponse,
-  BitmexSettlementResponse,
-  BitmexTradeResponse,
-} from '../types';
+import { Config, OrderResponse, OrderbookL2Response, QuoteResponse, SettlementResponse, TradeResponse } from '../types';
 import { BitmexWsBase } from './bitmex-ws-base';
 import { Order, Orderbook, Quote, Settlement, Trade } from './internal';
 import { Websocket } from './internal/websocket/websocket';
@@ -20,7 +13,7 @@ export class BitmexWS extends BitmexWsBase {
   private readonly order: Order;
   private readonly settlement: Settlement;
 
-  constructor(config?: BitmexConfig) {
+  constructor(config?: Config) {
     super(config);
 
     this.ws = new Websocket(config!);
@@ -32,7 +25,7 @@ export class BitmexWS extends BitmexWsBase {
   }
 
   // realtime orderbook
-  orderbook$(pair: string): Observable<BitmexOrderbookL2Response> {
+  orderbook$(pair: string): Observable<OrderbookL2Response> {
     return this.orderbook.orderbookL2T25$(pair);
   }
 
@@ -41,7 +34,7 @@ export class BitmexWS extends BitmexWsBase {
     this.orderbook.stopOrderbookL2T25(pair);
   }
 
-  trade$(pair: string): Observable<BitmexTradeResponse> {
+  trade$(pair: string): Observable<TradeResponse> {
     return this.trade.trade$(pair);
   }
 
@@ -50,7 +43,7 @@ export class BitmexWS extends BitmexWsBase {
     this.trade.stopTrade(pair);
   }
 
-  tradeBin1d$(pair: string): Observable<BitmexTradeResponse> {
+  tradeBin1d$(pair: string): Observable<TradeResponse> {
     return this.trade.tradeBin1d$(pair);
   }
 
@@ -59,7 +52,7 @@ export class BitmexWS extends BitmexWsBase {
     this.trade.stopTradeBin1d(pair);
   }
 
-  quote$(pair: string): Observable<BitmexQuoteResponse> {
+  quote$(pair: string): Observable<QuoteResponse> {
     return this.quote.quote$(pair);
   }
 
@@ -68,7 +61,7 @@ export class BitmexWS extends BitmexWsBase {
     this.quote.stopQuote(pair);
   }
 
-  settlement$(pair: string): Observable<BitmexSettlementResponse> {
+  settlement$(pair: string): Observable<SettlementResponse> {
     return this.settlement.settlement$(pair);
   }
 
@@ -77,7 +70,7 @@ export class BitmexWS extends BitmexWsBase {
     this.settlement.stopSettlement(pair);
   }
 
-  order$(pair: string): Observable<BitmexOrderResponse> {
+  order$(pair: string): Observable<OrderResponse> {
     return this.order.order$(pair);
   }
 

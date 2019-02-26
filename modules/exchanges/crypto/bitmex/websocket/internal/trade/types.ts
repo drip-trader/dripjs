@@ -1,4 +1,4 @@
-import { BitmexOrderSide } from '../../../types';
+import { OrderSide } from '../../../types';
 
 // {
 //   "table": "trade",
@@ -44,7 +44,7 @@ import { BitmexOrderSide } from '../../../types';
 export interface TradeSource {
   timestamp: string;
   symbol: string;
-  side: BitmexOrderSide;
+  side: OrderSide;
   size: number;
   price: number;
   tickDirection: string;
