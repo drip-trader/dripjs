@@ -99,7 +99,7 @@
   },
   "homepage": "https://github.com/zlq4863947/dripjs#readme",
   "devDependencies": {
-    "@types/jest": "24.0.6",
+    "@types/jest": "24.0.8",
     "@types/qs": "6.5.1",
     "@types/ws": "6.0.1",
     "@zerollup/ts-transform-paths": "1.7.0",
