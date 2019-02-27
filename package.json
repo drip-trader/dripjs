@@ -15,6 +15,7 @@
     "build:preprocess": "rm -rf dist",
     "build:postprocess": "cp package.json README.md README_EN.md dripjs.svg dist",
     "build:typedoc": "rm -rf type-docs && typedoc --tsconfig ./tsconfig.typedoc.json",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "cp:docs": "yarn build:typedoc && cp -rf type-docs/* ../dripjs-docs",
     "coverage": "jest -c jest.config.js --collectCoverage",
     "ci:coverage": "jest -c jest.config.js --coverage --coverageReporters=text-lcov | coveralls",
