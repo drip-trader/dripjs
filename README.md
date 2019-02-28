@@ -25,6 +25,9 @@ see the <a href="https://github.com/zlq4863947/dripjs/blob/master/README_EN.md">
 让量化开发者将大部分精力、时间花费在核心:交易策略的开发上。
 **Drip.js**提供除此之外的一切，使得开发者不必再为重复造轮子而苦恼
 
+## 简书专题文章
+https://www.jianshu.com/c/520f18fa56cb
+
 ## 安装
 
 由于此框架全部模块化，可以使用下面命令安装到您的程序中
