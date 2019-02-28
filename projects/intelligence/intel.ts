@@ -1,7 +1,7 @@
 import { Bar, BarRequest, Depth, Symbol, Ticker, Transaction } from '@dripjs/types';
 import { Observable } from 'rxjs';
 
-export abstract class Intelligence {
+export abstract class Intel {
   abstract getSymbols(): Promise<Symbol[]>;
   abstract getSymbol(symbol: string): Promise<Symbol | undefined>;
   abstract getTicker$(symbol: string): Observable<Ticker>;

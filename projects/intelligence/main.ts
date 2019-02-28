@@ -4,9 +4,9 @@ require('dotenv').config();
 import { realConfig } from '@dripjs/testing';
 
 import { BitmexSpy } from './spy';
-import { IntelligenceFactory } from '.';
+import { IntelFactory } from '.';
 
-const bitmex = IntelligenceFactory.create(BitmexSpy, realConfig);
+const bitmex = IntelFactory.create(BitmexSpy, realConfig);
 bitmex.getDepth$('XBTUSD').subscribe((depth) => {
   console.log(depth);
 });

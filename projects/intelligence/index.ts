@@ -1,2 +1,2 @@
-export * from './intelligence-factory';
+export * from './intel-factory';
 export * from './spy';
