@@ -6,13 +6,13 @@ import * as moment from 'moment';
 import { Observable, zip } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Intelligence } from '../intelligence';
+import { Intel } from '../intel';
 
 export interface BitmexBarRequest extends BarRequest {
   resolution: Bitmex.Resolution;
 }
 
-export class BitmexSpy extends Intelligence {
+export class BitmexSpy extends Intel {
   rest: Bitmex.BitmexRest;
   ws: Bitmex.BitmexWS;
 

@@ -11,9 +11,8 @@
   "typings": "dist/index.d.ts",
   "scripts": {
     "bdd": "yarn jest --watch --onlyChanged",
-    "build:prod": "yarn build:preprocess && yarn tsc:app && yarn build:postprocess",
+    "build:prod": "yarn build:preprocess && yarn tsc:app",
     "build:preprocess": "rm -rf dist",
-    "build:postprocess": "cp package.json README.md README_EN.md dripjs.svg dist",
     "build:typedoc": "rm -rf type-docs && typedoc --tsconfig ./tsconfig.typedoc.json",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "cp:docs": "yarn build:typedoc && cp -rf type-docs/* ../dripjs-docs",
@@ -29,7 +28,7 @@
     "lint": "yarn lint:md && yarn lint:ts",
     "lint:md": "markdownlint {docs/**/*.md,modules/**/*.md,projects/**/*.md,./README*.md}",
     "lint:ts": "tslint -p tsconfig.json -c tslint.json",
-    "pub": "yarn build:prod && npm publish dist",
+    "release:patch": "yarn standard-version -s --release-as patch",
     "test": "yarn jest --runInBand",
     "tsc:app": "ttsc -p tsconfig.app.json",
     "tsc:spec": "ttsc -p tsconfig.spec.json"

@@ -42,10 +42,10 @@ npm install dripjs-bitmex
 ## Use
 
 ```typescript
-import { IntelligenceFactory } from 'dripjs';
+import { IntelFactory, BitmexSpy } from 'dripjs';
 
 const pair = 'XBTUSD';
-const bitmex = IntelligenceFactory.create(Bitmex, {
+const bitmex = IntelFactory.create(BitmexSpy, {
   apiKey: `xx`,
   apiSecret: `zz`,
   testnet: false,

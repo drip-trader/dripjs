@@ -27,7 +27,7 @@ see the <a href="https://github.com/zlq4863947/dripjs/blob/master/README_EN.md">
 
 ## 简书专题文章
 
-https://www.jianshu.com/c/520f18fa56cb
+[https://www.jianshu.com/c/520f18fa56cb](https://www.jianshu.com/c/520f18fa56cb)
 
 ## 安装
 
@@ -47,10 +47,10 @@ npm install dripjs-bitmex
 ## 使用
 
 ```typescript
-import { IntelligenceFactory } from 'dripjs';
+import { IntelFactory, BitmexSpy } from 'dripjs';
 
 const pair = 'XBTUSD';
-const bitmex = IntelligenceFactory.create(Bitmex, {
+const bitmex = IntelFactory.create(BitmexSpy, {
   apiKey: `xx`,
   apiSecret: `zz`,
   testnet: false,

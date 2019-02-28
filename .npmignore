@@ -1,0 +1,37 @@
+# dependencies
+/node_modules
+
+# IDEs and editors
+*.launch
+.settings/
+/.vscode
+
+# misc
+/coverage/*
+/jest
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# System Files
+.DS_Store
+Thumbs.db
+.history
+docs
+type-docs
+assets
+.env*
+.importsortrc
+.markdownlintrc
+.prettier*
+.travis.yml
+CHANGELOG.md
+CONTRIBUTING.md
+index.ts
+jest*
+README_EN.md
+renovate.json
+tsconfig*
+tslint.json
+yarn.lock
+ .editorconfig

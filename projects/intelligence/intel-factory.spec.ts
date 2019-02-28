@@ -1,17 +1,15 @@
 import { Bitmex } from '@dripjs/exchanges';
 import { realConfig } from '@dripjs/testing';
 
-import { Spy } from './intelligence-factory';
-import { BitmexSpy } from './spy';
-import { IntelligenceFactory } from '.';
+import { IntelFactory, Spy, BitmexSpy } from '.';
 
-describe('Intelligence factory', () => {
+describe('Intel factory', () => {
   describe('Spy bitmex', () => {
     let bitmex: Spy;
     let pair = 'XBTUSD';
 
     beforeAll(() => {
-      bitmex = IntelligenceFactory.create(BitmexSpy, realConfig);
+      bitmex = IntelFactory.create(BitmexSpy, realConfig);
     });
 
     afterAll(() => {
