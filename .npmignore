@@ -5,6 +5,31 @@
 *.launch
 .settings/
 /.vscode
+.editorconfig
+.history
+
+# source
+projects
+modules
+index.ts
+
+# configuration
+.env*
+.importsortrc
+.markdownlintrc
+.prettier*
+.travis.yml
+renovate.json
+tsconfig*
+jest*
+tslint.json
+
+# docs
+docs
+type-docs
+CHANGELOG.md
+CONTRIBUTING.md
+README_EN.md
 
 # misc
 /coverage/*
@@ -12,26 +37,9 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+assets
+yarn.lock
 
 # System Files
 .DS_Store
 Thumbs.db
-.history
-docs
-type-docs
-assets
-.env*
-.importsortrc
-.markdownlintrc
-.prettier*
-.travis.yml
-CHANGELOG.md
-CONTRIBUTING.md
-index.ts
-jest*
-README_EN.md
-renovate.json
-tsconfig*
-tslint.json
-yarn.lock
- .editorconfig
