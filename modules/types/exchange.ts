@@ -12,10 +12,16 @@ export interface Market {
 
 export interface Pair {
   name: string;
+  exchange: string;
   baseAsset: string;
   quoteAsset: string;
   amountPrecision: number;
   pricePrecision: number;
+  minOrderAmount: number;
+  maxOrderAmount: number;
+  minOrderPrice: number;
+  maxOrderPrice: number;
+  isEnabled: boolean;
 }
 
 export interface Stock {

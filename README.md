@@ -46,22 +46,51 @@ npm install dripjs-bitmex
 
 ## 使用
 
-```typescript
-import { IntelFactory, BitmexSpy } from 'dripjs';
+- import
 
-const pair = 'XBTUSD';
-const bitmex = IntelFactory.create(BitmexSpy, {
-  apiKey: `xx`,
-  apiSecret: `zz`,
-  testnet: false,
+```typescript
+import { IntelligenceFactory, BitmexSpy } from 'dripjs';
+
+// 生成指定交易所的数据接口
+const bitmexSpy = IntelligenceFactory.create(BitmexSpy, {
+  apiKey: `你的bitmex交易所apiKey`,
+  apiSecret: `你的bitmex交易所apiSecret`,
+  testnet: true,
 });
-bitmex.getTransaction$(pair).subscribe((transaction) => {
-  console.log(transaction);
+const pair = 'XBTUSD';
+// 订阅逐笔数据
+bitmexSpy.getTicker$(pair).subscribe((res) => {
+  console.log(res);
 });
 setTimeout(() => {
-  bitmex.stopTransaction(pair);
-  bitmex.destory();
-}, 2000);
+  console.log('do stop ticker subscription');
+  // 不用时，别忘记退订
+  bitmexSpy.stopTicker(pair);
+}, 5000);
+```
+
+- require
+
+```typescript
+const dripjs = require('dripjs');
+
+// 生成指定交易所的数据接口
+const bitmexSpy = dripjs.IntelligenceFactory.create(dripjs.BitmexSpy, {
+  apiKey: `你的bitmex交易所apiKey`,
+  apiSecret: `你的bitmex交易所apiSecret`,
+  testnet: true,
+});
+const pair = 'XBTUSD';
+// 订阅逐笔数据
+bitmexSpy.getTicker$(pair).subscribe((res) => {
+  console.log(res);
+});
+
+setTimeout(() => {
+  console.log('do stop ticker subscription');
+  // 不用时，别忘记退订
+  bitmexSpy.stopTicker(pair);
+}, 5000);
 ```
 
 ## 模块列表

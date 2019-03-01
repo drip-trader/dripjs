@@ -1,7 +1,7 @@
 import { Bitmex } from '@dripjs/exchanges';
 import { realConfig } from '@dripjs/testing';
 
-import { IntelFactory, Spy, BitmexSpy } from '.';
+import { BitmexSpy, IntelFactory, Spy } from '.';
 
 describe('Intel factory', () => {
   describe('Spy bitmex', () => {

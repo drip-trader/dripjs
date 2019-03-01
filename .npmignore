@@ -9,8 +9,8 @@
 .history
 
 # source
-projects
-modules
+/projects
+/modules
 index.ts
 
 # configuration
