@@ -1,0 +1,23 @@
+# dependencies
+/node_modules
+
+# source
+/common
+/rest
+/types
+/websocket
+index.ts
+
+# configuration
+tsconfig.json
+
+# misc
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+assets
+yarn.lock
+
+# System Files
+.DS_Store
+Thumbs.db
