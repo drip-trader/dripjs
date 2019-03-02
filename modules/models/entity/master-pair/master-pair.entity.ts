@@ -28,7 +28,7 @@ export class MasterPairEntity {
     type: 'varchar',
     name: 'exchange',
     length: 10,
-    comment: 'exchange of special pair name',
+    comment: 'exchange name of special pair',
   })
   readonly exchange!: Pair['exchange'];
 
@@ -94,7 +94,7 @@ export class MasterPairEntity {
     default: () => '0.0',
     transformer: getFloorByDigitsTransformer(9),
   })
-  readonly minOrderPrice!: Pair['minOrderAmount'];
+  readonly minOrderPrice!: Pair['minOrderPrice'];
 
   @Column({
     type: 'int',
@@ -102,7 +102,7 @@ export class MasterPairEntity {
     unsigned: true,
     comment: 'max Order price',
   })
-  readonly maxOrderPrice!: Pair['maxOrderAmount'];
+  readonly maxOrderPrice!: Pair['maxOrderPrice'];
 
   @Column({
     type: 'tinyint',

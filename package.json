@@ -101,10 +101,13 @@
   },
   "homepage": "https://github.com/zlq4863947/dripjs#readme",
   "devDependencies": {
+    "@nestjs/common": "5.7.2",
+    "@nestjs/core": "5.7.2",
     "@nestjs/typeorm": "5.3.0",
     "@types/jest": "24.0.9",
     "@types/qs": "6.5.1",
     "@types/ws": "6.0.1",
+    "@types/lodash": "4.14.120",
     "@zerollup/ts-transform-paths": "1.7.0",
     "conventional-commits-detector": "1.0.2",
     "coveralls": "3.0.3",
@@ -131,14 +134,16 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "bignumber.js": "^8.1.0",
+    "bignumber.js": "^8.1.1",
     "dotenv": "^6.2.0",
     "dripjs-common": "^0.1.0",
     "dripjs-types": "^0.1.2",
+    "lodash": "^4.17.11",
     "moment": "^2.24.0",
     "qs": "^6.6.0",
     "rxjs": "^6.4.0",
-    "typeorm": "^0.2.14",
+    "typeorm": "0.2.13",
+    "reflect-metadata": "0.1.12",
     "ws": "^6.1.4"
   }
 }
