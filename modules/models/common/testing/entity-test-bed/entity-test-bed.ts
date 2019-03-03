@@ -1,7 +1,6 @@
 import * as assert from 'assert';
 
 import { gt, gtStrictly, lte } from '@dripjs/common';
-import { dripjsDbName } from '@dripjs/models';
 import { isFunction, isObject } from 'lodash';
 import { Connection, EntityManager, ObjectType, createConnection, getConnectionManager } from 'typeorm';
 
@@ -324,9 +323,7 @@ export class EntityTestBed {
    */
   async _setup(): Promise<void> {
     const connectionManager = getConnectionManager();
-    this.databaseConnection = connectionManager.has(dripjsDbName)
-      ? connectionManager.get(dripjsDbName)
-      : await createConnection(dripjsDbName);
+    this.databaseConnection = connectionManager.connections.length > 0 ? connectionManager.connections[0] : await createConnection();
 
     await this._reset();
   }

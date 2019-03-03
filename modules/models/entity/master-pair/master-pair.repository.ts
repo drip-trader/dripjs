@@ -16,7 +16,7 @@ export interface PairPrecision {
 }
 
 @EntityRepository(MasterPairEntity)
-export class MasterSpotPairRepository extends Repository<MasterPairEntity> {
+export class MasterPairRepository extends Repository<MasterPairEntity> {
   async findByPair(pair: string): Promise<MasterPairEntity | undefined> {
     return this.findOne({ where: { name: pair } });
   }

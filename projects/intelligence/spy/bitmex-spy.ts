@@ -1,7 +1,6 @@
 import { Bitmex } from '@dripjs/exchanges';
-import { Bar, BarRequest, Depth, OrderSide, Ticker, Transaction } from '@dripjs/types';
+import { Bar, BarRequest, Depth, OrderSide, Pair, Ticker, Transaction } from '@dripjs/types';
 import { BigNumber } from 'bignumber.js';
-import { Pair } from 'dripjs-types';
 import * as moment from 'moment';
 import { Observable, zip } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -34,11 +33,17 @@ export class BitmexSpy extends Intel {
       if (!res.error) {
         this.symbols = res.instruments.map((o) => {
           return {
+            exchange: 'bitmex',
             name: o.symbol,
             baseAsset: o.rootSymbol,
             quoteAsset: o.quoteCurrency,
             amountPrecision: o.lotSize,
             pricePrecision: new BigNumber(o.tickSize).dp(),
+            minOrderAmount: 0,
+            maxOrderAmount: 0,
+            minOrderPrice: 0,
+            maxOrderPrice: 0,
+            isEnabled: true,
           };
         });
       }

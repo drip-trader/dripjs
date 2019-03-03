@@ -1,5 +1,6 @@
-import { MasterPairEntity, MasterSpotPairRepository } from '@dripjs/models';
 import { ObjectType } from 'typeorm';
+
+import { MasterPairEntity, MasterSpotPairRepository } from '../../../entity';
 
 export const allEntityTypes: ObjectType<any>[] = [MasterPairEntity];
 
