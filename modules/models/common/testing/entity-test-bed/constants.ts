@@ -1,7 +1,7 @@
 import { ObjectType } from 'typeorm';
 
-import { MasterPairEntity, MasterSpotPairRepository } from '../../../entity';
+import { MasterPairEntity, MasterPairRepository } from '../../../entity';
 
 export const allEntityTypes: ObjectType<any>[] = [MasterPairEntity];
 
-export const allRepositoryTypes: ObjectType<any>[] = [MasterSpotPairRepository];
+export const allRepositoryTypes: ObjectType<any>[] = [MasterPairRepository];

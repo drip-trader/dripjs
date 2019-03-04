@@ -18,7 +18,7 @@
     "cp:docs": "yarn build:typedoc && cp -rf type-docs/* ../dripjs-docs",
     "coverage": "jest -c jest.config.js --collectCoverage",
     "ci:coverage": "jest -c jest.config.js --coverage --coverageReporters=text-lcov | coveralls",
-    "db:sync": "yarn ts-node $(npm bin)/typeorm schema:sync",
+    "db:sync": "yarn build:prod && yarn ts-node $(npm bin)/typeorm schema:sync",
     "docs": "yarn build:typedoc && http-server type-docs",
     "dev:bitmex": "ts-node --files -r tsconfig-paths/register ./projects/intelligence/main.ts",
     "format": "yarn format:ts && yarn format:md",

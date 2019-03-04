@@ -1,6 +1,6 @@
 import { MasterPairEntity, MasterPairRepository } from '@dripjs/models';
 
-import { EntityTestBed, DatabaseSnapshot } from './entity-test-bed';
+import { DatabaseSnapshot, EntityTestBed } from './entity-test-bed';
 import { overrideTimestampColumns } from './test-helpers';
 
 const createBase = {
@@ -67,7 +67,7 @@ describe('EntityTestBed', () => {
       it('should create multiple instances', async () => {
         const created = await EntityTestBed.createEntity(MasterPairEntity, [
           {
-            ...createBase
+            ...createBase,
           },
           {
             ...createBase,
@@ -109,7 +109,7 @@ describe('EntityTestBed', () => {
             ...createBase,
             name: () => 'function',
           });
-  
+
           expect(overrideTimestampColumns(created)).toEqual({
             ...expectedBase,
             id: '1',
@@ -148,7 +148,7 @@ describe('EntityTestBed', () => {
     });
   });
 
-  describe.only('assertDatabase', () => {
+  describe('assertDatabase', () => {
     // EntityTestBed.assertDatabase() returns <Promise<undefined>>
     const valueWhenAssertIsOK = undefined;
     let e1: MasterPairEntity;

@@ -197,7 +197,7 @@
       ["property", "static",    "camel"],
       ["property", "private",   "camel", "allow-leading-underscore"],
       ["property", "protected", "camel", "allow-leading-underscore"],
-      ["variable", "local",     "camel"],
+      ["variable", "local",     "camel", "allow-leading-underscore"],
       ["method", "private",     "camel", "allow-leading-underscore"],
       ["method", "protected",   "camel", "allow-leading-underscore"],
       ["function",              "camel"]

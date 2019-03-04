@@ -19,7 +19,7 @@ export class MasterPairEntity {
   @Column({
     type: 'varchar',
     name: 'name',
-    length: 10,
+    length: 32,
     comment: 'special pair name',
   })
   readonly name!: Pair['name'];
@@ -27,7 +27,7 @@ export class MasterPairEntity {
   @Column({
     type: 'varchar',
     name: 'exchange',
-    length: 10,
+    length: 32,
     comment: 'exchange name of special pair',
   })
   readonly exchange!: Pair['exchange'];
