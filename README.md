@@ -49,10 +49,10 @@ npm install dripjs-bitmex
 - import
 
 ```typescript
-import { IntelligenceFactory, BitmexSpy } from 'dripjs';
+import { IntelFactory, BitmexSpy } from 'dripjs';
 
 // 生成指定交易所的数据接口
-const bitmexSpy = IntelligenceFactory.create(BitmexSpy, {
+const bitmexSpy = IntelFactory.create(BitmexSpy, {
   apiKey: `你的bitmex交易所apiKey`,
   apiSecret: `你的bitmex交易所apiSecret`,
   testnet: true,
@@ -75,7 +75,7 @@ setTimeout(() => {
 const dripjs = require('dripjs');
 
 // 生成指定交易所的数据接口
-const bitmexSpy = dripjs.IntelligenceFactory.create(dripjs.BitmexSpy, {
+const bitmexSpy = dripjs.IntelFactory.create(dripjs.BitmexSpy, {
   apiKey: `你的bitmex交易所apiKey`,
   apiSecret: `你的bitmex交易所apiSecret`,
   testnet: true,
