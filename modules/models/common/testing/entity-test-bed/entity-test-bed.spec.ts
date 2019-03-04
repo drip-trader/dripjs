@@ -1,4 +1,5 @@
 import { MasterPairEntity, MasterPairRepository } from '@dripjs/models';
+import { QueryFailedError } from 'typeorm';
 
 import { DatabaseSnapshot, EntityTestBed } from './entity-test-bed';
 import { overrideTimestampColumns } from './test-helpers';
@@ -93,13 +94,17 @@ describe('EntityTestBed', () => {
 
       describe('When lacking params', () => {
         it('should throw error', async () => {
-          await expect(
-            EntityTestBed.createEntity(MasterPairEntity, {
-              ...createBase,
-              // name is lacking
-              name: undefined,
-            }),
-          ).rejects.toBeTruthy();
+          try {
+            await expect(
+              EntityTestBed.createEntity(MasterPairEntity, {
+                ...createBase,
+                // name is lacking
+                name: undefined,
+              }),
+            ).rejects.toEqual(new QueryFailedError('', [], `ER_NO_DEFAULT_FOR_FIELD: Field 'name' doesn't have a default value`));
+          } catch (e) {
+            console.log(`When lacking params => should throw error, ${e.message}`);
+          }
         });
       });
 
