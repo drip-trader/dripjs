@@ -1,7 +1,11 @@
-import { getFloorByDigitsTransformer, nullableDateTransformer, booleanTinyintTransformer, nullableBooleanTinyintTransformer } from './transformers';
+import {
+  booleanTinyintTransformer,
+  getFloorByDigitsTransformer,
+  nullableBooleanTinyintTransformer,
+  nullableDateTransformer,
+} from './transformers';
 
 describe('transformers', () => {
-
   it('getFloorByDigitsTransformer', async () => {
     const transformer = getFloorByDigitsTransformer(4);
     expect(transformer.from(null)).toEqual(null);
@@ -21,20 +25,18 @@ describe('transformers', () => {
 
   it('booleanTinyintTransformer', async () => {
     expect(booleanTinyintTransformer.from(0)).toBeFalsy();
-    expect(booleanTinyintTransformer.from(1)).toBeTruthy()
+    expect(booleanTinyintTransformer.from(1)).toBeTruthy();
     expect(booleanTinyintTransformer.to(<any>null)).toEqual(null);
     try {
       expect(booleanTinyintTransformer.to(<any>NaN)).toEqual(new Error(`Invalid boolean value NaN`));
-    } catch(e) {
-      console.info(`test error: ${e.message}`);
-    }
+    } catch (e) {}
     expect(booleanTinyintTransformer.to(false)).toEqual(0);
     expect(booleanTinyintTransformer.to(true)).toEqual(1);
   });
 
   it('nullableBooleanTinyintTransformer', async () => {
     expect(nullableBooleanTinyintTransformer.from(0)).toBeFalsy();
-    expect(nullableBooleanTinyintTransformer.from(1)).toBeTruthy()
+    expect(nullableBooleanTinyintTransformer.from(1)).toBeTruthy();
     expect(nullableBooleanTinyintTransformer.to(null)).toEqual(null);
     expect(nullableBooleanTinyintTransformer.to(false)).toEqual(0);
     expect(nullableBooleanTinyintTransformer.to(true)).toEqual(1);

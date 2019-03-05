@@ -102,9 +102,7 @@ describe('EntityTestBed', () => {
                 name: undefined,
               }),
             ).rejects.toEqual(new QueryFailedError('', [], `ER_NO_DEFAULT_FOR_FIELD: Field 'name' doesn't have a default value`));
-          } catch (e) {
-            console.log(`When lacking params => should throw error, ${e.message}`);
-          }
+          } catch (e) {}
         });
       });
 
