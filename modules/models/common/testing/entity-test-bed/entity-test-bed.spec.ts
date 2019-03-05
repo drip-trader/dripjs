@@ -1,7 +1,7 @@
 import { MasterPairEntity, MasterPairRepository } from '@dripjs/models';
 import { QueryFailedError } from 'typeorm';
 
-import { DatabaseSnapshot, EntityTestBed } from './entity-test-bed';
+import { DatabaseSnapshot, EntityTestBed, getLatestUpdatedTime } from './entity-test-bed';
 import { overrideTimestampColumns } from './test-helpers';
 
 const createBase = {
@@ -441,6 +441,38 @@ describe('EntityTestBed', () => {
           });
         });
       });
+    });
+  });
+});
+
+describe('getLatestUpdatedTime', () => {
+  describe('When no records', () => {
+    it('should return 0', () => {
+      expect(getLatestUpdatedTime([])).toBe(0);
+    });
+  });
+
+  describe('When max is value of createdAt', () => {
+    it('should get max value', () => {
+      expect(
+        getLatestUpdatedTime([
+          { id: '1', createdAt: 1, updatedAt: 1 },
+          { id: '2', createdAt: 2, updatedAt: 1 },
+          { id: '3', createdAt: 3, updatedAt: 1 },
+        ]),
+      ).toBe(3);
+    });
+  });
+
+  describe('When max is value of updatedAt', () => {
+    it('should get max value', () => {
+      expect(
+        getLatestUpdatedTime([
+          { id: '1', createdAt: 1, updatedAt: 3 },
+          { id: '2', createdAt: 1, updatedAt: 2 },
+          { id: '3', createdAt: 1, updatedAt: 1 },
+        ]),
+      ).toBe(3);
     });
   });
 });
