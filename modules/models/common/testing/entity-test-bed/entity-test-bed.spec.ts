@@ -80,8 +80,8 @@ describe('EntityTestBed', () => {
 
         expect(overrideTimestampColumns(created)).toEqual([
           {
-            ...expectedBase,
             id: '1',
+            ...expectedBase,
           },
           {
             ...expectedBase,

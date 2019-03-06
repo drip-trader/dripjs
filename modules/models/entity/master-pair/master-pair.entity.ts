@@ -71,7 +71,7 @@ export class MasterPairEntity {
     scale: 9,
     unsigned: true,
     comment: 'min Order amount',
-    default: () => '0.0',
+    default: /* istanbul ignore next */ () => '0.0',
     transformer: getFloorByDigitsTransformer(9),
   })
   readonly minOrderAmount!: Pair['minOrderAmount'];
@@ -91,7 +91,7 @@ export class MasterPairEntity {
     scale: 9,
     unsigned: true,
     comment: 'min Order price',
-    default: () => '0.0',
+    default: /* istanbul ignore next */ () => '0.0',
     transformer: getFloorByDigitsTransformer(9),
   })
   readonly minOrderPrice!: Pair['minOrderPrice'];
@@ -119,7 +119,7 @@ export class MasterPairEntity {
     type: 'datetime',
     name: 'created_at',
     precision: 3,
-    default: () => 'NOW(3)',
+    default: /* istanbul ignore next */ () => 'NOW(3)',
     transformer: nullableDateTransformer,
   })
   readonly createdAt!: Timestamp;
@@ -128,7 +128,7 @@ export class MasterPairEntity {
     type: 'datetime',
     name: 'updated_at',
     precision: 3,
-    default: () => 'NOW(3)',
+    default: /* istanbul ignore next */ () => 'NOW(3)',
     onUpdate: 'NOW(3)',
     transformer: nullableDateTransformer,
   })

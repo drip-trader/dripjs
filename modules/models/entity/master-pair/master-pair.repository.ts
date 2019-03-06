@@ -3,11 +3,15 @@ import { EntityRepository, Repository } from 'typeorm';
 import { MasterPairEntity } from './master-pair.entity';
 
 export interface MasterPairEntityCreateParams {
+  exchange: MasterPairEntity['exchange'];
   name: MasterPairEntity['name'];
   baseAsset: MasterPairEntity['baseAsset'];
   quoteAsset: MasterPairEntity['quoteAsset'];
   amountPrecision: MasterPairEntity['amountPrecision'];
   pricePrecision: MasterPairEntity['pricePrecision'];
+  maxOrderAmount: MasterPairEntity['maxOrderAmount'];
+  maxOrderPrice: MasterPairEntity['maxOrderPrice'];
+  isEnabled: MasterPairEntity['isEnabled'];
 }
 
 export interface PairPrecision {
@@ -41,10 +45,6 @@ export class MasterPairRepository extends Repository<MasterPairEntity> {
   }
 
   async getPair(): Promise<MasterPairEntity[]> {
-    return this.find({ where: { isEnabled: true } });
-  }
-
-  async getVisiblePairs(): Promise<MasterPairEntity[]> {
     return this.find({ where: { isEnabled: true } });
   }
 

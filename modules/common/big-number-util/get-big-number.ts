@@ -6,6 +6,7 @@ export function getBigNumber(value: BigNumber.Value): BigNumber {
   try {
     bn = new BigNumber(value);
   } catch (e) {
+    /* istanbul ignore next */
     bn = new BigNumber(NaN);
   }
 

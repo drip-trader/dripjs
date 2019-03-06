@@ -28,7 +28,12 @@ export class Trade {
   tradeBin1d$(pair: string): Observable<TradeResponse> {
     const channel = getTradeChannel(pair, PublicEndPoints.TradeBin1d);
 
-    return this.ws.subscribe<TradeSource>(channel).pipe(map((wsData) => transform(wsData.data[0])));
+    return this.ws.subscribe<TradeSource>(channel).pipe(
+      map(
+        /* istanbul ignore next */
+        (wsData) => transform(wsData.data[0]),
+      ),
+    );
   }
 
   stopTradeBin1d(pair: string): void {
