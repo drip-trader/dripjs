@@ -34,6 +34,7 @@
     "release:patch": "yarn standard-version -s --release-as patch",
     "test": "yarn jest --runInBand",
     "tsc:app": "ttsc -p tsconfig.app.json",
+    "tsc:dev": "ttsc -p tsconfig.dev.json",
     "tsc:spec": "ttsc -p tsconfig.spec.json"
   },
   "repository": {
