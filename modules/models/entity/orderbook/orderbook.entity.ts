@@ -53,7 +53,6 @@ export class OrderbookEntity {
     default: /* istanbul ignore next */ () => 'NOW(3)',
     transformer: nullableDateTransformer,
   })
-  /* istanbul ignore next */
   readonly createdAt!: Timestamp;
 
   @Column({
@@ -64,6 +63,5 @@ export class OrderbookEntity {
     onUpdate: 'NOW(3)',
     transformer: nullableDateTransformer,
   })
-  /* istanbul ignore next */
   readonly updatedAt!: Timestamp;
 }

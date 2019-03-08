@@ -4,14 +4,14 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { nullableDateTransformer } from '../../common';
 
 @Entity({
-  name: 'transaction',
+  name: 'ticker',
 })
-export class TransactionEntity {
+export class TickerEntity {
   @PrimaryGeneratedColumn({
     type: 'bigint',
     name: 'id',
     unsigned: true,
-    comment: 'transaction id',
+    comment: 'primary auto generated id',
   })
   readonly id!: string;
 
@@ -32,40 +32,75 @@ export class TransactionEntity {
   readonly symbol!: string;
 
   @Column({
+    type: 'decimal',
+    name: 'ask',
+    precision: 21,
+    scale: 9,
+    unsigned: true,
+  })
+  readonly ask!: string;
+
+  @Column({
+    type: 'decimal',
+    name: 'bid',
+    precision: 21,
+    scale: 9,
+    unsigned: true,
+  })
+  readonly bid!: string;
+
+  @Column({
+    type: 'decimal',
+    name: 'open',
+    precision: 21,
+    scale: 9,
+    unsigned: true,
+  })
+  readonly open!: string;
+
+  @Column({
+    type: 'decimal',
+    name: 'high',
+    precision: 21,
+    scale: 9,
+    unsigned: true,
+  })
+  readonly high!: string;
+
+  @Column({
+    type: 'decimal',
+    name: 'low',
+    precision: 21,
+    scale: 9,
+    unsigned: true,
+  })
+  readonly low!: string;
+
+  @Column({
+    type: 'decimal',
+    name: 'last',
+    precision: 21,
+    scale: 9,
+    unsigned: true,
+  })
+  readonly last!: string;
+
+  @Column({
+    type: 'decimal',
+    name: 'volume',
+    precision: 21,
+    scale: 9,
+    unsigned: true,
+  })
+  readonly volume!: string;
+
+  @Column({
     type: 'datetime',
     name: 'time',
     precision: 3,
     transformer: nullableDateTransformer,
   })
   readonly time!: Timestamp;
-
-  @Column({
-    type: 'varchar',
-    name: 'side',
-    length: 4,
-    comment: 'order side (buy or sell)',
-  })
-  readonly side!: string;
-
-  @Column({
-    type: 'decimal',
-    name: 'price',
-    precision: 21,
-    scale: 9,
-    unsigned: true,
-    comment: 'order price',
-  })
-  readonly price!: string;
-
-  @Column({
-    type: 'decimal',
-    name: 'amount',
-    precision: 21,
-    scale: 9,
-    unsigned: true,
-    comment: 'order amount',
-  })
-  readonly amount!: string;
 
   @Column({
     type: 'datetime',

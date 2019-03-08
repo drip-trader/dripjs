@@ -122,7 +122,6 @@ export class MasterPairEntity {
     default: /* istanbul ignore next */ () => 'NOW(3)',
     transformer: nullableDateTransformer,
   })
-  /* istanbul ignore next */
   readonly createdAt!: Timestamp;
 
   @Column({
@@ -133,6 +132,5 @@ export class MasterPairEntity {
     onUpdate: 'NOW(3)',
     transformer: nullableDateTransformer,
   })
-  /* istanbul ignore next */
   readonly updatedAt!: Timestamp;
 }

@@ -114,6 +114,25 @@ CREATE TABLE `transaction` (
 
 
 
+# テーブルのダンプ ticker
+# ------------------------------------------------------------
+CREATE TABLE `ticker` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'primary auto generated id',
+  `exchange` varchar(20) NOT NULL COMMENT 'exchange name',
+  `symbol` varchar(20) NOT NULL COMMENT 'symbol name',
+  `ask` decimal(21,9) unsigned NOT NULL,
+  `bid` decimal(21,9) unsigned NOT NULL,
+  `open` decimal(21,9) unsigned NOT NULL,
+  `high` decimal(21,9) unsigned NOT NULL,
+  `low` decimal(21,9) unsigned NOT NULL,
+  `last` decimal(21,9) unsigned NOT NULL,
+  `volume` decimal(21,9) unsigned NOT NULL,
+  `time` datetime(3) NOT NULL,
+  `created_at` datetime(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  `updated_at` datetime(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

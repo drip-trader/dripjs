@@ -9,6 +9,8 @@ import {
   MasterPairRepository,
   OrderbookEntity,
   OrderbookRepository,
+  TickerEntity,
+  TickerRepository,
   TransactionEntity,
   TransactionRepository,
 } from '../../../entity';
@@ -19,6 +21,7 @@ export const allEntityTypes: ObjectType<any>[] = [
   OrderbookEntity,
   TransactionEntity,
   CandlestickEntity,
+  TickerEntity,
 ];
 
 export const allRepositoryTypes: ObjectType<any>[] = [
@@ -27,4 +30,5 @@ export const allRepositoryTypes: ObjectType<any>[] = [
   OrderbookRepository,
   TransactionRepository,
   CandlestickRepository,
+  TickerRepository,
 ];
