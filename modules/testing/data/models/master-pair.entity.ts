@@ -12,7 +12,6 @@ export function getPairDefaultData(): MasterPairEntityCreateParams[] {
       pricePrecision: 1,
       maxOrderAmount: 9999999,
       maxOrderPrice: 9999999,
-      isEnabled: true,
     },
   ];
 }

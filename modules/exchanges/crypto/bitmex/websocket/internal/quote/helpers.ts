@@ -11,6 +11,6 @@ export function transform(source: QuoteSource): QuoteResponse {
   };
 }
 
-export function getTradeChannel(pair: string, endPoint?: PublicEndPoints | PrivateEndPoints): string {
-  return `${endPoint ? endPoint : PublicEndPoints.Quote}:${pair}`;
+export function getTradeChannel(pair: string): string {
+  return `${PublicEndPoints.Quote}:${pair}`;
 }

@@ -29,8 +29,8 @@ export function update(
   originSource: WebsocketData<OrderbookResponse>,
   updateSource: WebsocketData<OrderbookResponse>,
 ): WebsocketData<OrderbookResponse> {
-  const originData = originSource.data || [];
-  const updateData = updateSource.data || [];
+  const originData = originSource.data;
+  const updateData = updateSource.data;
 
   originSource.data = originData;
 

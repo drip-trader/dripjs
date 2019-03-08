@@ -19,7 +19,7 @@ export class MasterPairEntity {
   @Column({
     type: 'varchar',
     name: 'name',
-    length: 32,
+    length: 20,
     comment: 'special pair name',
   })
   readonly name!: Pair['name'];
@@ -27,7 +27,7 @@ export class MasterPairEntity {
   @Column({
     type: 'varchar',
     name: 'exchange',
-    length: 32,
+    length: 20,
     comment: 'exchange name of special pair',
   })
   readonly exchange!: Pair['exchange'];
@@ -67,7 +67,7 @@ export class MasterPairEntity {
   @Column({
     type: 'decimal',
     name: 'min_order_amount',
-    precision: 9,
+    precision: 21,
     scale: 9,
     unsigned: true,
     comment: 'min Order amount',
@@ -87,7 +87,7 @@ export class MasterPairEntity {
   @Column({
     type: 'decimal',
     name: 'min_order_price',
-    precision: 9,
+    precision: 21,
     scale: 9,
     unsigned: true,
     comment: 'min Order price',
@@ -110,7 +110,7 @@ export class MasterPairEntity {
     unsigned: true,
     width: 1,
     comment: 'whether pair is enable status',
-    default: '0',
+    default: '1',
     transformer: nullableBooleanTinyintTransformer,
   })
   readonly isEnabled!: Pair['isEnabled'];
@@ -122,6 +122,7 @@ export class MasterPairEntity {
     default: /* istanbul ignore next */ () => 'NOW(3)',
     transformer: nullableDateTransformer,
   })
+  /* istanbul ignore next */
   readonly createdAt!: Timestamp;
 
   @Column({
@@ -132,5 +133,6 @@ export class MasterPairEntity {
     onUpdate: 'NOW(3)',
     transformer: nullableDateTransformer,
   })
+  /* istanbul ignore next */
   readonly updatedAt!: Timestamp;
 }

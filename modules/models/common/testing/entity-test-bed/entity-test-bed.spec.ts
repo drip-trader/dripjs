@@ -19,7 +19,7 @@ const expectedBase = {
   ...createBase,
   minOrderAmount: '0.000000000',
   minOrderPrice: '0.000000000',
-  isEnabled: false,
+  isEnabled: true,
   createdAt: 'overridden',
   updatedAt: 'overridden',
 };

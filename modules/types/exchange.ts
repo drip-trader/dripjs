@@ -1,7 +1,13 @@
 export interface Exchange {
-  code: string;
   name: string;
-  desc?: string;
+  type: ExchangeType;
+  isEnabled: boolean;
+}
+
+export enum ExchangeType {
+  Crypto = 'crypto',
+  Stock = 'stock',
+  Futures = 'futures',
 }
 
 export interface Market {

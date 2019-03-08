@@ -4,6 +4,7 @@ import { getPairDefaultData } from '@dripjs/testing';
 describe('master-pair.repository', () => {
   let masterPairReposity: MasterPairRepository;
   const defaultData = getPairDefaultData();
+  const exchange = 'bitmex';
   const pair = 'xbtusd';
 
   beforeAll(async () => {
@@ -53,14 +54,14 @@ describe('master-pair.repository', () => {
 
   describe('getPair', () => {
     it('should get pair', async () => {
-      const pairInfo = await masterPairReposity.getPair();
+      const pairInfo = await masterPairReposity.getPairs(exchange);
       expect([getDataFromEntity(pairInfo[0])]).toEqual(defaultData);
     });
   });
 
   describe('getPairNames', () => {
     it('should get pair names', async () => {
-      const pairNames = await masterPairReposity.getPairNames();
+      const pairNames = await masterPairReposity.getPairNames(exchange);
       expect(pairNames).toEqual(defaultData.map((o) => o.name));
     });
   });
@@ -83,6 +84,5 @@ function getDataFromEntity(entity: MasterPairEntity): MasterPairEntityCreatePara
     pricePrecision: entity.pricePrecision,
     maxOrderAmount: entity.maxOrderAmount,
     maxOrderPrice: entity.maxOrderPrice,
-    isEnabled: entity.isEnabled,
   };
 }

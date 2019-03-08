@@ -11,7 +11,6 @@ export interface MasterPairEntityCreateParams {
   pricePrecision: MasterPairEntity['pricePrecision'];
   maxOrderAmount: MasterPairEntity['maxOrderAmount'];
   maxOrderPrice: MasterPairEntity['maxOrderPrice'];
-  isEnabled: MasterPairEntity['isEnabled'];
 }
 
 export interface PairPrecision {
@@ -44,13 +43,19 @@ export class MasterPairRepository extends Repository<MasterPairEntity> {
     return rs && rs.length > 0 ? rs[0] : { amountPrecision: 0, pricePrecision: 0 };
   }
 
-  async getPair(): Promise<MasterPairEntity[]> {
-    return this.find({ where: { isEnabled: true } });
+  async getPairs(exchange: string): Promise<MasterPairEntity[]> {
+    return this.find({
+      where: {
+        exchange,
+        isEnabled: true,
+      },
+    });
   }
 
-  async getPairNames(): Promise<string[]> {
+  async getPairNames(exchange: string): Promise<string[]> {
     const rs: { name: string }[] = await this.createQueryBuilder()
       .select('name')
+      .where({ exchange })
       .execute();
 
     return rs.map((record) => record.name);
