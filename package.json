@@ -103,7 +103,7 @@
   },
   "homepage": "https://github.com/zlq4863947/dripjs#readme",
   "devDependencies": {
-    "@types/jest": "24.0.9",
+    "@types/jest": "24.0.11",
     "@types/lodash": "4.14.122",
     "@types/qs": "6.5.2",
     "@types/ws": "6.0.1",
