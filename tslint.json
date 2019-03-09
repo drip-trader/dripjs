@@ -120,6 +120,7 @@
     "no-submodule-imports": [
       true,
       "@dripjs",
+      "@nestjs",
       "rxjs"
     ],
     "no-switch-case-fall-through": true,

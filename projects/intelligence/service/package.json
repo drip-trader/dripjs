@@ -1,0 +1,31 @@
+{
+  "name": "dripjs-intel-service",
+  "version": "0.1.0",
+  "description": "dripjs data acquisition service",
+  "license": "GPL-3.0-or-later",
+  "scripts": {
+    "start": "ts-node main.ts",
+    "prestart:prod": "tsc",
+    "start:prod": "node dist/main.js"
+  },
+  "dependencies": {
+    "@nestjs/common": "5.6.2",
+    "@nestjs/core": "^5.3.0",
+    "@nestjs/microservices": "^5.3.0",
+    "@nestjs/testing": "^5.3.0",
+    "@nestjs/websockets": "^5.3.0",
+    "class-transformer": "^0.1.7",
+    "class-validator": "^0.8.1",
+    "dripjs-types": "^0.1.6",
+    "reflect-metadata": "^0.1.12",
+    "rxjs": "^6.0.0",
+    "typescript": "^2.8.0",
+    "ws": "^3.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^7.0.41",
+    "@types/ws": "^3.0.2",
+    "ts-node": "^6.0.0",
+    "tslint": "^5.9.1"
+  }
+}

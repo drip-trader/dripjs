@@ -12,9 +12,9 @@ export interface BitmexBarRequest extends BarRequest {
 }
 
 export class BitmexSpy extends Intel {
-  rest: Bitmex.BitmexRest;
-  ws: Bitmex.BitmexWS;
-
+  readonly name = 'bitmex';
+  private readonly rest: Bitmex.BitmexRest;
+  private readonly ws: Bitmex.BitmexWS;
   private symbols: Pair[] = [];
 
   constructor(config: Bitmex.Config) {
