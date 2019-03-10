@@ -15,7 +15,7 @@
     "@nestjs/testing": "5.7.4",
     "@nestjs/websockets": "5.7.4",
     "class-transformer": "0.1.10",
-    "class-validator": "0.8.5",
+    "class-validator": "0.9.1",
     "dripjs-types": "0.1.7",
     "reflect-metadata": "0.1.13",
     "rxjs": "6.4.0",
