@@ -19,7 +19,7 @@
     "dripjs-types": "0.1.7",
     "reflect-metadata": "0.1.13",
     "rxjs": "6.4.0",
-    "typescript": "2.9.2",
+    "typescript": "3.3.3333",
     "ws": "6.2.0"
   },
   "devDependencies": {
