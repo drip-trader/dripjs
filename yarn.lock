@@ -316,10 +316,10 @@
     path-to-regexp "2.2.1"
     uuid "3.3.2"
 
-"@nestjs/testing@5.7.3":
-  version "5.7.3"
-  resolved "https://registry.yarnpkg.com/@nestjs/testing/-/testing-5.7.3.tgz#e7f0a070d73a009347963dbc993ee92bd083bef5"
-  integrity sha512-rBc/pmvYhdESbKiBDWa+jL4fzcwzkgS61ls5f2eoOxQLyFmNGCQnFPG9J4xjZwYUwcYTH8SMEwjqAa5s65gehQ==
+"@nestjs/testing@5.7.4":
+  version "5.7.4"
+  resolved "https://registry.yarnpkg.com/@nestjs/testing/-/testing-5.7.4.tgz#418e993416bd0c1b27b3adf14cc7d59f4ff2a622"
+  integrity sha512-3lIsTmkdkFJODxiMFtVmAIxCmXMnVcUU9fhHmzO20S3ERZ+hAFZDXuB3vTwFEiBzxva0fKZw6OnnqTlDyGNXaw==
   dependencies:
     deprecate "1.0.0"
     optional "0.1.4"
