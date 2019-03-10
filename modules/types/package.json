@@ -1,6 +1,6 @@
 {
   "name": "dripjs-types",
-  "version": "0.1.7",
+  "version": "0.1.9",
   "description": "dripjs types",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -18,7 +18,6 @@
   "keywords": [
     "drip",
     "dripjs",
-    "drip types",
     "drip types",
     "dripjs types"
   ],

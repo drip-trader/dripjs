@@ -10,6 +10,11 @@ export enum ExchangeType {
   Futures = 'futures',
 }
 
+export enum SupportedExchange {
+  Bitmex = 'bitmex',
+  BitmexTestNet = 'bitmexTestNet',
+}
+
 export interface Market {
   code: string;
   name: string;

@@ -1,21 +1,13 @@
-import { Config, ExchangeCryptoAuthConfig, Symbol } from '@dripjs/types';
 import { SubscribeMessage, WebSocketGateway, WsResponse } from '@nestjs/websockets';
 import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { BitmexSpy, IntelFactory, Spy } from '../../..';
-
-// tslint:disable-next-line
-const config: ExchangeCryptoAuthConfig = (<Config>require('config')).exchange['crypto']['bitmex'];
-
-export interface IntelErrorResponse {
-  name: string;
-  message: string;
-}
+import { IntelGetSymbolsResponse } from './common/types';
+import { IntelService } from './intel.service';
 
 @WebSocketGateway()
 export class IntelGateway {
-  private readonly intelMap = new Map<string, Spy>();
+  constructor(private readonly interService: IntelService) {}
 
   @SubscribeMessage('events')
   findAll(client: any, data: any): Observable<WsResponse<number>> {
@@ -28,34 +20,7 @@ export class IntelGateway {
   }
 
   @SubscribeMessage('symbols')
-  async symbols(client: SocketIOClient.Socket, exchange: string): Promise<Symbol[] | IntelErrorResponse> {
-    const spy = this.getSpyImpl(exchange);
-    if (!spy) {
-      const error: IntelErrorResponse = {
-        name: 'not_find_spy',
-        message: `exchange: ${exchange}, can not find spy`,
-      };
-
-      return error;
-    }
-
-    return spy.getSymbols();
-  }
-
-  private getSpyImpl(spyName: string): Spy | undefined {
-    let spyImpl = this.intelMap.get(spyName);
-    if (!spyImpl) {
-      switch (spyName) {
-        case 'bitmex': {
-          spyImpl = IntelFactory.create(BitmexSpy, { ...config, testnet: false });
-          this.intelMap.set(spyName, spyImpl);
-          break;
-        }
-        default: {
-        }
-      }
-    }
-
-    return spyImpl;
+  async symbols(client: SocketIOClient.Socket, exchange: string): Promise<IntelGetSymbolsResponse> {
+    return this.interService.getSymbols(exchange);
   }
 }

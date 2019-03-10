@@ -147,7 +147,7 @@
     "config": "^3.0.1",
     "dotenv": "^6.2.0",
     "dripjs-common": "^0.1.1",
-    "dripjs-types": "^0.1.7",
+    "dripjs-types": "^0.1.9",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
     "mysql": "^2.16.0",
