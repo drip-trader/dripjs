@@ -19,7 +19,7 @@ export interface ConfigContainer {
 export interface ConfigIntelServer {
   port: number;
   username: string;
-  password: number;
+  password: string;
 }
 
 export interface ConfigExchange {

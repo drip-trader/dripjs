@@ -1,11 +1,16 @@
+import { UseFilters, UseGuards } from '@nestjs/common';
 import { SubscribeMessage, WebSocketGateway, WsResponse } from '@nestjs/websockets';
 import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { IntelGetSymbolsResponse } from './common/types';
+import { IntelGetSymbolsResponse } from '../common';
+import { IntelServiceExceptionFilter } from '../exceptions';
+import { AuthGuard } from '../guards';
 import { IntelService } from './intel.service';
 
 @WebSocketGateway()
+@UseGuards(AuthGuard)
+@UseFilters(IntelServiceExceptionFilter)
 export class IntelGateway {
   constructor(private readonly interService: IntelService) {}
 

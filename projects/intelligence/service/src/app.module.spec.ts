@@ -4,7 +4,7 @@ import { ConfigIntelServer, Symbol } from 'dripjs-types';
 import * as io from 'socket.io-client';
 
 import { ApplicationModule } from './app.module';
-import { IntelErrorResponse, IntelGetSymbolsResponse } from './intel';
+import { IntelErrorResponse, IntelGetSymbolsResponse } from './common';
 
 // tslint:disable-next-line
 const config: ConfigIntelServer = require('config').container.intelService;
@@ -20,7 +20,16 @@ describe('app.module.events', () => {
     });
 
     await app.listenAsync(serverPort);
-    socket = io(`http://localhost:${serverPort}`);
+    socket = io(`http://localhost:${serverPort}`, {
+      transportOptions: {
+        polling: {
+          extraHeaders: {
+            username: config.username,
+            password: config.password,
+          },
+        },
+      },
+    });
   });
 
   afterAll(async () => {
@@ -28,16 +37,17 @@ describe('app.module.events', () => {
     socket.close();
   });
 
-  describe('getSymbols', () => {
-    it('simple non-depth ch', async (done) => {
-      socket.emit('symbols', 'bitmex', (res: IntelGetSymbolsResponse) => {
-        expect(res.error).toBeUndefined();
-        expect(res.symbols.length).toBeGreaterThan(0);
-      });
-
-      setTimeout(() => {
-        done();
-      }, 5000);
+  it('getSymbols', async (done) => {
+    socket.on('exception', (e: any) => {
+      console.log(JSON.stringify(e));
     });
+    socket.emit('symbols', 'bitmex', (res: IntelGetSymbolsResponse) => {
+      expect(res.error).toBeUndefined();
+      expect(res.symbols.length).toBeGreaterThan(0);
+    });
+
+    setTimeout(() => {
+      done();
+    }, 1000);
   });
 });

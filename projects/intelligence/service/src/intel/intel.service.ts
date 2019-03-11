@@ -2,50 +2,38 @@ import { Injectable } from '@nestjs/common';
 import { Config, ExchangeCryptoAuthConfig, SupportedExchange, Symbol } from 'dripjs-types';
 
 import { Spy } from '../../..';
-import { IntelGetSymbolsResponse, SpyImpl, findSpy, makeIntelError } from './common';
+import { findSpy } from '../common';
+import { IntelServiceException } from '../exceptions';
 
 @Injectable()
 export class IntelService {
   private readonly intelMap = new Map<string, Spy>();
 
-  async getSymbols(exchange: string): Promise<IntelGetSymbolsResponse> {
+  async getSymbols(exchange: string): Promise<Symbol[]> {
     let symbols: Symbol[] = [];
-    const { spy, error } = this.getSpyImpl(exchange);
-    if (error) {
-      return { symbols, error };
-    }
+    const spy = this.getSpyImpl(exchange);
     if (spy) {
       symbols = await spy.getSymbols();
     }
 
-    return { symbols };
+    return symbols;
   }
 
-  private getSpyImpl(exchange: string): SpyImpl {
+  private getSpyImpl(exchange: string): Spy {
     const supportedExchanges = Object.values(SupportedExchange);
     if (!supportedExchanges.includes(exchange)) {
-      return makeIntelError(
-        'exchange_not_supported',
-        `Exchange ${exchange} is not supported, now lists of supported exchanges: ${Object.values(supportedExchanges)}`,
-      );
+      throw new IntelServiceException(`Exchange ${exchange} is not supported, now lists of supported exchanges: ${supportedExchanges}`);
     }
 
     // tslint:disable-next-line
-    const config: ExchangeCryptoAuthConfig | undefined = (<Config>require('config')).exchange['crypto'][exchange];
-    if (!config) {
-      return makeIntelError('exchange_not_configuredd', `Please check the config file, exchange.crypto.${exchange} is not configured`);
-    }
+    const config: ExchangeCryptoAuthConfig = (<Config>require('config')).exchange['crypto'][exchange];
 
     let spyImpl = this.intelMap.get(exchange);
     if (!spyImpl) {
       spyImpl = findSpy(exchange, config);
-      if (spyImpl) {
-        this.intelMap.set(exchange, spyImpl);
-      } else {
-        return makeIntelError('exchange_not_implementation_class', `The implementation class of ${exchange} was not found`);
-      }
+      this.intelMap.set(exchange, spyImpl);
     }
 
-    return { spy: spyImpl };
+    return spyImpl;
   }
 }

@@ -147,7 +147,7 @@
     "config": "^3.0.1",
     "dotenv": "^6.2.0",
     "dripjs-common": "^0.1.1",
-    "dripjs-types": "^0.1.9",
+    "dripjs-types": "^0.1.10",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
     "mysql": "^2.16.0",
@@ -156,6 +156,6 @@
     "rxjs": "^6.4.0",
     "socket.io-client": "^2.2.0",
     "typeorm": "0.2.14",
-    "ws": "^6.1.4"
+    "ws": "^6.2.0"
   }
 }
