@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { Config, OrderResponse, OrderbookL2Response, QuoteResponse, SettlementResponse, TradeResponse } from '../types';
 import { BitmexWsBase } from './bitmex-ws-base';
 import { Order, Orderbook, Quote, Settlement, Trade } from './internal';
-import { Websocket } from './internal/websocket/websocket';
+import { Websocket } from './internal/websocket';
 
 export class BitmexWS extends BitmexWsBase {
   private readonly ws: Websocket;

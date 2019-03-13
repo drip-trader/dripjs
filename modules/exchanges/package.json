@@ -1,7 +1,7 @@
 {
-  "name": "dripjs-bitmex",
-  "version": "0.1.11",
-  "description": "dripjs bitmex api wapper, support for rest api and websocket",
+  "name": "dripjs-exchanges",
+  "version": "0.1.0",
+  "description": "dripjs exchanges api wapper, support for rest api and websocket",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
@@ -17,7 +17,9 @@
   "keywords": [
     "drip",
     "dripjs",
-    "drip bitmex",
+    "dripjs exchange",
+    "dripjs exchanges",
+    "drip exchanges",
     "bitmex api",
     "bitmex websocket",
     "bitmex rest api",
@@ -29,7 +31,7 @@
   "bugs": {
     "url": "https://github.com/zlq4863947/dripjs/issues"
   },
-  "homepage": "https://github.com/zlq4863947/dripjs/tree/master/modules/exchanges/crypto/bitmex#readme",
+  "homepage": "https://github.com/zlq4863947/dripjs/tree/master/modules/exchanges#readme",
   "devDependencies": {
     "@types/qs": "6.5.2",
     "@types/ws": "6.0.1"
