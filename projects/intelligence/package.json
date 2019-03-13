@@ -27,7 +27,7 @@
     "class-transformer": "0.2.0",
     "class-validator": "0.9.1",
     "dripjs-exchanges": "0.1.2",
-    "dripjs-types": "0.1.11",
+    "dripjs-types": "0.1.12",
     "reflect-metadata": "0.1.13",
     "rxjs": "6.4.0",
     "typescript": "3.3.3333",
