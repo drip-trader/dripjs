@@ -1,12 +1,14 @@
 {
   "name": "dripjs-types",
-  "version": "0.1.10",
+  "version": "0.1.12",
   "description": "dripjs types",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
     "build:prod": "yarn build:preprocess && yarn tsc",
     "build:preprocess": "rm -rf dist",
+    "prepare": "yarn build:prod",
+    "postpublish": "yarn build:preprocess",
     "tsc": "tsc -p tsconfig.json"
   },
   "repository": {

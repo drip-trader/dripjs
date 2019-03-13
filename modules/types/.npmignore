@@ -1,5 +1,15 @@
+# dependencies
+/node_modules
+
 # ignore the .ts files
 *.ts
 
 # include the .d.ts files
 !*.d.ts
+
+# configuration
+tsconfig*
+
+# System Files
+.DS_Store
+Thumbs.db

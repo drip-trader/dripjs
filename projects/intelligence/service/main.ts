@@ -1,7 +1,7 @@
-import { ConfigIntelServer } from '@dripjs/types';
 import { NestFactory } from '@nestjs/core';
+import { ConfigIntelServer } from 'dripjs-types';
 
-import { ApplicationModule } from './src/app.module';
+import { ApplicationModule } from './app.module';
 
 // tslint:disable-next-line
 const config: ConfigIntelServer = require('config').container.intelService;

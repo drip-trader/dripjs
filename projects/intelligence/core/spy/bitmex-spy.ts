@@ -1,5 +1,5 @@
-import { Bitmex } from '@dripjs/exchanges';
-import { Bar, BarRequest, Depth, OrderSide, Pair, Ticker, Transaction } from '@dripjs/types';
+import { Bitmex } from 'dripjs-exchanges';
+import { Bar, BarRequest, Depth, OrderSide, Pair, Ticker, Transaction } from 'dripjs-types';
 import { BigNumber } from 'bignumber.js';
 import * as moment from 'moment';
 import { Observable, zip } from 'rxjs';

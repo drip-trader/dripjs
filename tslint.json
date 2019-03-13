@@ -194,7 +194,7 @@
       true,
       ["class",                 "pascal"],
       ["interface",             "pascal"],
-      ["parameter",             "camel"],
+      ["parameter",             "camel", "allow-leading-underscore"],
       ["property", "static",    "camel"],
       ["property", "private",   "camel", "allow-leading-underscore"],
       ["property", "protected", "camel", "allow-leading-underscore"],

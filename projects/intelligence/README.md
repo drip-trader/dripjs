@@ -1,4 +1,4 @@
-# dripjs Intelligence Service
+# dripjs Intelligence
 
 ## start
 

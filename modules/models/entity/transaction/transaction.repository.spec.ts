@@ -26,6 +26,7 @@ describe('trade.repository', () => {
 
   beforeAll(async () => {
     await EntityTestBed.setup();
+    await EntityTestBed.clear();
     transactionReposity = EntityTestBed.getRepository(TransactionRepository);
   });
 

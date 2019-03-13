@@ -1,4 +1,4 @@
-import { Bar, BarRequest, Depth, Symbol, Ticker, Transaction } from '@dripjs/types';
+import { Bar, BarRequest, Depth, Symbol, Ticker, Transaction } from 'dripjs-types';
 import { Observable } from 'rxjs';
 
 export abstract class Intel {
