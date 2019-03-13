@@ -1,14 +1,14 @@
 {
   "name": "dripjs-common",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "dripjs common module",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "build:prod": "yarn build:preprocess && yarn tsc && yarn build:postprocess",
+    "build:prod": "yarn build:preprocess && yarn tsc",
     "build:preprocess": "rm -rf dist",
-    "build:postprocess": "cp package.json README.md dist",
-    "pub": "yarn build:prod && npm publish dist",
+    "prepare": "yarn build:prod",
+    "postpublish": "yarn build:preprocess",
     "tsc": "tsc -p tsconfig.json"
   },
   "repository": {
@@ -19,7 +19,7 @@
     "drip",
     "dripjs",
     "drip common",
-    "drip common",
+    "dripjs common",
     "dripjs common module"
   ],
   "author": "zlq4863947@gmail.com",
@@ -33,10 +33,11 @@
     "@types/socket.io": "2.1.2",
     "@types/socket.io-client": "1.4.32",
     "@types/ws": "6.0.1",
-    "express": "4.16.4",
-    "socket.io-client": "2.2.0"
+    "express": "4.16.4"
   },
   "dependencies": {
+    "bignumber.js": "^8.1.1",
+    "socket.io-client": "^2.2.0",
     "rxjs": "^6.4.0",
     "socket.io": "^2.2.0",
     "ws": "^6.1.3"

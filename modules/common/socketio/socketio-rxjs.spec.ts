@@ -10,7 +10,7 @@ describe('SocketIORxjs', () => {
   let ioRxjs: SocketIORxjs;
 
   beforeEach(() => {
-    const port = 8800;
+    const port = 8801;
     const app = express();
     const server = http.createServer(app);
     ioServer = socketIO(server).listen(port);
