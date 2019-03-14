@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.0.26](https://github.com/zlq4863947/dripjs/compare/v0.0.25...v0.0.26) (2019-03-14)
+
+
+### Bug Fixes
+
+* **build:** update npm config file ([270bc3f](https://github.com/zlq4863947/dripjs/commit/270bc3f))
+
+
+
 ## [0.0.25](https://github.com/zlq4863947/dripjs/compare/v0.0.24...v0.0.25) (2019-03-14)
 
 
