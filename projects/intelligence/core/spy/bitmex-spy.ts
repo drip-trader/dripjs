@@ -1,6 +1,6 @@
+import { BigNumber } from 'bignumber.js';
 import { Bitmex } from 'dripjs-exchanges';
 import { Bar, BarRequest, Depth, OrderSide, Pair, Ticker, Transaction } from 'dripjs-types';
-import { BigNumber } from 'bignumber.js';
 import * as moment from 'moment';
 import { Observable, zip } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -46,8 +46,9 @@ export class BitmexSpy extends Intel {
             isEnabled: true,
           };
         });
+      } else {
+        throw new Error(res.error.message);
       }
-      // TODO BitmexError handle
     }
 
     return this.symbols;

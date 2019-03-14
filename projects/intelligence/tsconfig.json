@@ -1,20 +1,8 @@
 {
+  "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "module": "commonjs",
-    "declaration": false,
-    "noImplicitAny": false,
-    "removeComments": true,
-    "noLib": false,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "target": "es6",
-    "sourceMap": true,
-    "allowJs": true,
-    "outDir": "./dist"
+    "baseUrl": "./",
+    "outDir": "dist"
   },
-  "exclude": [
-    "tools",
-    "node_modules",
-    "**/*.spec.ts"
-  ]
+  "include": ["*.ts", "**/*.ts"]
 }

@@ -39,16 +39,16 @@ describe('app.module.events', () => {
   });
 
   it('getSymbols', async (done) => {
-    /*socket.on('exception', (e: any) => {
+    socket.on('exception', (e: any) => {
       console.log(JSON.stringify(e));
-    });*/
+    });
     socket.emit('symbols', exchange, (symbols: Symbol[]) => {
       expect(symbols.length).toBeGreaterThan(0);
       done();
     });
   });
 
-  describe('subscribe', () => {
+  describe.skip('subscribe', () => {
     const pair = 'XBTUSD';
 
     afterAll(async () => {});
@@ -62,7 +62,6 @@ describe('app.module.events', () => {
           expect((<Ticker>res.data).ask).toBeGreaterThan(0);
           expect((<Ticker>res.data).bid).toBeGreaterThan(0);
           socket.emit('unsubscribe', exchange, pair, channel);
-          // socket.emit('test', exchange);
           done();
         });
         socket.emit('subscribe', exchange, pair, channel);

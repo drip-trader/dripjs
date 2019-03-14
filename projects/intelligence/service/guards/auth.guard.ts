@@ -1,9 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { ConfigIntelServer } from 'dripjs-types';
 
-// tslint:disable-next-line
-const config: ConfigIntelServer = require('config').container.intelService;
-
 @Injectable()
 export class AuthGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
@@ -15,6 +12,8 @@ export class AuthGuard implements CanActivate {
       if (!username || !password) {
         throw new Error('Auth info not found.');
       }
+      // tslint:disable-next-line
+      const config: ConfigIntelServer = require('config').container.intelService;
       if (config.username !== username || config.password !== password) {
         throw new Error('Authentication failed.');
       }

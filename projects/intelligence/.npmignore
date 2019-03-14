@@ -9,6 +9,7 @@
 
 # configuration
 tsconfig.json
+/preconfig
 
 # misc
 npm-debug.log*

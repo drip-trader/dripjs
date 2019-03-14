@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { Config, ExchangeCryptoAuthConfig, SupportedExchange, Symbol } from 'dripjs-types';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -6,6 +6,9 @@ import { map } from 'rxjs/operators';
 import { Spy } from '../../core';
 import { IntelChannel, IntelRealtimeResponse, findSpy, transform } from '../common';
 import { IntelServiceException } from '../exceptions';
+
+// tslint:disable-next-line
+const jsonValueReplacer = require('json-value-replacer');
 
 @Injectable()
 export class IntelService {
@@ -15,13 +18,21 @@ export class IntelService {
     let symbols: Symbol[] = [];
     const spy = this.getSpyImpl(exchange);
     if (spy) {
-      symbols = await spy.getSymbols();
+      try {
+        symbols = await spy.getSymbols();
+      } catch (error) {
+        Logger.error(`get exchange:${exchange} has an exception occurs, detail: ${error.message}`);
+
+        return [];
+      }
     }
+    Logger.log(`get exchange:${exchange} symbols data size: ${symbols.length}`, 'getSymbols');
 
     return symbols;
   }
 
   data$(exchange: string, symbol: string, channel: IntelChannel): Observable<IntelRealtimeResponse> {
+    Logger.log(`subscribe to realtime data, exchange:${exchange},symbol:${symbol},channel:${channel}`, 'data$');
     const spy = this.getSpyImpl(exchange);
     if (spy) {
       switch (channel) {
@@ -35,6 +46,7 @@ export class IntelService {
           return spy.getTransaction$(symbol).pipe(map((transation) => transform(channel, transation)));
         }
         default: {
+          Logger.warn(`cannot find channel:${channel}`, 'data$');
         }
       }
     }
@@ -42,6 +54,7 @@ export class IntelService {
   }
 
   stopData(exchange: string, symbol: string, channel?: IntelChannel): void {
+    Logger.log(`unsubscribe to realtime data, exchange:${exchange},symbol:${symbol},channel:${channel}`, 'stopData');
     const spy = this.getSpyImpl(exchange);
     if (spy) {
       switch (channel) {
@@ -68,6 +81,7 @@ export class IntelService {
 
   close(): void {
     for (const spy of this.intelMap.values()) {
+      Logger.log(`destory exchange spy:${spy.name}`, 'close');
       spy.destory();
     }
   }
@@ -75,14 +89,16 @@ export class IntelService {
   private getSpyImpl(exchange: string): Spy | undefined {
     const supportedExchanges = Object.values(SupportedExchange);
     if (!supportedExchanges.includes(exchange)) {
-      throw new IntelServiceException(`Exchange ${exchange} is not supported, now lists of supported exchanges: ${supportedExchanges}`);
+      const msg = `Exchange ${exchange} is not supported, now lists of supported exchanges: ${supportedExchanges}`;
+      Logger.error(msg, undefined, 'getSpyImpl');
+      throw new IntelServiceException(msg);
     }
-
-    // tslint:disable-next-line
-    const config: ExchangeCryptoAuthConfig = (<Config>require('config')).exchange['crypto'][exchange];
 
     let spyImpl = this.intelMap.get(exchange);
     if (!spyImpl) {
+      // tslint:disable-next-line
+      const config: ExchangeCryptoAuthConfig = (<Config>require('config')).exchange['crypto'][exchange];
+      Logger.log(`loading config: ${JSON.stringify(jsonValueReplacer(config, '******'))}`, 'getSpyImpl');
       spyImpl = findSpy(exchange, config);
       this.intelMap.set(exchange, spyImpl);
     }
