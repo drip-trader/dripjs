@@ -29,6 +29,7 @@
     "lint": "yarn lint:md && yarn lint:ts",
     "lint:md": "markdownlint {docs/**/*.md,modules/**/*.md,projects/**/*.md,./README*.md}",
     "lint:ts": "tslint -p tsconfig.json -c tslint.json",
+    "prepare": "yarn build:prod",
     "postpublish": "yarn build:preprocess",
     "release:major": "yarn standard-version -s --release-as major",
     "release:minor": "yarn standard-version -s --release-as minor",

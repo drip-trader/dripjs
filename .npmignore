@@ -11,7 +11,12 @@
 # source
 /projects
 /modules
-index.ts
+
+# ignore the .ts files
+*.ts
+
+# include the .d.ts files
+!*.d.ts
 
 # configuration
 .env*
@@ -23,6 +28,7 @@ renovate.json
 tsconfig*
 jest*
 tslint.json
+projects/intelligence/config/default.json
 
 # docs
 docs
