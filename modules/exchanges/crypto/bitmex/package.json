@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zlq4863947/dripjs.git"
+    "url": "git+https://github.com/drip-trader/dripjs.git"
   },
   "keywords": [
     "drip",
@@ -27,9 +27,9 @@
   "author": "zlq4863947@gmail.com",
   "license": "GPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/zlq4863947/dripjs/issues"
+    "url": "https://github.com/drip-trader/dripjs/issues"
   },
-  "homepage": "https://github.com/zlq4863947/dripjs/tree/master/modules/exchanges/crypto/bitmex#readme",
+  "homepage": "https://github.com/drip-trader/dripjs/tree/master/modules/exchanges/crypto/bitmex#readme",
   "devDependencies": {
     "@types/qs": "6.5.2",
     "@types/ws": "6.0.1"

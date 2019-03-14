@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://github.com/zlq4863947/dripjs" target="blank">
+  <a href="https://github.com/drip-trader/dripjs" target="blank">
     <img src="https://cdn.jsdelivr.net/npm/dripjs/dripjs.svg" width="320" alt="Dripjs Logo" />
   </a>
 </p>
@@ -8,15 +8,15 @@
 <a href="https://www.npmjs.com/package/dripjs"><img src="https://img.shields.io/npm/v/dripjs.svg" alt="NPM Version" />
 <a href="https://www.npmjs.com/package/dripjs"><img src="https://img.shields.io/badge/license-GPL_3.0-green.svg" alt="Package License" /></a>
 <a href="https://www.npmjs.com/package/dripjs"><img src="https://img.shields.io/npm/dm/dripjs.svg" alt="NPM Downloads" /></a>
-<a href="https://travis-ci.com/zlq4863947/dripjs"><img src="https://travis-ci.com/zlq4863947/dripjs.svg?branch=master&t=6" alt="Tiavis" /></a>
-<a href="https://coveralls.io/github/zlq4863947/dripjs?branch=master"><img src="https://coveralls.io/repos/github/zlq4863947/dripjs/badge.svg?branch=master&t=6" alt="Coverage" /></a>
+<a href="https://travis-ci.com/drip-trader/dripjs"><img src="https://travis-ci.com/drip-trader/dripjs.svg?branch=master&t=6" alt="Tiavis" /></a>
+<a href="https://coveralls.io/github/drip-trader/dripjs?branch=master"><img src="https://coveralls.io/repos/github/drip-trader/dripjs/badge.svg?branch=master&t=6" alt="Coverage" /></a>
 <a href="https://gitter.im/drip-js/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img src="https://badges.gitter.im/drip-js.svg" alt="Gitter" /></a>
 <a href="https://www.paypal.me/zlq4863947"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
 </p>
 
 # 简介
 
-see the <a href="https://github.com/zlq4863947/dripjs/blob/master/README_EN.md">English</a>
+see the <a href="https://github.com/drip-trader/dripjs/blob/master/README_EN.md">English</a>
 
 **Drip.js**旨在提供一个开箱即用的量化交易程序体系架构，允许开发者轻松创建高可用、可扩展且易于维护的量化交易程序。
 
@@ -104,7 +104,7 @@ setTimeout(() => {
 
 ## 参考文档
 
-- 设计[文档](https://github.com/zlq4863947/dripjs/tree/master/docs)
+- 设计[文档](https://github.com/drip-trader/dripjs/tree/master/docs)
 - 接口[文档](https://drip-trader.github.io/dripjs-docs)
 
 ## 框架功能
