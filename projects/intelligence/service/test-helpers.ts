@@ -1,6 +1,4 @@
-import { INestApplication } from '@nestjs/common';
-import { ModuleMetadata, WsArgumentsHost } from '@nestjs/common/interfaces';
-import { Test } from '@nestjs/testing';
+import { WsArgumentsHost } from '@nestjs/common/interfaces';
 import { ConfigIntelServer } from 'dripjs-types';
 
 // tslint:disable-next-line
@@ -39,10 +37,4 @@ export function getSwitchToWs(params: {
       },
     };
   });
-}
-
-export async function createNestTestApplication(metadata: ModuleMetadata): Promise<INestApplication> {
-  const testingModule = await Test.createTestingModule(metadata).compile();
-
-  return testingModule.createNestApplication();
 }

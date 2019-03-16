@@ -1,10 +1,10 @@
 import { INestApplication } from '@nestjs/common';
+import { Test } from '@nestjs/testing';
 import { ConfigIntelServer, Depth, SupportedExchange, Symbol, Ticker, Transaction } from 'dripjs-types';
 import * as io from 'socket.io-client';
 
 import { ApplicationModule } from './app.module';
 import { IntelChannel, IntelRealtimeResponse } from './common';
-import { createNestTestApplication } from './test-helpers';
 
 // tslint:disable-next-line
 const config: ConfigIntelServer = require('config').container.intelService;
@@ -16,11 +16,12 @@ describe('app.module', () => {
 
   beforeAll(async () => {
     const serverPort = config.port;
-    app = await createNestTestApplication({
+    const testingModule = await Test.createTestingModule({
       imports: [ApplicationModule],
-    });
-
+    }).compile();
+    app = testingModule.createNestApplication();
     await app.listenAsync(serverPort);
+
     socket = io(`http://localhost:${serverPort}`, {
       transportOptions: {
         polling: {
