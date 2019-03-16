@@ -1,6 +1,6 @@
 {
   "name": "dripjs-intelligence",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "dripjs data acquisition service",
   "license": "GPL-3.0-or-later",
   "main": "dist/index.js",
@@ -12,7 +12,7 @@
     "build:prod": "yarn build:preprocess && yarn tsc && yarn make:config",
     "build:preprocess": "rm -rf dist config",
     "prestart:prod": "tsc",
-    "prepare": "mv -f config preconfig && yarn build:prod",
+    "prepublishOnly": "mv -f config preconfig && yarn build:prod",
     "postpublish": "yarn build:preprocess && mv -f preconfig config",
     "service": "ts-node service/main.ts",
     "make:config": "mkdir -p config && ts-node tools/make-config.ts",

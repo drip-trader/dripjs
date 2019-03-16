@@ -1878,9 +1878,9 @@ dripjs-common@^0.1.2:
     ws "^6.1.3"
 
 dripjs-exchanges@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/dripjs-exchanges/-/dripjs-exchanges-0.1.2.tgz#8d21dd02215d9d27228eaa4638da3fe6ca8ff1ea"
-  integrity sha512-TdoRPDvUnqoTgTHAFOo/0eXSjfMNZbyQgrwRrk8hZHvJyHuBLXXrJTZdl51835Y6/XuCVboQUAmMIh9Hg6B9EA==
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/dripjs-exchanges/-/dripjs-exchanges-0.1.4.tgz#183fc72089d3be3750599804199612dcb35aa5b9"
+  integrity sha512-BpLML6P8DHfz2XdR6j6yGOIw9AO4RAi1fxlR1DeBFLEW9TUm8ig1fYejrLhjLZxfp1LHbyuCQHQ4/tgIHGShog==
   dependencies:
     axios "^0.18.0"
     dripjs-common "^0.1.2"

@@ -1,0 +1,18 @@
+# dependencies
+/node_modules
+
+# ignore the .ts files
+*.ts
+
+# include the .d.ts files
+!*.d.ts
+
+# source
+/crypto
+
+# configuration
+tsconfig*
+
+# System Files
+.DS_Store
+Thumbs.db

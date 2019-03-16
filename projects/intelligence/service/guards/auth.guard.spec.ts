@@ -1,7 +1,7 @@
 import { ExecutionContext } from '@nestjs/common';
 
+import { getSwitchToWs } from '../test-helpers';
 import { AuthGuard } from './auth.guard';
-import { getSwitchToWs } from './test-helpers';
 
 describe('AuthGuard', () => {
   let auth: AuthGuard;

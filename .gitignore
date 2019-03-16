@@ -66,3 +66,4 @@ package-lock.json
 .coveralls.yml
 type-docs
 projects/intelligence/config/default.json
+.idea

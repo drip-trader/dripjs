@@ -1,10 +1,10 @@
-import { createNestTestApplication } from '@dripjs/testing';
 import { INestApplication } from '@nestjs/common';
 import { ConfigIntelServer, Depth, SupportedExchange, Symbol, Ticker, Transaction } from 'dripjs-types';
 import * as io from 'socket.io-client';
 
 import { ApplicationModule } from './app.module';
 import { IntelChannel, IntelRealtimeResponse } from './common';
+import { createNestTestApplication } from './test-helpers';
 
 // tslint:disable-next-line
 const config: ConfigIntelServer = require('config').container.intelService;

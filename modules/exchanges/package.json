@@ -1,16 +1,15 @@
 {
   "name": "dripjs-exchanges",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "dripjs exchanges api wapper, support for rest api and websocket",
-  "main": "index.js",
-  "typings": "index.d.ts",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "scripts": {
-    "build:prod": "yarn build:preprocess && yarn tsc && yarn build:postprocess",
+    "build:prod": "yarn build:preprocess && yarn tsc",
     "build:preprocess": "rm -rf dist",
-    "build:postprocess": "cp package.json README.md dist",
+    "prepublishOnly": "yarn build:prod",
     "postpublish": "yarn build:preprocess",
-    "tsc": "tsc -p tsconfig.json",
-    "pub": "yarn build:prod && npm publish dist"
+    "tsc": "tsc -p tsconfig.json"
   },
   "repository": {
     "type": "git",

@@ -7,7 +7,7 @@
   "scripts": {
     "build:prod": "yarn build:preprocess && yarn tsc",
     "build:preprocess": "rm -rf dist",
-    "prepare": "yarn build:prod",
+    "prepublishOnly": "yarn build:prod",
     "postpublish": "yarn build:preprocess",
     "tsc": "tsc -p tsconfig.json"
   },
