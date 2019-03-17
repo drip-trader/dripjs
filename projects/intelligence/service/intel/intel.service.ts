@@ -4,8 +4,9 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Spy } from '../../core';
-import { IntelChannel, IntelRealtimeResponse, findSpy, transform } from '../common';
+import { findSpy, transform } from '../common';
 import { IntelServiceException } from '../exceptions';
+import { IntelChannel, IntelRealtimeResponse } from '../types';
 
 // tslint:disable-next-line
 const jsonValueReplacer = require('json-value-replacer');

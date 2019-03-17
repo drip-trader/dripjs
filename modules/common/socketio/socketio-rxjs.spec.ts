@@ -27,7 +27,7 @@ describe('SocketIORxjs', () => {
       action: 'test',
     };
     ioRxjs.message$.subscribe((o) => {
-      ioRxjs.send(['test', msg]);
+      ioRxjs.send('test', msg);
       expect(o).toEqual(msg);
     });
     ioServer.on('connection', (ws) => {
@@ -61,6 +61,20 @@ describe('SocketIORxjs', () => {
     ioServer.on('connection', (ws) => {
       ws.send('t');
     });
+    setTimeout(() => {
+      done();
+    }, 500);
+  });
+
+  it('subscribe onmessage to next', (done) => {
+    const msg = {
+      action: 'test',
+    };
+    ioRxjs.message$.subscribe((o) => {
+      expect(o).toEqual(msg);
+    });
+
+    ioRxjs.next(msg);
     setTimeout(() => {
       done();
     }, 500);
@@ -106,7 +120,7 @@ describe('SocketIORxjs', () => {
       expect(data).toEqual(msg);
     });
 
-    ioRxjs.emit('joinRoom', [roomName, joinMsg]);
+    ioRxjs.emit('joinRoom', roomName, joinMsg);
     ioServer.on('connection', (ws) => {
       ws.on('joinRoom', (roomNm, data) => {
         ws.join(roomNm);

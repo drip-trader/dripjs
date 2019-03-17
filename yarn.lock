@@ -1867,9 +1867,20 @@ dotgitignore@^1.0.3:
     minimatch "^3.0.4"
 
 dripjs-common@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/dripjs-common/-/dripjs-common-0.1.2.tgz#ccb5a65914fad00ef3cf3b6a4881d199faab2f72"
-  integrity sha512-Ji7uyzDJ8ItGKouzn06vaImAAbwM63HfrQxmTbiQKKSxyM0Xohrol+asRpiVWljS/oBI+SvJORUDAqCtJslErA==
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/dripjs-common/-/dripjs-common-0.1.3.tgz#dad2d00d7ca6cb332946bcc220db455ff0c11ff3"
+  integrity sha512-Q/xn3LRiKwKPgm2j1aZu+O/8yHBNL5NYemaXuQkykXsA2/ni9dgo/02iE+JDYihPM1y9SYL0XhlbnR78K28AmA==
+  dependencies:
+    bignumber.js "^8.1.1"
+    rxjs "^6.4.0"
+    socket.io "^2.2.0"
+    socket.io-client "^2.2.0"
+    ws "^6.1.3"
+
+dripjs-common@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/dripjs-common/-/dripjs-common-0.1.4.tgz#6f73f4076b1feb6652789307a864232c44cfa82f"
+  integrity sha512-ktd+ylTAsNLNlix9dZ/25HkHJnDH+dZanlobnLO2vbmjlQevLa/05hqHTwly+vTQ53rff5NFOOlhSC2neJm7RQ==
   dependencies:
     bignumber.js "^8.1.1"
     rxjs "^6.4.0"

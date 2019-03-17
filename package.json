@@ -149,7 +149,7 @@
     "bignumber.js": "^8.1.1",
     "config": "^3.0.1",
     "dotenv": "^7.0.0",
-    "dripjs-common": "^0.1.2",
+    "dripjs-common": "^0.1.4",
     "dripjs-exchanges": "^0.1.2",
     "dripjs-types": "^0.1.12",
     "lodash": "^4.17.11",
