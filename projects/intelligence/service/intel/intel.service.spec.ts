@@ -1,7 +1,7 @@
 import { Depth, SupportedExchange, Ticker, Transaction } from 'dripjs-types';
 
-import { IntelChannel } from '../types';
 import { IntelServiceException } from '../exceptions';
+import { IntelChannel } from '../types';
 import { IntelService } from './intel.service';
 
 describe('IntelService', () => {

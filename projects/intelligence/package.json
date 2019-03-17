@@ -1,6 +1,6 @@
 {
   "name": "dripjs-intelligence",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "dripjs data acquisition service",
   "license": "GPL-3.0-or-later",
   "main": "dist/index.js",
