@@ -2,7 +2,7 @@ import { ExchangeCryptoAuthConfig, RealtimeType, SupportedExchange } from 'dripj
 
 import { BitmexSpy, IntelFactory, Spy } from '../../core';
 import { IntelServiceException } from '../exceptions';
-import { IntelChannel, IntelRealtimeResponse } from './types';
+import { IntelChannel, IntelRealtimeResponse } from '../types';
 
 export function findSpy(exchange: string, config: ExchangeCryptoAuthConfig): Spy {
   switch (exchange) {

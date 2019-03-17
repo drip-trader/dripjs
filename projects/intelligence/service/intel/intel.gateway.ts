@@ -4,9 +4,9 @@ import { Symbol } from 'dripjs-types';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { IntelChannel, IntelRealtimeResponse } from '../common';
 import { IntelServiceExceptionFilter } from '../exceptions';
 import { AuthGuard } from '../guards';
+import { IntelChannel, IntelRealtimeResponse } from '../types';
 import { IntelService } from './intel.service';
 
 @WebSocketGateway()

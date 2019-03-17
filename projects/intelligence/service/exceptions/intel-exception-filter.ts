@@ -1,6 +1,6 @@
 import { ArgumentsHost, Catch, ExceptionFilter } from '@nestjs/common';
 
-import { IntelErrorResponse } from '../common';
+import { IntelErrorResponse } from '../types';
 import { IntelServiceException } from './intel-exception';
 
 @Catch(IntelServiceException)
