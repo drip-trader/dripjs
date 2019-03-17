@@ -4,7 +4,7 @@ import { ConfigIntelServer, Depth, SupportedExchange, Symbol, Ticker, Transactio
 import * as io from 'socket.io-client';
 
 import { ApplicationModule } from './app.module';
-import { IntelChannel, IntelRealtimeResponse } from './common';
+import { IntelChannel, IntelRealtimeResponse } from './types';
 
 // tslint:disable-next-line
 const config: ConfigIntelServer = require('config').container.intelService;
@@ -15,7 +15,7 @@ describe('app.module', () => {
   const exchange = SupportedExchange.Bitmex;
 
   beforeAll(async () => {
-    const serverPort = config.port;
+    const serverPort = config.port + 1;
     const testingModule = await Test.createTestingModule({
       imports: [ApplicationModule],
     }).compile();

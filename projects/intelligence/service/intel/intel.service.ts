@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { Config, ExchangeCryptoAuthConfig, SupportedExchange, Symbol } from 'dripjs-types';
-import { Observable } from 'rxjs';
+import { Bar, Config, ExchangeCryptoAuthConfig, SupportedExchange, Symbol } from 'dripjs-types';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Spy } from '../../core';
@@ -16,20 +16,19 @@ export class IntelService {
   private readonly intelMap = new Map<string, Spy>();
 
   async getSymbols(exchange: string): Promise<Symbol[]> {
-    let symbols: Symbol[] = [];
     const spy = this.getSpyImpl(exchange);
-    if (spy) {
-      try {
-        symbols = await spy.getSymbols();
-      } catch (error) {
-        Logger.error(`get exchange:${exchange} has an exception occurs, detail: ${error.message}`);
-
-        return [];
-      }
-    }
-    Logger.log(`get exchange:${exchange} symbols data size: ${symbols.length}`, 'getSymbols');
+    const symbols = await spy.getSymbols();
+    Logger.log(`exchange:${exchange}, symbols data size: ${symbols.length}`, 'getSymbols');
 
     return symbols;
+  }
+
+  async getBars(exchange: string, symbol: string, resolution: string, start: number, end: number): Promise<Bar[]> {
+    const spy = this.getSpyImpl(exchange);
+    const bars = await spy.getBars({ symbol, resolution, start, end });
+    Logger.log(`exchange:${exchange} bar data size: ${bars.length}`, 'getBars');
+
+    return bars;
   }
 
   data$(exchange: string, symbol: string, channel: IntelChannel): Observable<IntelRealtimeResponse> {
@@ -87,7 +86,7 @@ export class IntelService {
     }
   }
 
-  private getSpyImpl(exchange: string): Spy | undefined {
+  private getSpyImpl(exchange: string): Spy {
     const supportedExchanges = Object.values(SupportedExchange);
     if (!supportedExchanges.includes(exchange)) {
       const msg = `Exchange ${exchange} is not supported, now lists of supported exchanges: ${supportedExchanges}`;

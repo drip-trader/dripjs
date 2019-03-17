@@ -72,7 +72,7 @@ export function getChannel(
  * @param updateSource
  * @param fromId
  */
-function findPosition(originSource: OrderbookResponse[], updateSource: OrderbookResponse, fromId: number = 0): number {
+function findPosition(originSource: OrderbookResponse[], updateSource: OrderbookResponse, fromId: number): number {
   let i = fromId;
   for (; i < originSource.length; i++) {
     if (originSource[i].id >= updateSource.id) {

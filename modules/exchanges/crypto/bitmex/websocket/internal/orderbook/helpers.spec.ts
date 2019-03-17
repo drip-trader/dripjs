@@ -1,6 +1,6 @@
-import { OrderbookResponse } from '../../../types';
+import { OrderbookResponse, PublicEndPoints } from '../../../types';
 import { WebsocketData } from '../websocket';
-import { update } from './helpers';
+import { getChannel, transform, update } from './helpers';
 
 describe('BitmexWS orderbook helpers', () => {
   let originSource: WebsocketData<OrderbookResponse>;
@@ -43,6 +43,13 @@ describe('BitmexWS orderbook helpers', () => {
           size: 290238,
           price: 3808,
         },
+        {
+          symbol: 'XBTUSD',
+          id: 15599619200,
+          side: 'Buy',
+          size: 290238,
+          price: 3808,
+        },
       ],
     };
   });
@@ -62,9 +69,10 @@ describe('BitmexWS orderbook helpers', () => {
       ],
     };
     const targetData = update(originSource, insertData);
-    expect(targetData.data.length).toEqual(3);
+    expect(targetData.data.length).toEqual(4);
     expect(targetData.data[1]).toEqual(insertData.data[0]);
   });
+
   it('orderbook update: action=update', () => {
     const updateData: WebsocketData<OrderbookResponse> = {
       table: 'orderBookL2_25',
@@ -80,7 +88,7 @@ describe('BitmexWS orderbook helpers', () => {
       ],
     };
     const targetData = update(originSource, updateData);
-    expect(targetData.data.length).toEqual(2);
+    expect(targetData.data.length).toEqual(3);
     expect(targetData.data[0].size).toEqual(updateData.data[0].size);
   });
   it('orderbook update: action=delete', () => {
@@ -98,7 +106,20 @@ describe('BitmexWS orderbook helpers', () => {
       ],
     };
     const targetData = update(originSource, deleteData);
-    expect(targetData.data.length).toEqual(1);
+    expect(targetData.data.length).toEqual(2);
     expect(targetData.data.find((o) => o.id === deleteData.data[0].id)).toBeUndefined();
+  });
+
+  it('transform', () => {
+    const targetData = transform(originSource);
+    expect(targetData.asks.length).toEqual(2);
+    expect(targetData.bids.length).toEqual(1);
+  });
+
+  it('getChannel', () => {
+    const pair = 'XBTUSD';
+    const endpoint = PublicEndPoints.OrderBook10;
+    const channel = getChannel(pair, endpoint);
+    expect(channel).toEqual(`${endpoint}:${pair}`);
   });
 });

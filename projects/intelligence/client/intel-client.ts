@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { IntelChannel, IntelRealtimeResponse } from '../service';
-import { IntelClientException } from './exception';
 
 export interface IntelClientOptions {
   ip: string;
@@ -14,11 +13,9 @@ export interface IntelClientOptions {
 }
 
 export class IntelClient {
-  private ioRxjs: SocketIORxjs | undefined;
+  private readonly ioRxjs: SocketIORxjs;
 
-  constructor(private readonly options: IntelClientOptions) {}
-
-  connect(): void {
+  constructor(private readonly options: IntelClientOptions) {
     this.ioRxjs = new SocketIORxjs(`http://${this.options.ip}:${this.options.port}`, {
       transportOptions: {
         polling: {
@@ -32,26 +29,14 @@ export class IntelClient {
   }
 
   disconnect(): void {
-    if (!this.ioRxjs) {
-      throw new IntelClientException('ioRxjs is undefined。');
-    }
     this.ioRxjs.close();
   }
 
   async getSymbols(exchange: SupportedExchange): Promise<Symbol[]> {
-    return new Promise((resolve, reject) => {
-      if (!this.ioRxjs) {
-        reject(new IntelClientException('ioRxjs is undefined。'));
-
-        return;
-      }
-      try {
-        this.ioRxjs.emit('symbols', exchange, (res: Symbol[]) => {
-          resolve(res);
-        });
-      } catch (error) {
-        reject(error);
-      }
+    return new Promise((resolve) => {
+      this.ioRxjs.emit('symbols', exchange, (res: Symbol[]) => {
+        resolve(res);
+      });
     });
   }
 
@@ -89,19 +74,13 @@ export class IntelClient {
   }
 
   private subscribe(channel: IntelChannel, exchange: SupportedExchange, symbol: string): Observable<IntelRealtimeResponse> {
-    if (!this.ioRxjs) {
-      throw new IntelClientException('ioRxjs is undefined。');
-    }
-    this.ioRxjs.socket.on(channel, (res: IntelRealtimeResponse) => this.ioRxjs!.next(res));
+    this.ioRxjs.socket.on(channel, (res: IntelRealtimeResponse) => this.ioRxjs.next(res));
     this.ioRxjs.emit('subscribe', exchange, symbol, channel);
 
     return this.ioRxjs.message$.pipe(filter((res: IntelRealtimeResponse) => res.channel === channel));
   }
 
   private unsubscribe(channel: IntelChannel, exchange: SupportedExchange, symbol: string): void {
-    if (!this.ioRxjs) {
-      throw new IntelClientException('ioRxjs is undefined。');
-    }
     this.ioRxjs.emit('unsubscribe', exchange, symbol, channel);
   }
 }

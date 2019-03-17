@@ -1,5 +1,6 @@
 import { Depth, SupportedExchange, Ticker, Transaction } from 'dripjs-types';
 
+import { Resolution } from '../../core';
 import { IntelServiceException } from '../exceptions';
 import { IntelChannel } from '../types';
 import { IntelService } from './intel.service';
@@ -24,6 +25,27 @@ describe('IntelService', () => {
     it('return symbols', async () => {
       const exchange = SupportedExchange.Bitmex;
       const symbols = await intelService.getSymbols(exchange);
+      expect(symbols.length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('getBars', () => {
+    const pair = 'XBTUSD';
+    const resolution = Resolution.day;
+    const end = Date.now();
+    const start = end - 1000 * 60 * 60 * 24 * 60;
+    it('is not supported', async () => {
+      const exchange = 'testEx';
+      await expect(intelService.getBars(exchange, pair, resolution, start, end)).rejects.toEqual(
+        new IntelServiceException(
+          `Exchange ${exchange} is not supported, now lists of supported exchanges: ${Object.values(SupportedExchange)}`,
+        ),
+      );
+    });
+
+    it('return bars', async () => {
+      const exchange = SupportedExchange.Bitmex;
+      const symbols = await intelService.getBars(exchange, pair, resolution, start, end);
       expect(symbols.length).toBeGreaterThan(0);
     });
   });
@@ -56,6 +78,7 @@ describe('IntelService', () => {
         expect(res.data).toBeDefined();
         expect((<Depth>res.data).asks.length).toBeGreaterThan(20);
         expect((<Depth>res.data).bids.length).toBeGreaterThan(20);
+        intelService.stopData(exchange, pair, type);
         done();
       });
     });
@@ -67,6 +90,7 @@ describe('IntelService', () => {
         expect(res.data).toBeDefined();
         expect((<Transaction>res.data).price).toBeGreaterThan(0);
         expect((<Transaction>res.data).time).toBeGreaterThan(0);
+        intelService.stopData(exchange, pair, type);
         done();
       });
     });
