@@ -1,9 +1,4 @@
-import { Bitmex } from 'dripjs-exchanges';
-
-import { BitmexSpy } from './spy';
-
-export type Spy = BitmexSpy;
-export type SpyConfig = Bitmex.Config;
+import { Spy, SpyConfig } from './types';
 
 export class IntelFactory {
   static create<T extends Spy>(intel: new (config: SpyConfig) => T, config: SpyConfig): T {

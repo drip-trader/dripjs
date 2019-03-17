@@ -7,10 +7,6 @@ import { map } from 'rxjs/operators';
 
 import { Intel } from '../intel';
 
-export interface BitmexBarRequest extends BarRequest {
-  resolution: Bitmex.Resolution;
-}
-
 export class BitmexSpy extends Intel {
   readonly name = 'bitmex';
   private readonly rest: Bitmex.BitmexRest;
@@ -86,10 +82,14 @@ export class BitmexSpy extends Intel {
     this.ws.stopQuote(symbol);
   }
 
-  async getBars(request: BitmexBarRequest): Promise<Bar[]> {
+  async getBars(request: BarRequest): Promise<Bar[]> {
+    const resolutions: string[] = Object.values(Bitmex.Resolution);
+    if (!resolutions.includes(request.resolution)) {
+      throw new Error(`${request.resolution} is not supported,${this.name} only allows resolution: ${resolutions}`);
+    }
     const res = await this.rest.fetchBar({
       symbol: request.symbol,
-      binSize: request.resolution,
+      binSize: request.resolution as Bitmex.Resolution,
       startTime: moment(request.start).toISOString(),
       endTime: moment(request.end).toISOString(),
     });

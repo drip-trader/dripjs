@@ -1,8 +1,8 @@
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
-import { ConfigIntelServer, Depth, SupportedExchange, Symbol, Ticker, Transaction } from 'dripjs-types';
+import { ConfigIntelServer, Depth, SupportedExchange, Ticker, Transaction } from 'dripjs-types';
 
-import { ApplicationModule, IntelChannel } from '../service';
+import { ApplicationModule, IntelChannel } from '../../intelligence';
 import { IntelClient } from './intel-client';
 
 // tslint:disable-next-line
@@ -26,7 +26,6 @@ describe('intel-client', () => {
       ...config,
       ip: '127.0.0.1',
     });
-    client.connect();
   });
 
   afterAll(async () => {

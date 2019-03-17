@@ -1,6 +1,6 @@
 import { RealtimeType } from 'dripjs-types';
 
-export interface IntelErrorResponse {
+export interface IntelError {
   name: string;
   message: string;
 }

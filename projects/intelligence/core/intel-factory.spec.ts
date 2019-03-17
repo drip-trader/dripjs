@@ -1,5 +1,6 @@
 import { Bitmex } from '@dripjs/exchanges';
 import { realConfig } from '@dripjs/testing';
+import { OrderSide } from 'dripjs-types';
 
 import { BitmexSpy, IntelFactory, Spy } from '.';
 
@@ -17,13 +18,19 @@ describe('Intel factory', () => {
     });
 
     it('bitmex getTransaction$', (done) => {
+      let sideNum = 0;
+      let side: OrderSide;
       bitmex.getTransaction$(pair).subscribe((transaction) => {
-        expect(transaction).toBeDefined();
+        if (sideNum === 0) {
+          expect(transaction).toBeDefined();
+          side = transaction.side;
+          sideNum++;
+        } else if (sideNum === 1 && side && transaction.side !== side) {
+          expect(transaction).toBeDefined();
+          bitmex.stopTransaction(pair);
+          done();
+        }
       });
-      setTimeout(() => {
-        bitmex.stopTransaction(pair);
-        done();
-      }, 2000);
     });
 
     it('bitmex getTicker$', async (done) => {
@@ -47,7 +54,7 @@ describe('Intel factory', () => {
       }, 3500);
     });
 
-    it('bitmex getBars', async () => {
+    it('bitmex getBars to not supported resolution', async () => {
       const time = Date.now();
       const bars = await bitmex.getBars({
         symbol: pair,
@@ -58,11 +65,38 @@ describe('Intel factory', () => {
       expect(bars.length).toEqual(60);
     });
 
+    it('bitmex getBars to not supported resolution', async () => {
+      const time = Date.now();
+      const request = {
+        symbol: pair,
+        resolution: '30min',
+        start: time - 1000 * 60 * 60 * 24 * 60,
+        end: time,
+      };
+      const resolutions: string[] = Object.values(Bitmex.Resolution);
+      await expect(bitmex.getBars(request)).rejects.toThrowError(
+        new Error(`${request.resolution} is not supported,${bitmex.name} only allows resolution: ${resolutions}`),
+      );
+    });
+
     it('bitmex getSymbols', async () => {
       const symbol = await bitmex.getSymbol(pair);
       expect(symbol).toBeDefined();
       const symbols = await bitmex.getSymbols();
       expect(symbols.length).toBeGreaterThan(0);
+    });
+
+    it('bitmex getSymbols has error', async () => {
+      const error = new Error('getSymbols has error');
+      const bitmex2 = IntelFactory.create(BitmexSpy, realConfig);
+      (<any>bitmex2).rest.fetchInstrument = jest.fn(
+        async () =>
+          // tslint:disable-next-line
+          new Promise((resolve) => {
+            resolve({ error });
+          }),
+      );
+      await expect(bitmex2.getSymbols()).rejects.toThrowError(error);
     });
 
     it('bitmex getSymbol', async () => {
