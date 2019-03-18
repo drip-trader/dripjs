@@ -1,6 +1,6 @@
 {
   "name": "dripjs",
-  "version": "0.0.26",
+  "version": "0.1.0",
   "description": "用于构建高效且可扩展的交易程序的渐进式Node.js开源量化框架",
   "engines": {
     "node": ">= 10.15.0",

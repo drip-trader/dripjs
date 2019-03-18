@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [0.1.0](https://github.com/drip-trader/dripjs/compare/v0.0.26...v0.1.0) (2019-03-18)
+
+
+### Features
+
+* **intelligence:** add intelligence websocket client ([d6f3872](https://github.com/drip-trader/dripjs/commit/d6f3872))
+
+
+
 ## [0.0.26](https://github.com/drip-trader/dripjs/compare/v0.0.25...v0.0.26) (2019-03-14)
 
 
