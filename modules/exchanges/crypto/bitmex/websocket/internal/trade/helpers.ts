@@ -10,6 +10,20 @@ export function transform(source: TradeSource): TradeResponse {
   };
 }
 
-export function getTradeChannel(pair: string, endPoint?: PublicEndPoints | PrivateEndPoints): string {
-  return `${endPoint ? endPoint : PublicEndPoints.Trade}:${pair}`;
+export function getTradeChannel(pair?: string | string[], endPoint?: PublicEndPoints | PrivateEndPoints): string {
+  const ep = endPoint ? endPoint : PublicEndPoints.Trade;
+  let subStr = `${ep}`;
+  if (pair) {
+    let streamName = '';
+    if (pair instanceof Array) {
+      for (const p of pair) {
+        streamName = `${streamName}_${ep}:${p}`;
+      }
+    } else {
+      streamName = `${ep}:${pair}`;
+    }
+    subStr = streamName;
+  }
+
+  return subStr;
 }

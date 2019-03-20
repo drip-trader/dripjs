@@ -19,12 +19,17 @@ describe('BitmexWS', () => {
       done();
     }, 5000);
   });
-  it('subscribe trade', (done) => {
+  it.only('subscribe trade', (done) => {
     bitmexWS.trade$(pair).subscribe((trade) => {
-      expect(trade).toBeDefined();
+      console.log(trade);
+      // expect(trade).toBeDefined();
+      //bitmexWS.stopTrade(pair);
+      //done();
+    });
+    setTimeout(() => {
       bitmexWS.stopTrade(pair);
       done();
-    });
+    }, 1000000);
   });
   it('subscribe tradeBin1d', (done) => {
     bitmexWS.tradeBin1d$(pair).subscribe((trade) => {

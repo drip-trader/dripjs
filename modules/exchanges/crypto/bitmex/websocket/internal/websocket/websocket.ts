@@ -1,4 +1,4 @@
-import { Observable, ReplaySubject } from 'rxjs';
+import { Observable, ReplaySubject, from, of } from 'rxjs';
 
 import { Config } from '../../../types';
 import { WebsocketData, WebsocketRequest, WebsocketResponse } from './types';
@@ -6,6 +6,7 @@ import { WebsocketBase } from './websocket-base';
 
 export class Websocket extends WebsocketBase<WebsocketRequest, WebsocketResponse | WebsocketData> {
   private readonly streamTable = new Map<string, ReplaySubject<WebsocketData>>();
+  private readonly spltStr = '_';
 
   constructor(config: Config) {
     super(config);
@@ -29,17 +30,20 @@ export class Websocket extends WebsocketBase<WebsocketRequest, WebsocketResponse
   }
 
   // {"op": "subscribe", "args": "orderBookL2_25:XBTUSD"}
-  subscribe<T>(args: string): Observable<WebsocketData<T>> {
-    let stream = this.streamTable.get(args);
-
-    if (!stream) {
-      stream = new ReplaySubject<WebsocketData<T>>(1);
-      this.streamTable.set(args, stream);
+  // OR {"op": "subscribe", "args": ["trade:XBTUSD","trade:BCHH19"]}
+  // OR {"op": "subscribe", "args": ["trade"]}
+  subscribe<T>(args: string | string[]): Observable<WebsocketData<T>> {
+    this.send({ op: 'subscribe', args });
+    let streamName = '';
+    if (args instanceof Array) {
+      for (const arg of args) {
+        streamName = `${streamName}${this.spltStr}${arg}`;
+      }
+    } else {
+      streamName = args;
     }
 
-    this.send({ op: 'subscribe', args });
-
-    return stream.asObservable();
+    return this.fetchStream(streamName);
   }
 
   /**
@@ -53,14 +57,50 @@ export class Websocket extends WebsocketBase<WebsocketRequest, WebsocketResponse
       stream.complete();
       this.streamTable.delete(arg);
       this.send({ op: 'unsubscribe', args: arg });
+      return;
     }
 
-    // TODO handle when unsubscribe complete
+    for (const [name, stream] of this.streamTable.entries()) {
+      if (name.includes(arg)) {
+        // get multiple names
+        const names = name.split(this.spltStr);
+        let newName;
+        let delName;
+        for (const nm of names) {
+          // match to the unsubscribe name
+          if (nm === arg) {
+            delName = nm;
+            continue;
+          }
+          newName = `${newName}${this.spltStr}${nm}`;
+        }
+        const steam = this.streamTable.get(name);
+        // set new name
+        this.streamTable.set(newName, steam);
+        // delete old name
+        this.streamTable.delete(name);
+        this.send({ op: 'unsubscribe', args: delName });
+      }
+    }
   }
 
   onDestroy(): void {
-    // TODO complete all streams
+    // complete all streams
+    for (const [name, stream] of this.streamTable.entries()) {
+      stream.complete();
+      this.send({ op: 'unsubscribe', args: name });
+    }
     // clear stream map and key map
     this.streamTable.clear();
+  }
+
+  private fetchStream<T>(name: string): ReplaySubject<WebsocketData<T>> {
+    let stream = this.streamTable.get(name);
+    if (!stream) {
+      stream = new ReplaySubject<WebsocketData<T>>(1);
+      this.streamTable.set(name, stream);
+    }
+
+    return stream;
   }
 }
