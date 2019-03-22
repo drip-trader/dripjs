@@ -1,12 +1,18 @@
-import { Observable, ReplaySubject, from, of } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
+import { v4 as uuid } from 'uuid';
 
 import { Config } from '../../../types';
 import { WebsocketData, WebsocketRequest, WebsocketResponse } from './types';
 import { WebsocketBase } from './websocket-base';
 
+interface StreamData {
+  uuid: string;
+  name: string;
+  stream: ReplaySubject<WebsocketData>;
+}
+
 export class Websocket extends WebsocketBase<WebsocketRequest, WebsocketResponse | WebsocketData> {
-  private readonly streamTable = new Map<string, ReplaySubject<WebsocketData>>();
-  private readonly spltStr = '_';
+  private streamTable: StreamData[] = [];
 
   constructor(config: Config) {
     super(config);
@@ -22,9 +28,14 @@ export class Websocket extends WebsocketBase<WebsocketRequest, WebsocketResponse
     if (wsData.table) {
       const symbol = wsData.data && wsData.data.length ? wsData.data[0].symbol : '';
       const key = `${wsData.table}:${symbol}`;
-      const stream = this.streamTable.get(key);
-      if (stream) {
-        stream.next(wsData);
+
+      const streamData = this.streamTable.find((o) => o.name === key);
+      // find all channel, eg:trade
+      const allStreamData = this.streamTable.find((o) => o.name === wsData.table);
+      if (streamData) {
+        streamData.stream.next(wsData);
+      } else if (allStreamData) {
+        allStreamData.stream.next(wsData);
       }
     }
   }
@@ -32,75 +43,110 @@ export class Websocket extends WebsocketBase<WebsocketRequest, WebsocketResponse
   // {"op": "subscribe", "args": "orderBookL2_25:XBTUSD"}
   // OR {"op": "subscribe", "args": ["trade:XBTUSD","trade:BCHH19"]}
   // OR {"op": "subscribe", "args": ["trade"]}
-  subscribe<T>(args: string | string[]): Observable<WebsocketData<T>> {
-    this.send({ op: 'subscribe', args });
-    let streamName = '';
-    if (args instanceof Array) {
-      for (const arg of args) {
-        streamName = `${streamName}${this.spltStr}${arg}`;
-      }
-    } else {
-      streamName = args;
-    }
+  subscribe<T>(channel: string | string[]): Observable<WebsocketData<T>> {
+    this.send({ op: 'subscribe', args: channel });
 
-    return this.fetchStream(streamName);
+    return this.fetchOrNewStream(channel);
   }
 
   /**
    * Unsubscribe channel
    *
-   * @param arg
+   * @param channel
    */
-  unsubscribe(arg: string): void {
-    const stream = this.streamTable.get(arg);
-    if (stream) {
-      stream.complete();
-      this.streamTable.delete(arg);
-      this.send({ op: 'unsubscribe', args: arg });
-      return;
-    }
-
-    for (const [name, stream] of this.streamTable.entries()) {
-      if (name.includes(arg)) {
-        // get multiple names
-        const names = name.split(this.spltStr);
-        let newName;
-        let delName;
-        for (const nm of names) {
-          // match to the unsubscribe name
-          if (nm === arg) {
-            delName = nm;
-            continue;
-          }
-          newName = `${newName}${this.spltStr}${nm}`;
-        }
-        const steam = this.streamTable.get(name);
-        // set new name
-        this.streamTable.set(newName, steam);
-        // delete old name
-        this.streamTable.delete(name);
-        this.send({ op: 'unsubscribe', args: delName });
+  unsubscribe(channel: string | string[]): void {
+    // when multiple channel
+    if (channel instanceof Array) {
+      for (const cn of channel) {
+        this.delStream(cn);
       }
+    } else {
+      this.delStream(channel);
     }
+    // unsubscribe real-time data from exchange
+    this.send({ op: 'unsubscribe', args: channel });
   }
 
   onDestroy(): void {
-    // complete all streams
-    for (const [name, stream] of this.streamTable.entries()) {
-      stream.complete();
+    // remove duplicates
+    const uniqueStreamData: StreamData[] = [];
+    for (const steamData of this.streamTable) {
+      if (uniqueStreamData.length === 0) {
+        uniqueStreamData.push(steamData);
+      } else {
+        const sameData = uniqueStreamData.find((o) => o.uuid === steamData.uuid);
+        // not has same data
+        if (!sameData) {
+          uniqueStreamData.push(steamData);
+        }
+      }
+    }
+    // complete all unique streams
+    for (const steamData of uniqueStreamData) {
+      steamData.stream.complete();
       this.send({ op: 'unsubscribe', args: name });
     }
-    // clear stream map and key map
-    this.streamTable.clear();
+    // clear stream table
+    this.streamTable = [];
   }
 
-  private fetchStream<T>(name: string): ReplaySubject<WebsocketData<T>> {
-    let stream = this.streamTable.get(name);
+  private fetchOrNewStream<T>(channel: string | string[]): ReplaySubject<WebsocketData<T>> {
+    let stream;
+    // when multiple channel
+    if (channel instanceof Array) {
+      for (const cn of channel) {
+        stream = this.streamTable.find((o) => o.name === cn);
+        if (stream) {
+          return stream;
+        }
+      }
+
+      // when not found, new ReplaySubject
+      stream = new ReplaySubject<WebsocketData<T>>(1);
+      const _uuid = uuid();
+      for (const cn of channel) {
+        // put into streamTable
+        this.streamTable.push({
+          uuid: _uuid,
+          name: cn,
+          stream,
+        });
+      }
+
+      return stream;
+    }
+
+    // when single channel
+    stream = this.streamTable.find((o) => o.name === channel);
     if (!stream) {
       stream = new ReplaySubject<WebsocketData<T>>(1);
-      this.streamTable.set(name, stream);
+      this.streamTable.push({
+        uuid: uuid(),
+        name: channel,
+        stream,
+      });
     }
 
     return stream;
+  }
+
+  private delStream(streamName: string | string[]): void {
+    const streamData = this.streamTable.find((data, index) => {
+      if (data.name === streamName) {
+        // delete stream data
+        this.streamTable.splice(index, 1);
+
+        return true;
+      }
+    });
+    if (streamData) {
+      // find other data from same uuid
+      const otherSteam = this.streamTable.find((o) => o.uuid === streamData.uuid);
+      // not found
+      if (!otherSteam) {
+        // complete stream
+        streamData.stream.complete();
+      }
+    }
   }
 }

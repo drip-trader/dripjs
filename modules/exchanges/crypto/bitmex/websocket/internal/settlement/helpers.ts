@@ -1,4 +1,4 @@
-import { PublicEndPoints, SettlementResponse } from '../../../types';
+import { SettlementResponse } from '../../../types';
 import { SettlementSource } from './types';
 
 export function transform(source: SettlementSource): SettlementResponse {
@@ -6,8 +6,4 @@ export function transform(source: SettlementSource): SettlementResponse {
     ...source,
     timestamp: new Date(source.timestamp).getTime(),
   };
-}
-
-export function getTradeChannel(pair: string): string {
-  return `${PublicEndPoints.Settlement}:${pair}`;
 }

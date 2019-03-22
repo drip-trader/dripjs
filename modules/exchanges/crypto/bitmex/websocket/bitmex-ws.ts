@@ -25,56 +25,56 @@ export class BitmexWS extends BitmexWsBase {
   }
 
   // realtime orderbook
-  orderbook$(pair: string): Observable<OrderbookL2Response> {
+  orderbook$(pair?: string | string[]): Observable<OrderbookL2Response> {
     return this.orderbook.orderbookL2T25$(pair);
   }
 
   // stop realtime orderbook
-  stopOrderbook(pair: string): void {
+  stopOrderbook(pair?: string | string[]): void {
     this.orderbook.stopOrderbookL2T25(pair);
   }
 
-  trade$(pair: string): Observable<TradeResponse> {
+  trade$(pair?: string | string[]): Observable<TradeResponse> {
     return this.trade.trade$(pair);
   }
 
   // stop realtime trade
-  stopTrade(pair: string): void {
+  stopTrade(pair?: string | string[]): void {
     this.trade.stopTrade(pair);
   }
 
-  tradeBin1d$(pair: string): Observable<TradeResponse> {
+  tradeBin1d$(pair?: string | string[]): Observable<TradeResponse> {
     return this.trade.tradeBin1d$(pair);
   }
 
   // stop realtime trade
-  stopTradeBin1d(pair: string): void {
+  stopTradeBin1d(pair?: string | string[]): void {
     this.trade.stopTradeBin1d(pair);
   }
 
-  quote$(pair: string): Observable<QuoteResponse> {
+  quote$(pair?: string | string[]): Observable<QuoteResponse> {
     return this.quote.quote$(pair);
   }
 
   // stop realtime quote
-  stopQuote(pair: string): void {
+  stopQuote(pair?: string | string[]): void {
     this.quote.stopQuote(pair);
   }
 
-  settlement$(pair: string): Observable<SettlementResponse> {
+  settlement$(pair?: string | string[]): Observable<SettlementResponse> {
     return this.settlement.settlement$(pair);
   }
 
   // stop realtime settlement
-  stopSettlement(pair: string): void {
+  stopSettlement(pair?: string | string[]): void {
     this.settlement.stopSettlement(pair);
   }
 
-  order$(pair: string): Observable<OrderResponse> {
+  order$(pair?: string | string[]): Observable<OrderResponse> {
     return this.order.order$(pair);
   }
 
-  stopOrder(pair: string): void {
+  stopOrder(pair?: string | string[]): void {
     this.order.stopOrder(pair);
   }
 

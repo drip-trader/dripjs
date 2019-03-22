@@ -11,6 +11,7 @@ export interface RestResponse extends ErrorResponse {
 }
 
 export interface TradeResponse {
+  symbol: string;
   side: OrderSide;
   price: number;
   amount: number;
@@ -18,6 +19,7 @@ export interface TradeResponse {
 }
 
 export interface QuoteResponse {
+  symbol: string;
   timestamp: number;
   bidAmount: number;
   bidPrice: number;

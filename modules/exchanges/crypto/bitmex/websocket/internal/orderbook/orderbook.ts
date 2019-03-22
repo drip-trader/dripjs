@@ -2,7 +2,8 @@ import { Observable, concat } from 'rxjs';
 import { filter, map, scan, take } from 'rxjs/operators';
 
 import { OrderbookL2Response, OrderbookResponse, PublicEndPoints } from '../../../types';
-import { Websocket } from '../websocket';
+import { getTradeChannel } from '../../helpers';
+import { Websocket, WebsocketData } from '../websocket';
 import { getChannel, transform, update } from './helpers';
 
 export class Orderbook {
@@ -10,44 +11,14 @@ export class Orderbook {
 
   constructor(private readonly ws: Websocket) {}
 
-  orderbookL2T25$(pair: string): Observable<OrderbookL2Response> {
-    let stream = this.streamMap.get(pair);
-    if (!stream) {
-      stream = this.startOrderbookL2T25$(pair);
-      this.streamMap.set(pair, stream);
-    }
+  orderbookL2T25$(pair?: string | string[]): Observable<OrderbookL2Response> {
+    const channel = getTradeChannel({pair, endPoint: PublicEndPoints.OrderBookL2T25});
 
-    return stream;
+    return this.ws.subscribe<WebsocketData<OrderbookResponse>>(channel).pipe(map((wsData) => transform(wsData.data[0])));
   }
 
-  stopOrderbookL2T25(pair: string): void {
-    const channel = getChannel(pair, PublicEndPoints.OrderBookL2T25);
+  stopOrderbookL2T25(pair?: string | string[]): void {
+    const channel = getTradeChannel({pair, endPoint: PublicEndPoints.OrderBookL2T25});
     this.ws.unsubscribe(channel);
-    this.streamMap.delete(pair);
-  }
-
-  private startOrderbookL2T25$(pair: string): Observable<OrderbookL2Response> {
-    const channel = getChannel(pair, PublicEndPoints.OrderBookL2T25);
-
-    const data$ = this.ws.subscribe<OrderbookResponse>(channel);
-
-    /*
-     * Make sure 'partial' come first and then 'insert' 'update' 'delete'
-     */
-    const snapshot$ = data$.pipe(
-      filter((orderbookData) => orderbookData.action === 'partial'),
-      take(1),
-    );
-
-    const update$ = data$.pipe(
-      filter(
-        (orderbookData) => orderbookData.action === 'update' || orderbookData.action === 'insert' || orderbookData.action === 'delete',
-      ),
-    );
-
-    return concat(snapshot$, update$).pipe(
-      scan(update),
-      map(transform),
-    );
   }
 }
