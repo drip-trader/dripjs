@@ -2,17 +2,21 @@ import { isPositive } from 'dripjs-common';
 
 import { testnetConfig } from '../common';
 import { BitmexRest } from '../rest';
-import { OrderSide, OrderType, TimeInForce, TradeResponse, SettlementResponse } from '../types';
+import { OrderSide, OrderType, TimeInForce, TradeResponse, SettlementResponse, OrderResponse, RestOrderRequest } from '../types';
 import { BitmexWS } from './bitmex-ws';
+import { OrderStatus } from 'dripjs-types';
 
+// check value with order isde
 const isOrderSide = (side: any) => side === OrderSide.Buy || side === OrderSide.Sell;
-const removeDuplicates = (list: any[]): any[] => {
+
+// get unique list by pair
+const removeDuplicates = (list: TradeResponse[]): TradeResponse[] => {
   const uniqueList: any[] = [];
   for (const data of list) {
     if(uniqueList.length === 0) {
       uniqueList.push(data);
     } else {
-      const sameData = uniqueList.find((o) => o.pair === data.pair);
+      const sameData = uniqueList.find((o) => o.symbol === data.symbol);
       // not has same data
       if (!sameData) {
         uniqueList.push(data);
@@ -22,6 +26,9 @@ const removeDuplicates = (list: any[]): any[] => {
 
   return uniqueList;
 }
+
+// chedck uuid
+const isUuid = (v: any) => v.length === 36;
 
 describe('BitmexWS', () => {
   const pair = 'XBTUSD';
@@ -40,39 +47,42 @@ describe('BitmexWS', () => {
       done();
     }, 5000);
   });
-  it('subscribe trade', (done) => {
-    bitmexWS.trade$(pair).subscribe((trade) => {
-      expect(isOrderSide(trade.side)).toBeTruthy();
-      expect(isPositive(trade.amount)).toBeTruthy();
-      expect(isPositive(trade.price)).toBeTruthy();
-      expect(isPositive(trade.timestamp)).toBeTruthy();
-      bitmexWS.stopTrade(pair);
-      done();
-    });
-  });
 
-  it('subscribe multiple trade', async (done) => {
-    const receivedMessages: TradeResponse[] = [];
-    bitmexWS.trade$([pair, pair2]).subscribe((trade) => {
-      receivedMessages.push(trade);
-      if (receivedMessages.length === 2) {
-        expect(receivedMessages.map((o) => o.symbol)).toEqual([pair, pair2]);
-        bitmexWS.stopTrade([pair, pair2]);
+  describe('subscribe trade', () => {
+    it('subscribe single trade', (done) => {
+      bitmexWS.trade$(pair).subscribe((trade) => {
+        expect(isOrderSide(trade.side)).toBeTruthy();
+        expect(isPositive(trade.amount)).toBeTruthy();
+        expect(isPositive(trade.price)).toBeTruthy();
+        expect(isPositive(trade.timestamp)).toBeTruthy();
+        bitmexWS.stopTrade(pair);
         done();
-      }
+      });
     });
-  });
-
-  it('subscribe all trade', async (done) => {
-    const receivedMessages: TradeResponse[] = [];
-    bitmexWS.trade$().subscribe((trade) => {
-      receivedMessages.push(trade);
-      if (receivedMessages.length > 5) {
-        const list = removeDuplicates(receivedMessages);
-        expect(list.length).toBeGreaterThan(2);
-        bitmexWS.stopTrade();
-        done();
-      }
+  
+    it('subscribe multiple trade', async (done) => {
+      const receivedMessages: TradeResponse[] = [];
+      bitmexWS.trade$([pair, pair2]).subscribe((trade) => {
+        receivedMessages.push(trade);
+        if (receivedMessages.length === 2) {
+          expect(receivedMessages.map((o) => o.symbol)).toEqual([pair, pair2]);
+          bitmexWS.stopTrade([pair, pair2]);
+          done();
+        }
+      });
+    });
+  
+    it('subscribe all trade', async (done) => {
+      const receivedMessages: TradeResponse[] = [];
+      bitmexWS.trade$().subscribe((trade) => {
+        receivedMessages.push(trade);
+        if (receivedMessages.length > 5) {
+          const list = removeDuplicates(receivedMessages);
+          expect(list.length).toBeGreaterThan(2);
+          bitmexWS.stopTrade();
+          done();
+        }
+      });
     });
   });
 
@@ -116,31 +126,117 @@ describe('BitmexWS', () => {
     });
   });
 
-  it('subscribe order', async (done) => {
-    bitmexWS.order$(pair).subscribe((order) => {
-      expect(order).toBeDefined();
-      bitmexWS.stopOrder(pair);
-    });
-    const bitmexRest = new BitmexRest(testnetConfig);
-    const orderbookRes = await bitmexRest.fetchOrderbook({
-      symbol: pair,
-      depth: 5,
-    });
-    const price = +orderbookRes.orderbook.bids[4][0];
-    const res = await bitmexRest.createOrder({
+  describe.only('subscribe order', () => {
+    const newOrder = {
       symbol: pair,
       side: OrderSide.Buy,
-      price,
+      price: 0,
       orderQty: 25,
       ordType: OrderType.Limit,
       timeInForce: TimeInForce.Day,
-    });
-    setTimeout(async () => {
-      await bitmexRest.cancelOrder({
-        orderID: res.order.orderID,
+    };
+    const newOrder2 = {
+      ...newOrder,
+      symbol: pair2,
+    }
+    const checkOrder = (snapshot: Partial<RestOrderRequest>, order: OrderResponse) => {
+      expect(isUuid(order.orderID)).toBeTruthy();
+      expect(isPositive(String(order.account))).toBeTruthy();
+      expect(order.side).toEqual(snapshot.side);
+      expect(order.price).toEqual(snapshot.price);
+      expect(order.orderQty).toEqual(snapshot.orderQty);
+      expect(order.ordType).toEqual(snapshot.ordType);
+      expect(order.timeInForce).toEqual(snapshot.timeInForce);
+      expect(order.ordStatus).toEqual(OrderStatus.New);
+    }
+
+    it('subscribe single order', async (done) => {
+      const bitmexRest = new BitmexRest(testnetConfig);
+      const orderbookRes = await bitmexRest.fetchOrderbook({
+        symbol: pair,
+        depth: 5,
       });
-      done();
-    }, 3000);
+      newOrder.price = +orderbookRes.orderbook.bids[4][0];
+      bitmexWS.order$(pair).subscribe(async (order) => {
+        checkOrder(newOrder, order);
+        bitmexWS.stopOrder(pair);
+        await bitmexRest.cancelOrder({
+          orderID: order.orderID,
+        });
+        done();
+      });
+      await bitmexRest.createOrder(newOrder);
+    });
+
+    it('subscribe multiple order', async (done) => {
+      const bitmexRest = new BitmexRest(testnetConfig);
+      const orderbookRes = await bitmexRest.fetchOrderbook({
+        symbol: pair,
+        depth: 5,
+      });
+      newOrder.price = +orderbookRes.orderbook.bids[4][0];
+
+      const orderbookRes2 = await bitmexRest.fetchOrderbook({
+        symbol: pair2,
+        depth: 5,
+      });
+      newOrder2.price = +orderbookRes2.orderbook.bids[4][0];
+
+      const receivedMessages: OrderResponse[] = [];
+      bitmexWS.order$([pair, pair2]).subscribe(async (order) => {
+        receivedMessages.push(order);
+        if (receivedMessages.length === 2) {
+          bitmexWS.stopOrder([pair, pair2]);
+          for (const msg of receivedMessages) {
+            const snapshot = msg.symbol === newOrder.symbol ? newOrder : newOrder2;
+            checkOrder(snapshot, msg);
+            await bitmexRest.cancelOrder({
+              orderID: msg.orderID,
+            });
+          }
+          done();
+        }
+      });
+      await Promise.all([
+        bitmexRest.createOrder(newOrder),
+        bitmexRest.createOrder(newOrder2),
+      ]);
+    });
+
+    it.only('subscribe all order', async (done) => {
+      const bitmexRest = new BitmexRest(testnetConfig);
+      const orderbookRes = await bitmexRest.fetchOrderbook({
+        symbol: pair,
+        depth: 5,
+      });
+      newOrder.price = +orderbookRes.orderbook.bids[4][0];
+
+      const orderbookRes2 = await bitmexRest.fetchOrderbook({
+        symbol: pair2,
+        depth: 5,
+      });
+      newOrder2.price = +orderbookRes2.orderbook.bids[4][0];
+
+      const receivedMessages: OrderResponse[] = [];
+      bitmexWS.order$().subscribe(async (order) => {
+        receivedMessages.push(order);
+        if (receivedMessages.length === 2) {
+          bitmexWS.stopOrder();
+          for (const msg of receivedMessages) {
+            const snapshot = msg.symbol === newOrder.symbol ? newOrder : newOrder2;
+            checkOrder(snapshot, msg);
+            await bitmexRest.cancelOrder({
+              orderID: msg.orderID,
+            });
+          }
+          done();
+        }
+      });
+      await Promise.all([
+        bitmexRest.createOrder(newOrder),
+        bitmexRest.createOrder(newOrder2),
+      ]);
+    });
   });
 
   it('config is null', (done) => {
