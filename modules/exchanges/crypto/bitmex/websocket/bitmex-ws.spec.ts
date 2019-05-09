@@ -2,9 +2,19 @@ import { isPositive } from 'dripjs-common';
 
 import { testnetConfig } from '../common';
 import { BitmexRest } from '../rest';
-import { OrderSide, OrderType, TimeInForce, TradeResponse, SettlementResponse, OrderResponse, RestOrderRequest } from '../types';
+import {
+  OrderSide,
+  OrderType,
+  TimeInForce,
+  TradeResponse,
+  SettlementResponse,
+  OrderResponse,
+  RestOrderRequest,
+  OrderbookL2Response,
+} from '../types';
 import { BitmexWS } from './bitmex-ws';
 import { OrderStatus } from 'dripjs-types';
+import { sleep } from '@dripjs/common';
 
 // check value with order isde
 const isOrderSide = (side: any) => side === OrderSide.Buy || side === OrderSide.Sell;
@@ -13,7 +23,7 @@ const isOrderSide = (side: any) => side === OrderSide.Buy || side === OrderSide.
 const removeDuplicates = (list: TradeResponse[]): TradeResponse[] => {
   const uniqueList: any[] = [];
   for (const data of list) {
-    if(uniqueList.length === 0) {
+    if (uniqueList.length === 0) {
       uniqueList.push(data);
     } else {
       const sameData = uniqueList.find((o) => o.symbol === data.symbol);
@@ -25,7 +35,7 @@ const removeDuplicates = (list: TradeResponse[]): TradeResponse[] => {
   }
 
   return uniqueList;
-}
+};
 
 // chedck uuid
 const isUuid = (v: any) => v.length === 36;
@@ -37,15 +47,16 @@ describe('BitmexWS', () => {
   afterAll(() => {
     bitmexWS.destroy();
   });
-  it('subscribe orderbook', (done) => {
+
+  it('subscribe orderbook', async () => {
+    let receiveData: OrderbookL2Response;
     bitmexWS.orderbook$(pair).subscribe((orderbook) => {
-      expect(orderbook.asks.length).toBeGreaterThan(0);
-      expect(orderbook.bids.length).toBeGreaterThan(0);
+      receiveData = orderbook;
     });
-    setTimeout(() => {
-      bitmexWS.stopOrderbook(pair);
-      done();
-    }, 5000);
+    await sleep(5000);
+    expect(receiveData.asks.length).toBeGreaterThan(0);
+    expect(receiveData.bids.length).toBeGreaterThan(0);
+    bitmexWS.stopOrderbook(pair);
   });
 
   describe('subscribe trade', () => {
@@ -59,7 +70,7 @@ describe('BitmexWS', () => {
         done();
       });
     });
-  
+
     it('subscribe multiple trade', async (done) => {
       const receivedMessages: TradeResponse[] = [];
       bitmexWS.trade$([pair, pair2]).subscribe((trade) => {
@@ -71,7 +82,7 @@ describe('BitmexWS', () => {
         }
       });
     });
-  
+
     it('subscribe all trade', async (done) => {
       const receivedMessages: TradeResponse[] = [];
       bitmexWS.trade$().subscribe((trade) => {
@@ -138,7 +149,7 @@ describe('BitmexWS', () => {
     const newOrder2 = {
       ...newOrder,
       symbol: pair2,
-    }
+    };
     const checkOrder = (snapshot: Partial<RestOrderRequest>, order: OrderResponse) => {
       expect(isUuid(order.orderID)).toBeTruthy();
       expect(isPositive(String(order.account))).toBeTruthy();
@@ -148,7 +159,7 @@ describe('BitmexWS', () => {
       expect(order.ordType).toEqual(snapshot.ordType);
       expect(order.timeInForce).toEqual(snapshot.timeInForce);
       expect(order.ordStatus).toEqual(OrderStatus.New);
-    }
+    };
 
     it('subscribe single order', async (done) => {
       const bitmexRest = new BitmexRest(testnetConfig);
@@ -197,10 +208,7 @@ describe('BitmexWS', () => {
           done();
         }
       });
-      await Promise.all([
-        bitmexRest.createOrder(newOrder),
-        bitmexRest.createOrder(newOrder2),
-      ]);
+      await Promise.all([bitmexRest.createOrder(newOrder), bitmexRest.createOrder(newOrder2)]);
     });
 
     it.only('subscribe all order', async (done) => {
@@ -232,10 +240,7 @@ describe('BitmexWS', () => {
           done();
         }
       });
-      await Promise.all([
-        bitmexRest.createOrder(newOrder),
-        bitmexRest.createOrder(newOrder2),
-      ]);
+      await Promise.all([bitmexRest.createOrder(newOrder), bitmexRest.createOrder(newOrder2)]);
     });
   });
 

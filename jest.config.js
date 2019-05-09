@@ -9,7 +9,7 @@ module.exports = {
   globals: {
     'ts-jest': {
       tsConfig: './tsconfig.spec.json',
-      isolatedModules: true
+      isolatedModules: true,
     },
   },
   transform: {
@@ -17,10 +17,16 @@ module.exports = {
   },
   testMatch: ['<rootDir>/modules/**/*.spec.ts', '<rootDir>/projects/**/*.spec.ts'],
   testURL: 'http://localhost/',
-  collectCoverageFrom: ['modules/**/*.{js,ts}', 'projects/**/*.{js,ts}', '!projects/**/main.{js,ts}', '!modules/**/index.{js,ts}', '!**/node_modules/**', '!**/vendor/**'],
+  collectCoverageFrom: [
+    'modules/**/*.{js,ts}',
+    'projects/**/*.{js,ts}',
+    '!projects/**/main.{js,ts}',
+    '!modules/**/index.{js,ts}',
+    '!**/node_modules/**',
+    '!**/vendor/**',
+  ],
   coveragePathIgnorePatterns: ['/node_modules/', '/test-helpers/', '/main.{js,ts}', '/dist/', 'entity-test-bed', '/types/', '/tools/'],
   coverageReporters: ['json', 'lcov'],
   verbose: true,
   preset: 'ts-jest',
 };
-
