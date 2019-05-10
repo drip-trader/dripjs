@@ -1,12 +1,15 @@
 {
-  "name": "dripjs-intelligence",
-  "version": "0.1.10",
+  "name": "@dripjs/intelligence",
+  "version": "0.1.13",
   "description": "dripjs data acquisition service",
   "license": "GPL-3.0-or-later",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "bin": {
     "intel-service": "dist/service/main.js"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "build:prod": "yarn build:preprocess && yarn tsc && yarn make:config",
@@ -33,9 +36,9 @@
     "class-transformer": "0.2.0",
     "class-validator": "0.9.1",
     "config": "3.0.1",
-    "dripjs-common": "^0.1.4",
-    "dripjs-exchanges": "0.1.2",
-    "dripjs-types": "0.1.12",
+    "@dripjs/common": "^0.1.13",
+    "@dripjs/exchanges": "0.1.13",
+    "@dripjs/types": "0.1.13",
     "json-value-replacer": "0.1.1",
     "moment": "2.24.0",
     "reflect-metadata": "0.1.13",

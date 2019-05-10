@@ -1,4 +1,4 @@
-import { HttpHeaders } from 'dripjs-types';
+import { HttpHeaders } from '@dripjs/types';
 
 import { Config, RateLimit } from '../types';
 

@@ -2,7 +2,7 @@ import { writeFile } from 'fs';
 import { join } from 'path';
 import { promisify } from 'util';
 
-import { Config } from 'dripjs-types';
+import { Config } from '@dripjs/types';
 
 // tslint:disable-next-line
 const jsonValueReplacer = require('json-value-replacer');

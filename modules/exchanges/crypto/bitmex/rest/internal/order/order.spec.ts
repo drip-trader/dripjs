@@ -1,4 +1,4 @@
-import { OrderStatus } from 'dripjs-types';
+import { OrderStatus } from '@dripjs/types';
 
 import { testnetConfig, testnetReadonlyConfig } from '../../../common';
 import { OrderSide, OrderType, RestFetchOrderRequest, RestOrderRequest } from '../../../types';

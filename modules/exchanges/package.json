@@ -1,6 +1,6 @@
 {
   "name": "@dripjs/exchanges",
-  "version": "0.1.5",
+  "version": "0.1.13",
   "description": "dripjs exchanges api wapper, support for rest api and websocket",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -42,8 +42,8 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "dripjs-common": "^0.1.2",
-    "dripjs-types": "^0.1.1",
+    "@dripjs/common": "^0.1.13",
+    "@dripjs/types": "^0.1.13",
     "qs": "^6.6.0",
     "rxjs": "^6.4.0",
     "ws": "^6.1.3"

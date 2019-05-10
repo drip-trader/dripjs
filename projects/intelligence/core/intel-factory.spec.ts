@@ -1,6 +1,6 @@
 import { Bitmex } from '@dripjs/exchanges';
 import { realConfig } from '@dripjs/testing';
-import { OrderSide } from 'dripjs-types';
+import { OrderSide } from '@dripjs/types';
 
 import { BitmexSpy, IntelFactory, Spy } from '.';
 

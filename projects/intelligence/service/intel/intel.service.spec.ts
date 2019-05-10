@@ -1,4 +1,4 @@
-import { Depth, SupportedExchange, Ticker, Transaction } from 'dripjs-types';
+import { Depth, SupportedExchange, Ticker, Transaction } from '@dripjs/types';
 
 import { Resolution } from '../../core';
 import { IntelServiceException } from '../exceptions';

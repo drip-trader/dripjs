@@ -1,6 +1,6 @@
+import { ConfigIntelServer, Depth, SupportedExchange, Ticker, Transaction } from '@dripjs/types';
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
-import { ConfigIntelServer, Depth, SupportedExchange, Ticker, Transaction } from 'dripjs-types';
 
 import { ApplicationModule, IntelChannel } from '../../intelligence';
 import { IntelClient } from './intel-client';

@@ -1,5 +1,5 @@
 import { testnetConfig } from '@dripjs/testing';
-import { SupportedExchange } from 'dripjs-types';
+import { SupportedExchange } from '@dripjs/types';
 
 import { IntelServiceException } from '../exceptions';
 import { findSpy } from './helpers';

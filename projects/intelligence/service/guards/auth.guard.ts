@@ -1,5 +1,5 @@
+import { ConfigIntelServer } from '@dripjs/types';
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { ConfigIntelServer } from 'dripjs-types';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

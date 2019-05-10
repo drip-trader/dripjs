@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
+import { ConfigIntelServer } from '@dripjs/types';
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { ConfigIntelServer } from 'dripjs-types';
 
 import { ApplicationModule } from './app.module';
 
@@ -23,6 +23,6 @@ async function bootstrap(): Promise<void> {
 }
 
 bootstrap().catch((e) => {
-  console.error('dripjs-intel-service on error: ', e.message);
+  console.error('@dripjs/intel-service on error: ', e.message);
   process.exit(1);
 });

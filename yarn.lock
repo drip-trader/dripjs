@@ -139,6 +139,34 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
+"@dripjs/common@^0.1.13":
+  version "0.1.13"
+  resolved "https://registry.yarnpkg.com/@dripjs/common/-/common-0.1.13.tgz#6f2d24899cb2944bf2f6d3514bb4ece1287b2f4b"
+  integrity sha512-zxTHrVw1Mgj1XQF4ooSor/tdbNQFBNzyvnXGwx0W2vGNmKHvka8Qg5eAJS4gaodKtJp0OZmmv3X1lQYsz1yOTg==
+  dependencies:
+    bignumber.js "^8.1.1"
+    rxjs "^6.4.0"
+    socket.io "^2.2.0"
+    socket.io-client "^2.2.0"
+    ws "^6.1.3"
+
+"@dripjs/exchanges@^0.1.13":
+  version "0.1.13"
+  resolved "https://registry.yarnpkg.com/@dripjs/exchanges/-/exchanges-0.1.13.tgz#c073014d4b18de5fe697920a081f99aedb6cccc6"
+  integrity sha512-Zc7FHhEag0E1PN0YYZBxigxIBbQe5qfbnuOqoDj5F+c/vBCXusSMMGBDwkF/hUCqcYDd5lr+iV6N/5/L4G0y3A==
+  dependencies:
+    "@dripjs/common" "^0.1.13"
+    "@dripjs/types" "^0.1.13"
+    axios "^0.18.0"
+    qs "^6.6.0"
+    rxjs "^6.4.0"
+    ws "^6.1.3"
+
+"@dripjs/types@^0.1.13":
+  version "0.1.13"
+  resolved "https://registry.yarnpkg.com/@dripjs/types/-/types-0.1.13.tgz#1abe4b969d4d77acbbbbda4a76f3d3f730200fbd"
+  integrity sha512-bUlzBTUwdPWB4fe8vYxEHYuZ6xnk4eTjlCpr8taaK7/IIV5IUGKn1toFZaafujzMWsKm7EaVHp+ZMyi0lmt6sg==
+
 "@jest/console@^24.3.0":
   version "24.3.0"
   resolved "https://registry.yarnpkg.com/@jest/console/-/console-24.3.0.tgz#7bd920d250988ba0bf1352c4493a48e1cb97671e"
@@ -922,10 +950,10 @@ big.js@^5.2.2:
   resolved "https://registry.yarnpkg.com/big.js/-/big.js-5.2.2.tgz#65f0af382f578bcdc742bd9c281e9cb2d7768328"
   integrity sha512-vyL2OymJxmarO8gxMr0mhChsO9QGwhynfuu4+MHTAW6czfq9humCB7rKpUjDd9YUiDPU4mzpyupFSvOClAwbmQ==
 
-bignumber.js@4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-4.1.0.tgz#db6f14067c140bd46624815a7916c92d9b6c24b1"
-  integrity sha512-eJzYkFYy9L4JzXsbymsFn3p54D+llV27oTQ+ziJG7WFRheJcNZilgVXMG0LoZtlQSKBsJdWtLFqOD0u+U0jZKA==
+bignumber.js@7.2.1:
+  version "7.2.1"
+  resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-7.2.1.tgz#80c048759d826800807c4bfd521e50edbba57a5f"
+  integrity sha512-S4XzBk5sMB+Rcb/LNcpzXr57VRTxgAvaAEDAl1AwRx27j00hT84O6OkteE7u8UB3NuaaygCRrEpqox4uDOrbdQ==
 
 bignumber.js@^8.1.1:
   version "8.1.1"
@@ -1335,9 +1363,9 @@ concat-stream@^1.5.0, concat-stream@^1.6.0:
     typedarray "^0.0.6"
 
 config@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/config/-/config-3.0.1.tgz#c3118e2eb45fdfd135277339f87e2492559cb147"
-  integrity sha512-TBNrrk2b6AybUohqXw2AydglFBL9b/+1GG93Di6Fm6x1SyVJ5PYgo+mqY2X0KpU9m0PJDSbFaC5H95utSphtLw==
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/config/-/config-3.1.0.tgz#c7d49c4171e8f6cb61c1d69e22647ffd60492548"
+  integrity sha512-t6oDeNQbsIWa+D/KF4959TANzjSHLv1BA/hvL8tHEA3OUSWgBXELKaONSI6nr9oanbKs0DXonjOWLcrtZ3yTAA==
   dependencies:
     json5 "^1.0.1"
 
@@ -1865,45 +1893,6 @@ dotgitignore@^1.0.3:
   dependencies:
     find-up "^2.1.0"
     minimatch "^3.0.4"
-
-dripjs-common@^0.1.2:
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/dripjs-common/-/dripjs-common-0.1.3.tgz#dad2d00d7ca6cb332946bcc220db455ff0c11ff3"
-  integrity sha512-Q/xn3LRiKwKPgm2j1aZu+O/8yHBNL5NYemaXuQkykXsA2/ni9dgo/02iE+JDYihPM1y9SYL0XhlbnR78K28AmA==
-  dependencies:
-    bignumber.js "^8.1.1"
-    rxjs "^6.4.0"
-    socket.io "^2.2.0"
-    socket.io-client "^2.2.0"
-    ws "^6.1.3"
-
-dripjs-common@^0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/dripjs-common/-/dripjs-common-0.1.4.tgz#6f73f4076b1feb6652789307a864232c44cfa82f"
-  integrity sha512-ktd+ylTAsNLNlix9dZ/25HkHJnDH+dZanlobnLO2vbmjlQevLa/05hqHTwly+vTQ53rff5NFOOlhSC2neJm7RQ==
-  dependencies:
-    bignumber.js "^8.1.1"
-    rxjs "^6.4.0"
-    socket.io "^2.2.0"
-    socket.io-client "^2.2.0"
-    ws "^6.1.3"
-
-dripjs-exchanges@^0.1.2:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/dripjs-exchanges/-/dripjs-exchanges-0.1.4.tgz#183fc72089d3be3750599804199612dcb35aa5b9"
-  integrity sha512-BpLML6P8DHfz2XdR6j6yGOIw9AO4RAi1fxlR1DeBFLEW9TUm8ig1fYejrLhjLZxfp1LHbyuCQHQ4/tgIHGShog==
-  dependencies:
-    axios "^0.18.0"
-    dripjs-common "^0.1.2"
-    dripjs-types "^0.1.1"
-    qs "^6.6.0"
-    rxjs "^6.4.0"
-    ws "^6.1.3"
-
-dripjs-types@^0.1.1, dripjs-types@^0.1.12:
-  version "0.1.12"
-  resolved "https://registry.yarnpkg.com/dripjs-types/-/dripjs-types-0.1.12.tgz#21f77b6a34a3950b0d0a32ff36bef15203fe6cef"
-  integrity sha512-745t1A9zFBmc6hG/MFSBMxCUERGBB891MDn5tMz3TIZiSJSNIJcMmO0BMcrrqcNEyRtNpQ63uPnTqm3iuyYkzA==
 
 ecc-jsbn@~0.1.1:
   version "0.1.2"
@@ -4473,11 +4462,11 @@ mute-stream@0.0.7:
   integrity sha1-MHXOk7whuPq0PhvE2n6BFe0ee6s=
 
 mysql@^2.16.0:
-  version "2.16.0"
-  resolved "https://registry.yarnpkg.com/mysql/-/mysql-2.16.0.tgz#b23b22ab5de44fc2d5d32bd4f5af6653fc45e2ba"
-  integrity sha512-dPbN2LHonQp7D5ja5DJXNbCLe/HRdu+f3v61aguzNRQIrmZLOeRoymBYyeThrR6ug+FqzDL95Gc9maqZUJS+Gw==
+  version "2.17.1"
+  resolved "https://registry.yarnpkg.com/mysql/-/mysql-2.17.1.tgz#62bba4a039a9b2f73638cd1652ce50fc6f682899"
+  integrity sha512-7vMqHQ673SAk5C8fOzTG2LpPcf3bNt0oL3sFpxPEEFp1mdlDcrLK0On7z8ZYKaaHrHwNcQ/MTUz7/oobZ2OyyA==
   dependencies:
-    bignumber.js "4.1.0"
+    bignumber.js "7.2.1"
     readable-stream "2.3.6"
     safe-buffer "5.1.2"
     sqlstring "2.3.1"
@@ -5063,9 +5052,9 @@ qs@6.5.2, qs@~6.5.2:
   integrity sha512-N5ZAX4/LxJmF+7wN74pUD6qAh9/wnvdQcjq9TZjevvXzSUo7bfmw91saqMjzGS2xq91/odN2dW/WOl7qQHNDGA==
 
 qs@^6.6.0:
-  version "6.6.0"
-  resolved "https://registry.yarnpkg.com/qs/-/qs-6.6.0.tgz#a99c0f69a8d26bf7ef012f871cdabb0aee4424c2"
-  integrity sha512-KIJqT9jQJDQx5h5uAVPimw6yVg2SekOKu959OCtktD3FjzbpvaPr8i4zzg07DOMz+igA4W/aNM7OV8H37pFYfA==
+  version "6.7.0"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.7.0.tgz#41dc1a015e3d581f1621776be31afb2876a9b1bc"
+  integrity sha512-VCdBRNFTX1fyE7Nb6FYoURo/SPe62QCaAyzJvUjwRaIsc+NePBEniHlvxFmmX56+HZphIGtV0XeCirBtpDrTyQ==
 
 quick-lru@^1.0.0:
   version "1.1.0"
@@ -5371,9 +5360,9 @@ run-async@^2.2.0:
     is-promise "^2.1.0"
 
 rxjs@^6.4.0:
-  version "6.4.0"
-  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.4.0.tgz#f3bb0fe7bda7fb69deac0c16f17b50b0b8790504"
-  integrity sha512-Z9Yfa11F6B9Sg/BK9MnqnQ+aQYicPLtilXBp2yUtDt2JRCE0h26d33EnfO3ZxoNxG0T92OUucP3Ct7cpfkdFfw==
+  version "6.5.2"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.5.2.tgz#2e35ce815cd46d84d02a209fb4e5921e051dbec7"
+  integrity sha512-HUb7j3kvb7p7eCUHE3FqjoDsC1xfZQ4AHFWfTKSpZ+sAhhz5X1WX0ZuUqWbzB2QhSLp3DoLUG+hMdEDKqWo2Zg==
   dependencies:
     tslib "^1.9.0"
 
@@ -6507,10 +6496,17 @@ ws@^5.2.0:
   dependencies:
     async-limiter "~1.0.0"
 
-ws@^6.1.3, ws@^6.2.0:
+ws@^6.1.3:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/ws/-/ws-6.2.0.tgz#13806d9913b2a5f3cbb9ba47b563c002cbc7c526"
   integrity sha512-deZYUNlt2O4buFCa3t5bKLf8A7FPP/TVjwOeVNpw818Ma5nk4MLXls2eoEGS39o8119QIYxTrTDoPQ5B/gTD6w==
+  dependencies:
+    async-limiter "~1.0.0"
+
+ws@^6.2.0:
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-6.2.1.tgz#442fdf0a47ed64f59b6a5d8ff130f4748ed524fb"
+  integrity sha512-GIyAXC2cB7LjvpgMt9EKS2ldqr0MTrORaleiOno6TweZ6r3TKtoFQWay/2PceJ3RuBasOHzXNn5Lrw1X0bEjqA==
   dependencies:
     async-limiter "~1.0.0"
 

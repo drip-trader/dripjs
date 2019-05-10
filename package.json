@@ -17,6 +17,7 @@
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "cp:docs": "yarn build:typedoc && cp -rf type-docs/* ../dripjs-docs",
     "coverage": "jest -c jest.config.js --collectCoverage",
+    "ci:build-check": "yarn run tsc:app --noEmit",
     "ci:coverage": "jest -c jest.config.js --coverage --coverageReporters=text-lcov | coveralls",
     "db:sync": "yarn build:prod && yarn ts-node $(npm bin)/typeorm schema:sync",
     "docs": "yarn build:typedoc && http-server type-docs",
@@ -142,6 +143,9 @@
     "yarn": "1.13.0"
   },
   "dependencies": {
+    "@dripjs/common": "^0.1.13",
+    "@dripjs/exchanges": "^0.1.13",
+    "@dripjs/types": "^0.1.13",
     "@nestjs/common": "^5.7.3",
     "@nestjs/core": "^5.7.3",
     "@nestjs/websockets": "^5.7.3",
@@ -149,9 +153,6 @@
     "bignumber.js": "^8.1.1",
     "config": "^3.0.1",
     "dotenv": "^7.0.0",
-    "dripjs-common": "^0.1.4",
-    "dripjs-exchanges": "^0.1.2",
-    "dripjs-types": "^0.1.12",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
     "mysql": "^2.16.0",

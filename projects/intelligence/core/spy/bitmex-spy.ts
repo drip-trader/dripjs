@@ -1,6 +1,6 @@
+import { Bitmex } from '@dripjs/exchanges';
+import { Bar, BarRequest, Depth, OrderSide, Pair, Ticker, Transaction } from '@dripjs/types';
 import { BigNumber } from 'bignumber.js';
-import { Bitmex } from 'dripjs-exchanges';
-import { Bar, BarRequest, Depth, OrderSide, Pair, Ticker, Transaction } from 'dripjs-types';
 import * as moment from 'moment';
 import { Observable, zip } from 'rxjs';
 import { map } from 'rxjs/operators';

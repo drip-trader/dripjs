@@ -1,5 +1,5 @@
+import { ConfigIntelServer } from '@dripjs/types';
 import { WsArgumentsHost } from '@nestjs/common/interfaces';
-import { ConfigIntelServer } from 'dripjs-types';
 
 // tslint:disable-next-line
 const config: ConfigIntelServer = require('config').container.intelService;

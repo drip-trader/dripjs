@@ -1,4 +1,4 @@
-import { OrderStatus } from 'dripjs-types';
+import { OrderStatus } from '@dripjs/types';
 import * as moment from 'moment';
 
 import { testnetConfig } from '../common';

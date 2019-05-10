@@ -1,4 +1,4 @@
-import { ExchangeCryptoAuthConfig, RealtimeType, SupportedExchange } from 'dripjs-types';
+import { ExchangeCryptoAuthConfig, RealtimeType, SupportedExchange } from '@dripjs/types';
 
 import { BitmexSpy, IntelFactory, Spy } from '../../core';
 import { IntelServiceException } from '../exceptions';

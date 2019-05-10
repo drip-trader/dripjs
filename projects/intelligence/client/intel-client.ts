@@ -1,5 +1,5 @@
-import { SocketIORxjs } from 'dripjs-common';
-import { SupportedExchange } from 'dripjs-types';
+import { SocketIORxjs } from '@dripjs/common';
+import { SupportedExchange } from '@dripjs/types';
 import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 

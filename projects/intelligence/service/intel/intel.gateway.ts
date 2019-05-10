@@ -1,6 +1,6 @@
+import { Symbol } from '@dripjs/types';
 import { UseFilters, UseGuards } from '@nestjs/common';
 import { OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WsResponse } from '@nestjs/websockets';
-import { Symbol } from 'dripjs-types';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

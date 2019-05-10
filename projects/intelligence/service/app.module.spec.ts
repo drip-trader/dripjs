@@ -1,6 +1,6 @@
+import { ConfigIntelServer, Depth, SupportedExchange, Symbol, Ticker, Transaction } from '@dripjs/types';
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
-import { ConfigIntelServer, Depth, SupportedExchange, Symbol, Ticker, Transaction } from 'dripjs-types';
 import * as io from 'socket.io-client';
 
 import { ApplicationModule } from './app.module';

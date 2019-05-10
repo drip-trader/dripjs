@@ -1,4 +1,4 @@
-import { Bitmex } from 'dripjs-exchanges';
+import { Bitmex } from '@dripjs/exchanges';
 
 import { BitmexSpy } from './spy';
 

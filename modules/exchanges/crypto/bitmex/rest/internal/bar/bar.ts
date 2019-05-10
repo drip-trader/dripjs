@@ -1,4 +1,4 @@
-import { HttpMethod } from 'dripjs-types';
+import { HttpMethod } from '@dripjs/types';
 
 import { BarResponse, Config, PublicEndPoints, RestBarRequest, RestBarResponse, RestResponse } from '../../../types';
 import { Rest } from '../rest';

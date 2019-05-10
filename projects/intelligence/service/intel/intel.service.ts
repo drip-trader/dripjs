@@ -1,5 +1,5 @@
+import { Bar, Config, ExchangeCryptoAuthConfig, SupportedExchange, Symbol } from '@dripjs/types';
 import { Injectable, Logger } from '@nestjs/common';
-import { Bar, Config, ExchangeCryptoAuthConfig, SupportedExchange, Symbol } from 'dripjs-types';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 

@@ -1,4 +1,4 @@
-import { OrderStatus } from 'dripjs-types';
+import { OrderStatus } from '@dripjs/types';
 
 import { ExecInst, OrderSide, OrderType, TimeInForce } from './order';
 

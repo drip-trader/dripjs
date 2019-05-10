@@ -1,4 +1,4 @@
-import { RealtimeType } from 'dripjs-types';
+import { RealtimeType } from '@dripjs/types';
 
 export interface IntelError {
   name: string;
