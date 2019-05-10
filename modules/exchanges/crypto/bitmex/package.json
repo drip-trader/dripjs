@@ -1,14 +1,18 @@
 {
-  "name": "dripjs-bitmex",
-  "version": "0.1.11",
+  "name": "@dripjs/bitmex",
+  "version": "0.1.12",
   "description": "dripjs bitmex api wapper, support for rest api and websocket",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
     "build:prod": "yarn build:preprocess && yarn tsc",
     "build:preprocess": "rm -rf dist",
+    "prepublishOnly": "yarn build:prod",
     "postpublish": "yarn build:preprocess",
     "tsc": "tsc -p tsconfig.json"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "repository": {
     "type": "git",

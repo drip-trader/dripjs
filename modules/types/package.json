@@ -1,5 +1,5 @@
 {
-  "name": "dripjs-types",
+  "name": "@dripjs/types",
   "version": "0.1.12",
   "description": "dripjs types",
   "main": "dist/index.js",
@@ -10,6 +10,9 @@
     "prepublishOnly": "yarn build:prod",
     "postpublish": "yarn build:preprocess",
     "tsc": "tsc -p tsconfig.json"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "repository": {
     "type": "git",

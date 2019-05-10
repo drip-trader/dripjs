@@ -1,6 +1,6 @@
 {
-  "name": "dripjs-exchanges",
-  "version": "0.1.4",
+  "name": "@dripjs/exchanges",
+  "version": "0.1.5",
   "description": "dripjs exchanges api wapper, support for rest api and websocket",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -10,6 +10,9 @@
     "prepublishOnly": "yarn build:prod",
     "postpublish": "yarn build:preprocess",
     "tsc": "tsc -p tsconfig.json"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "repository": {
     "type": "git",
