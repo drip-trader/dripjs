@@ -19,14 +19,8 @@
       "@dripjs/types": ["modules/types"],
       "@dripjs/models": ["modules/models"],
       "@dripjs/exchanges": ["modules/exchanges"],
-      "@dripjs/testing": ["modules/testing"],
+      "@dripjs/testing": ["modules/testing"]
     },
-    "plugins": [
-      {
-        "transform": "@zerollup/ts-transform-paths",
-        "exclude": ["*"]
-      },
-    ],
     "sourceMap": true
   },
   "include": [
@@ -36,6 +30,6 @@
   ],
   "exclude": [
     "dist",
-    "node_modules",
+    "node_modules"
   ]
 }

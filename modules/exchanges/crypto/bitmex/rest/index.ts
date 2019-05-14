@@ -1,1 +1,2 @@
-export * from './bitmex-rest';
+export * from './rest';
+export * from './types';

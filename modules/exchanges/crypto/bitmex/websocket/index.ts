@@ -1,1 +1,1 @@
-export * from './bitmex-ws';
+export * from './websocket';

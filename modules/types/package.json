@@ -1,6 +1,6 @@
 {
   "name": "@dripjs/types",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "description": "dripjs types",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
