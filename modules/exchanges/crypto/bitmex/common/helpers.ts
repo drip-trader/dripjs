@@ -1,6 +1,6 @@
 import { HttpHeaders } from '@dripjs/types';
 
-import { Config, RateLimit } from '../types';
+import { RateLimit } from '../types';
 
 export function getRateLimit(headers: HttpHeaders): RateLimit {
   return {
@@ -10,14 +10,38 @@ export function getRateLimit(headers: HttpHeaders): RateLimit {
   };
 }
 
-export const testnetConfig: Config = {
-  apiKey: `${process.env['SPEC_BITMEX_TEST_API_KEY']}`,
-  apiSecret: `${process.env['SPEC_BITMEX_TEST_API_SECRET']}`,
-  testnet: true,
-};
+/**
+ * get channel name
+ *
+ * @param params
+ *
+ * eg1:
+ * input: {
+ *   pair: 'XBTUSD',
+ *   endPoint: PublicEndPoints.Trade,
+ * }
+ * output: 'trade:XBTUSD'
+ *
+ * eg2:
+ * input: {
+ *   pair: ['XBTUSD', 'ETHUSD'],
+ *   endPoint: PublicEndPoints.Trade,
+ * }
+ * output: ['trade:XBTUSD', 'trade:ETHUSD']
+ */
+export function getChannelName(params: { pair?: string | string[]; endPoint: string }): string | string[] {
+  let subStr = `${params.endPoint}`;
+  if (params.pair) {
+    if (params.pair instanceof Array) {
+      const channels: string[] = [];
+      for (const p of params.pair) {
+        channels.push(`${params.endPoint}:${p}`);
+      }
 
-export const testnetReadonlyConfig: Config = {
-  apiKey: `${process.env['SPEC_BITMEX_TEST_TRADE_API_KEY']}`,
-  apiSecret: `${process.env['SPEC_BITMEX_TEST_TRADE_API_SECRET']}`,
-  testnet: true,
-};
+      return channels;
+    }
+    subStr = `${params.endPoint}:${params.pair}`;
+  }
+
+  return subStr;
+}

@@ -3,7 +3,7 @@ import { createHmac } from 'crypto';
 import { HttpMethod } from '@dripjs/types';
 import { stringify } from 'qs';
 
-import { restApiBasePath } from '../types';
+import { apiBasePath } from '../rest/types';
 
 /**
  * Sign a message. hex( HMAC_SHA256(secret, verb + url + nonce + data) )
@@ -39,7 +39,7 @@ export function getWSAuthQuery(apiKey: string, apiSecret: string): string {
 
 export function getRestAuthHeaders(method: HttpMethod, endpoint: string, apiKey: string, apiSecret: string, data?: any): AuthHeaders {
   const query = method === HttpMethod.GET && Object.keys(data).length !== 0 ? `?${stringify(data)}` : '';
-  const url = `${restApiBasePath}${endpoint}${query}`;
+  const url = `${apiBasePath}${endpoint}${query}`;
   // 3min timeout
   const expires = Math.round(Date.now() / 1000) + 60 * 3;
   const body = method === HttpMethod.GET ? '' : data;

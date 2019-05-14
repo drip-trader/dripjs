@@ -14,6 +14,9 @@
     "build:prod": "yarn build:preprocess && yarn tsc:app",
     "build:preprocess": "rm -rf dist",
     "build:typedoc": "rm -rf type-docs && typedoc --tsconfig ./tsconfig.typedoc.json",
+    "build:modules": "yarn build:prod && yarn build:modules:preprocess && yarn build:modules:process",
+    "build:modules:preprocess": "mkdir dist/node_modules && mkdir dist/node_modules/@dripjs && cp -rf dist/modules/* dist/node_modules/@dripjs",
+    "build:modules:process": "sh shell/reorg-modules.sh && cp -rf dist/node_modules/@dripjs/* node_modules/@dripjs",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "cp:docs": "yarn build:typedoc && cp -rf type-docs/* ../dripjs-docs",
     "coverage": "jest -c jest.config.js --collectCoverage",
@@ -37,9 +40,9 @@
     "release:patch": "yarn standard-version -s --release-as patch",
     "start:app-inter-service": "yarn ts-node projects/intelligence/service/main.ts",
     "test": "yarn jest --runInBand",
-    "tsc:app": "ttsc -p tsconfig.app.json",
-    "tsc:dev": "ttsc -p tsconfig.dev.json",
-    "tsc:spec": "ttsc -p tsconfig.spec.json"
+    "tsc:app": "tsc -p tsconfig.app.json",
+    "tsc:dev": "tsc -p tsconfig.dev.json",
+    "tsc:spec": "tsc -p tsconfig.spec.json"
   },
   "repository": {
     "type": "git",
@@ -114,8 +117,8 @@
     "@types/qs": "6.5.2",
     "@types/socket.io": "2.1.2",
     "@types/socket.io-client": "1.4.32",
+    "@types/uuid": "^3.4.4",
     "@types/ws": "6.0.1",
-    "@zerollup/ts-transform-paths": "1.7.0",
     "conventional-commits-detector": "1.0.2",
     "coveralls": "3.0.3",
     "express": "4.16.4",
@@ -136,16 +139,15 @@
     "tsconfig-paths": "3.8.0",
     "tslint": "5.14.0",
     "tslint-eslint-rules": "5.4.0",
-    "ttypescript": "1.5.6",
     "typedoc": "0.14.2",
     "typescript": "3.3.3333",
     "vrsource-tslint-rules": "6.0.0",
     "yarn": "1.13.0"
   },
   "dependencies": {
-    "@dripjs/common": "^0.1.13",
-    "@dripjs/exchanges": "^0.1.13",
-    "@dripjs/types": "^0.1.13",
+    "@dripjs/common": "^0.1.14",
+    "@dripjs/exchanges": "^0.1.14",
+    "@dripjs/types": "^0.1.14",
     "@nestjs/common": "^5.7.3",
     "@nestjs/core": "^5.7.3",
     "@nestjs/websockets": "^5.7.3",
@@ -161,6 +163,7 @@
     "rxjs": "^6.4.0",
     "socket.io-client": "^2.2.0",
     "typeorm": "0.2.15",
+    "uuid": "^3.3.2",
     "ws": "^6.2.0"
   }
 }

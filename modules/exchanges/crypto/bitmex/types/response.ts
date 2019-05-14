@@ -11,6 +11,7 @@ export interface RestResponse extends ErrorResponse {
 }
 
 export interface TradeResponse {
+  symbol: string;
   side: OrderSide;
   price: number;
   amount: number;
@@ -18,6 +19,7 @@ export interface TradeResponse {
 }
 
 export interface QuoteResponse {
+  symbol: string;
   timestamp: number;
   bidAmount: number;
   bidPrice: number;
@@ -36,6 +38,7 @@ export interface SettlementResponse {
   taxBase: any;
   taxRate: any;
 }
+
 export interface InstrumentResponse {
   symbol: string;
   rootSymbol: string;
@@ -126,38 +129,127 @@ export interface BarResponse {
 
 export interface OrderResponse {
   orderID: string;
-  clOrdID?: string;
-  clOrdLinkID?: string;
-  account?: string;
-  symbol?: string;
-  side?: string;
-  simpleOrderQty?: number;
-  orderQty?: number;
-  price?: number;
-  displayQty?: number;
-  stopPx?: number;
-  pegOffsetValue?: number;
-  pegPriceType?: string;
-  currency?: string;
-  settlCurrency?: string;
-  ordType?: string;
-  timeInForce?: string;
-  execInst?: string;
-  contingencyType?: string;
-  exDestination?: string;
-  ordStatus?: string;
-  triggered?: string;
-  workingIndicator?: boolean;
-  ordRejReason?: string;
-  simpleLeavesQty?: number;
-  leavesQty?: number;
-  simpleCumQty?: number;
-  cumQty?: number;
-  avgPx?: number;
-  multiLegReportingType?: string;
-  text?: string;
-  transactTime?: Date;
-  timestamp?: string;
+  clOrdID: string;
+  clOrdLinkID: string;
+  account: number;
+  symbol: string;
+  side: string;
+  simpleOrderQty: number;
+  orderQty: number;
+  price: number;
+  displayQty: number;
+  stopPx: number;
+  pegOffsetValue: number;
+  pegPriceType: string;
+  currency: string;
+  settlCurrency: string;
+  ordType: string;
+  timeInForce: string;
+  execInst: string;
+  contingencyType: string;
+  exDestination: string;
+  ordStatus: string;
+  triggered: string;
+  workingIndicator: boolean;
+  ordRejReason: string;
+  simpleLeavesQty: number;
+  leavesQty: number;
+  simpleCumQty: number;
+  cumQty: number;
+  avgPx: number;
+  multiLegReportingType: string;
+  text: string;
+  transactTime: Date;
+  timestamp: string;
+}
+
+export interface PositionResponse {
+  account: number;
+  symbol: string;
+  currency: string;
+  underlying: string;
+  quoteCurrency: string;
+  commission: number;
+  initMarginReq: number;
+  maintMarginReq: number;
+  riskLimit: number;
+  leverage: number;
+  crossMargin: boolean;
+  deleveragePercentile: number | null;
+  rebalancedPnl: number;
+  prevRealisedPnl: number;
+  prevUnrealisedPnl: number;
+  prevClosePrice: number;
+  openingTimestamp: string;
+  openingQty: number;
+  openingCost: number;
+  openingComm: number;
+  openOrderBuyQty: number;
+  openOrderBuyCost: number;
+  openOrderBuyPremium: number;
+  openOrderSellQty: number;
+  openOrderSellCost: number;
+  openOrderSellPremium: number;
+  execBuyQty: number;
+  execBuyCost: number;
+  execSellQty: number;
+  execSellCost: number;
+  execQty: number;
+  execCost: number;
+  execComm: number;
+  currentTimestamp: string;
+  currentQty: number;
+  currentCost: number;
+  currentComm: number;
+  realisedCost: number;
+  unrealisedCost: number;
+  grossOpenCost: number;
+  grossOpenPremium: number;
+  grossExecCost: number;
+  isOpen: boolean;
+  markPrice: null;
+  markValue: number;
+  riskValue: number;
+  homeNotional: number;
+  foreignNotional: number;
+  posState: string;
+  posCost: number;
+  posCost2: number;
+  posCross: number;
+  posInit: number;
+  posComm: number;
+  posLoss: number;
+  posMargin: number;
+  posMaint: number;
+  posAllowance: number;
+  taxableMargin: number;
+  initMargin: number;
+  maintMargin: number;
+  sessionMargin: number;
+  targetExcessMargin: number;
+  varMargin: number;
+  realisedGrossPnl: number;
+  realisedTax: number;
+  realisedPnl: number;
+  unrealisedGrossPnl: number;
+  longBankrupt: number;
+  shortBankrupt: number;
+  taxBase: number;
+  indicativeTaxRate: number;
+  indicativeTax: number;
+  unrealisedTax: number;
+  unrealisedPnl: number;
+  unrealisedPnlPcnt: number;
+  unrealisedRoePcnt: number;
+  avgCostPrice: number;
+  avgEntryPrice: number;
+  breakEvenPrice: number;
+  marginCallPrice: number;
+  liquidationPrice: number;
+  bankruptPrice: number;
+  timestamp: number;
+  lastPrice: number;
+  lastValue: number;
 }
 
 export interface OrderbookResponse {
@@ -182,28 +274,4 @@ export interface OrderbookL2Response {
    * eg: [[price, amount], ...]
    */
   bids: [string, string][];
-}
-
-export interface RestRateLimitResponse extends ErrorResponse {
-  ratelimit: RateLimit;
-}
-
-export interface RestInstrumentResponse extends RestRateLimitResponse {
-  instruments: InstrumentResponse[];
-}
-
-export interface RestBarResponse extends RestRateLimitResponse {
-  bars: BarResponse[];
-}
-
-export interface RestOrderResponse extends RestRateLimitResponse {
-  order: OrderResponse;
-}
-
-export interface RestOrdersResponse extends RestRateLimitResponse {
-  orders: OrderResponse[];
-}
-
-export interface RestOrderbookL2Response extends RestRateLimitResponse {
-  orderbook: OrderbookL2Response;
 }

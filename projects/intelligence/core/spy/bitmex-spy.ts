@@ -9,14 +9,14 @@ import { Intel } from '../intel';
 
 export class BitmexSpy extends Intel {
   readonly name = 'bitmex';
-  private readonly rest: Bitmex.BitmexRest;
-  private readonly ws: Bitmex.BitmexWS;
+  private readonly rest: Bitmex.Rest;
+  private readonly ws: Bitmex.Websocket;
   private symbols: Pair[] = [];
 
   constructor(config: Bitmex.Config) {
     super();
-    this.rest = new Bitmex.BitmexRest(config);
-    this.ws = new Bitmex.BitmexWS(config);
+    this.rest = new Bitmex.Rest(config);
+    this.ws = new Bitmex.Websocket(config);
   }
 
   destory(): void {
