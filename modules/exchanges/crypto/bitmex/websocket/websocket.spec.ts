@@ -73,7 +73,7 @@ describe('BitmexWS', () => {
       const receivedMessages: TradeResponse[] = [];
       bitmexWS.trade$().subscribe((trade) => {
         receivedMessages.push(trade);
-        if (receivedMessages.length > 5) {
+        if (receivedMessages.length > 10) {
           const list = removeDuplicates(receivedMessages);
           expect(list.length).toBeGreaterThan(2);
           bitmexWS.stopTrade();
