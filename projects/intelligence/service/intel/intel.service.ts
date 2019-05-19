@@ -1,6 +1,6 @@
 import { Bar, Config, ExchangeCryptoAuthConfig, SupportedExchange, Symbol } from '@dripjs/types';
 import { Injectable, Logger } from '@nestjs/common';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Spy } from '../../core';

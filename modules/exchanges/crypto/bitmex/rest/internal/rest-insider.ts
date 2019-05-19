@@ -1,9 +1,10 @@
 import { HttpHeaders, HttpMethod } from '@dripjs/types';
 import Axios, { AxiosRequestConfig } from 'axios';
 import { stringify } from 'qs';
-import { Config, ErrorResponse, RestResponse } from '../../types';
-import { apiBasePath, endpoints, PrivateEndPoints, PublicEndPoints } from '../types';
+
 import { getRateLimit, getRestAuthHeaders } from '../../common';
+import { Config, ErrorResponse, RestResponse } from '../../types';
+import { PrivateEndPoints, PublicEndPoints, apiBasePath, endpoints } from '../types';
 
 export class RestInsider {
   /**可用请求数 */

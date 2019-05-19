@@ -29,6 +29,7 @@ export class SocketIORxjs<T = any> {
   }
 
   /**
+   * @param event
    * @param args
    */
   emit(event: string, ...args: any[]): void {

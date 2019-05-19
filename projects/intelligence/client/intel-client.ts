@@ -1,5 +1,5 @@
 import { SocketIORxjs } from '@dripjs/common';
-import { SupportedExchange } from '@dripjs/types';
+import { Bar, BarRequest, SupportedExchange } from '@dripjs/types';
 import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
@@ -34,9 +34,13 @@ export class IntelClient {
 
   async getSymbols(exchange: SupportedExchange): Promise<Symbol[]> {
     return new Promise((resolve) => {
-      this.ioRxjs.emit('symbols', exchange, (res: Symbol[]) => {
-        resolve(res);
-      });
+      this.ioRxjs.emit('symbols', exchange, resolve);
+    });
+  }
+
+  async getBars(exchange: SupportedExchange, barRequest: BarRequest): Promise<Bar[]> {
+    return new Promise((resolve) => {
+      this.ioRxjs.emit('bars', [exchange, barRequest.symbol, barRequest.resolution, barRequest.start, barRequest.end], resolve);
     });
   }
 

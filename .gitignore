@@ -58,6 +58,7 @@ typings/
 .env
 
 dist
+deploy
 .history
 config/**/*.toml
 db/*

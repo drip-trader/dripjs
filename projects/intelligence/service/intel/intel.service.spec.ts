@@ -45,8 +45,8 @@ describe('IntelService', () => {
 
     it('return bars', async () => {
       const exchange = SupportedExchange.Bitmex;
-      const symbols = await intelService.getBars(exchange, pair, resolution, start, end);
-      expect(symbols.length).toBeGreaterThan(0);
+      const bars = await intelService.getBars(exchange, pair, resolution, start, end);
+      expect(bars.length).toBeGreaterThan(0);
     });
   });
 

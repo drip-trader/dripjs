@@ -1,8 +1,9 @@
-import { ConfigIntelServer, Depth, SupportedExchange, Symbol, Ticker, Transaction } from '@dripjs/types';
+import { Bar, ConfigIntelServer, Depth, SupportedExchange, Symbol, Ticker, Transaction } from '@dripjs/types';
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import * as io from 'socket.io-client';
 
+import { Resolution } from '../core';
 import { ApplicationModule } from './app.module';
 import { IntelChannel, IntelRealtimeResponse } from './types';
 
@@ -45,6 +46,17 @@ describe('app.module', () => {
     });
     socket.emit('symbols', exchange, (symbols: Symbol[]) => {
       expect(symbols.length).toBeGreaterThan(0);
+      done();
+    });
+  });
+
+  it('getBars', async (done) => {
+    const pair = 'XBTUSD';
+    const resolution = Resolution.day;
+    const end = Date.now();
+    const start = end - 1000 * 60 * 60 * 24 * 60;
+    socket.emit('getBars', exchange, pair, resolution, start, end, (bars: Bar[]) => {
+      expect(bars.length).toBeGreaterThan(0);
       done();
     });
   });

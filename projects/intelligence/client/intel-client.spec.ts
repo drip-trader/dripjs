@@ -2,7 +2,8 @@ import { ConfigIntelServer, Depth, SupportedExchange, Ticker, Transaction } from
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 
-import { ApplicationModule, IntelChannel } from '../../intelligence';
+import { Resolution } from '../core';
+import { ApplicationModule, IntelChannel } from '../service';
 import { IntelClient } from './intel-client';
 
 // tslint:disable-next-line
@@ -36,6 +37,19 @@ describe('intel-client', () => {
   it('getSymbols', async () => {
     const symbols = await client.getSymbols(exchange);
     expect(symbols.length).toBeGreaterThan(0);
+  });
+
+  it('getBars', async () => {
+    const resolution = Resolution.day;
+    const end = Date.now();
+    const start = end - 1000 * 60 * 60 * 24 * 60;
+    const bars = await client.getBars(exchange, {
+      symbol: pair,
+      resolution,
+      start,
+      end,
+    });
+    expect(bars.length).toBeGreaterThan(0);
   });
 
   it('tick$', (done) => {

@@ -14,9 +14,7 @@
     "build:prod": "yarn build:preprocess && yarn tsc:app",
     "build:preprocess": "rm -rf dist",
     "build:typedoc": "rm -rf type-docs && typedoc --tsconfig ./tsconfig.typedoc.json",
-    "build:modules": "yarn build:prod && yarn build:modules:preprocess && yarn build:modules:process",
-    "build:modules:preprocess": "mkdir dist/node_modules && mkdir dist/node_modules/@dripjs && cp -rf dist/modules/* dist/node_modules/@dripjs",
-    "build:modules:process": "sh shell/reorg-modules.sh && cp -rf dist/node_modules/@dripjs/* node_modules/@dripjs",
+    "build:modules": "yarn build:prod && yarn :build:modules:preprocess && yarn :build:modules:process",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "cp:docs": "yarn build:typedoc && cp -rf type-docs/* ../dripjs-docs",
     "coverage": "jest -c jest.config.js --collectCoverage",
@@ -42,7 +40,9 @@
     "test": "yarn jest --runInBand",
     "tsc:app": "tsc -p tsconfig.app.json",
     "tsc:dev": "tsc -p tsconfig.dev.json",
-    "tsc:spec": "tsc -p tsconfig.spec.json"
+    "tsc:spec": "tsc -p tsconfig.spec.json",
+    ":build:modules:preprocess": "mkdir dist/node_modules && mkdir dist/node_modules/@dripjs && cp -rf dist/modules/* dist/node_modules/@dripjs",
+    ":build:modules:process": "sh shell/reorg-modules.sh && cp -rf dist/node_modules/@dripjs/* node_modules/@dripjs"
   },
   "repository": {
     "type": "git",
