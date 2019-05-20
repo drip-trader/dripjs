@@ -7,6 +7,7 @@
   "scripts": {
     "build:prod": "yarn build:preprocess && yarn tsc",
     "build:preprocess": "rm -rf dist",
+    "copy:ws": "cp -rf websocket/ws dist/websocket/",
     "prepublishOnly": "yarn build:prod",
     "postpublish": "yarn build:preprocess",
     "tsc": "tsc -p tsconfig.json"

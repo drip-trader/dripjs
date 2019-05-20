@@ -1,5 +1,3 @@
-//import { createHmac } from 'crypto';
-
 import { HttpMethod } from '@dripjs/types';
 import { stringify } from 'qs';
 
