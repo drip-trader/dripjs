@@ -1,4 +1,4 @@
-import { Symbol } from '@dripjs/types';
+import { Bar, Symbol } from '@dripjs/types';
 import { UseFilters, UseGuards } from '@nestjs/common';
 import { OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WsResponse } from '@nestjs/websockets';
 import { Observable } from 'rxjs';
@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 
 import { IntelServiceExceptionFilter } from '../exceptions';
 import { AuthGuard } from '../guards';
-import { IntelChannel, IntelRealtimeResponse } from '../types';
+import { GetBarsInput, IntelRealtimeResponse, RealtimeInput } from '../types';
 import { IntelService } from './intel.service';
 
 @WebSocketGateway()
@@ -24,13 +24,18 @@ export class IntelGateway implements OnGatewayDisconnect {
     return this.interService.getSymbols(exchange);
   }
 
+  @SubscribeMessage('bars')
+  async bars(_: any, input: GetBarsInput): Promise<Bar[]> {
+    return this.interService.getBars(input);
+  }
+
   @SubscribeMessage('subscribe')
-  subscribe(_: any, args: string[]): Observable<WsResponse<IntelRealtimeResponse>> {
-    return this.interService.data$(args[0], args[1], <IntelChannel>args[2]).pipe(map((res) => ({ event: args[2], data: res })));
+  subscribe(_: any, input: RealtimeInput): Observable<WsResponse<IntelRealtimeResponse>> {
+    return this.interService.data$(input).pipe(map((res) => ({ event: input.channel, data: res })));
   }
 
   @SubscribeMessage('unsubscribe')
-  unsubscribe(_: any, args: string[]): void {
-    this.interService.stopData(args[0], args[1], <IntelChannel>args[2]);
+  unsubscribe(_: any, input: RealtimeInput): void {
+    this.interService.stopData(input.exchange, input.symbol, input.channel);
   }
 }

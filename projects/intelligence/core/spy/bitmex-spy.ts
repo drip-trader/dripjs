@@ -77,7 +77,7 @@ export class BitmexSpy extends Intel {
     );
   }
 
-  stopTicker(symbol: string): void {
+  stopTicker(symbol?: string): void {
     this.ws.stopTrade(symbol);
     this.ws.stopQuote(symbol);
   }
@@ -121,7 +121,7 @@ export class BitmexSpy extends Intel {
     );
   }
 
-  stopDepth(symbol: string): void {
+  stopDepth(symbol?: string): void {
     this.ws.stopOrderbook(symbol);
   }
 
@@ -138,7 +138,7 @@ export class BitmexSpy extends Intel {
     );
   }
 
-  stopTransaction(symbol: string): void {
+  stopTransaction(symbol?: string): void {
     this.ws.stopTrade(symbol);
   }
 }

@@ -1,12 +1,12 @@
 import { Bar, Config, ExchangeCryptoAuthConfig, SupportedExchange, Symbol } from '@dripjs/types';
 import { Injectable, Logger } from '@nestjs/common';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Spy } from '../../core';
 import { findSpy, transform } from '../common';
 import { IntelServiceException } from '../exceptions';
-import { IntelChannel, IntelRealtimeResponse } from '../types';
+import { GetBarsInput, IntelChannel, IntelRealtimeResponse, RealtimeInput } from '../types';
 
 // tslint:disable-next-line
 const jsonValueReplacer = require('json-value-replacer');
@@ -23,7 +23,7 @@ export class IntelService {
     return symbols;
   }
 
-  async getBars(exchange: string, symbol: string, resolution: string, start: number, end: number): Promise<Bar[]> {
+  async getBars({ exchange, symbol, resolution, start, end }: GetBarsInput): Promise<Bar[]> {
     const spy = this.getSpyImpl(exchange);
     const bars = await spy.getBars({ symbol, resolution, start, end });
     Logger.log(`exchange:${exchange} bar data size: ${bars.length}`, 'getBars');
@@ -31,7 +31,7 @@ export class IntelService {
     return bars;
   }
 
-  data$(exchange: string, symbol: string, channel: IntelChannel): Observable<IntelRealtimeResponse> {
+  data$({ exchange, symbol, channel }: RealtimeInput): Observable<IntelRealtimeResponse> {
     Logger.log(`subscribe to realtime data, exchange:${exchange},symbol:${symbol},channel:${channel}`, 'data$');
     const spy = this.getSpyImpl(exchange);
     if (spy) {
@@ -53,7 +53,7 @@ export class IntelService {
     throw new IntelServiceException(`not found spy implemention, for exchange: ${exchange}, symbol: ${symbol}, channel: ${channel}`);
   }
 
-  stopData(exchange: string, symbol: string, channel?: IntelChannel): void {
+  stopData(exchange: string, symbol?: string, channel?: IntelChannel): void {
     Logger.log(`unsubscribe to realtime data, exchange:${exchange},symbol:${symbol},channel:${channel}`, 'stopData');
     const spy = this.getSpyImpl(exchange);
     if (spy) {
@@ -71,17 +71,23 @@ export class IntelService {
           break;
         }
         default: {
-          spy.stopTicker(symbol);
-          spy.stopDepth(symbol);
-          spy.stopTransaction(symbol);
+          this.stopAllData(spy, symbol);
         }
       }
     }
   }
 
+  stopAllData(spy: Spy, symbol?: string): void {
+    Logger.log(`unsubscribe to all realtime data, spy:${spy},symbol:${symbol}`, 'stopAllData');
+    spy.stopTicker(symbol);
+    spy.stopDepth(symbol);
+    spy.stopTransaction(symbol);
+  }
+
   close(): void {
     for (const spy of this.intelMap.values()) {
       Logger.log(`destory exchange spy:${spy.name}`, 'close');
+      this.stopAllData(spy);
       spy.destory();
     }
   }

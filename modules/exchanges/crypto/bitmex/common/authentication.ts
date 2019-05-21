@@ -1,9 +1,10 @@
-import { createHmac } from 'crypto';
-
 import { HttpMethod } from '@dripjs/types';
 import { stringify } from 'qs';
 
 import { apiBasePath } from '../rest/types';
+
+// tslint:disable-next-line:no-var-requires
+const createHmac = require('create-hmac');
 
 /**
  * Sign a message. hex( HMAC_SHA256(secret, verb + url + nonce + data) )

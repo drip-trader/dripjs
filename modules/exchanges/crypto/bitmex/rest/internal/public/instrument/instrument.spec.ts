@@ -8,7 +8,6 @@ describe('Bitmex RestInsider Instrument', () => {
   it('fetch instrument', async () => {
     const res = await instrument.fetch();
     expect(res.instruments.length).toBeGreaterThan(0);
-    expect(res.ratelimit.limit).toEqual(300);
   });
 
   it('fetch instrument of remaining < 20', async () => {

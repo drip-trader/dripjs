@@ -12,6 +12,5 @@ describe('Bitmex RestInsider Bar', () => {
       symbol: 'XBTUSD',
     });
     expect(res.bars.length).toEqual(100);
-    expect(res.ratelimit.limit).toEqual(300);
   });
 });

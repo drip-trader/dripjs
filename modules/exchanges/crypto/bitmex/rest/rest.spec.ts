@@ -22,7 +22,6 @@ describe('Bitmex Rest', () => {
     price = +res.orderbook.bids[4][0];
     expect(res.orderbook.bids.length).toEqual(25);
     expect(res.orderbook.asks.length).toEqual(25);
-    expect(res.ratelimit.limit).toEqual(300);
   });
 
   it('create order', async () => {
@@ -37,7 +36,6 @@ describe('Bitmex Rest', () => {
     const res = await rest.createOrder(request);
     orderId = res.order.orderID;
     expect(res.order).toBeDefined();
-    expect(res.ratelimit.limit).toEqual(300);
   });
 
   it('fetch order', async () => {
@@ -50,7 +48,6 @@ describe('Bitmex Rest', () => {
 
     const res = await rest.fetchOrder(request);
     expect(res.orders[0].price).toEqual(price);
-    expect(res.ratelimit.limit).toEqual(300);
   });
 
   it('update order', async () => {
@@ -61,7 +58,6 @@ describe('Bitmex Rest', () => {
 
     const res = await rest.updateOrder(request);
     expect(res.order.price).toEqual(price - 1);
-    expect(res.ratelimit.limit).toEqual(300);
   });
 
   it('cancel order', async () => {
@@ -70,7 +66,6 @@ describe('Bitmex Rest', () => {
     };
     const res = await rest.cancelOrder(request);
     expect(res.order.ordStatus).toEqual(OrderStatus.Canceled);
-    expect(res.ratelimit.limit).toEqual(300);
   });
 
   it('get order by id', async () => {
@@ -81,7 +76,6 @@ describe('Bitmex Rest', () => {
     });
 
     expect(res.orders[0].price).toEqual(price);
-    expect(res.ratelimit.limit).toEqual(300);
   });
 
   it('config is null', async () => {
@@ -102,7 +96,6 @@ describe('Bitmex Rest', () => {
   it('fetch instrument', async () => {
     const res = await rest.fetchInstrument();
     expect(res.instruments.length).toBeGreaterThan(0);
-    expect(res.ratelimit.limit).toEqual(300);
   });
 
   it('fetch bar', async () => {
@@ -114,6 +107,5 @@ describe('Bitmex Rest', () => {
       endTime: moment(time).toISOString(),
     });
     expect(res.bars.length).toEqual(60);
-    expect(res.ratelimit.limit).toEqual(300);
   });
 });

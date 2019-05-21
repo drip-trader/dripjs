@@ -15,3 +15,17 @@ export enum IntelChannel {
   Depth = 'depth',
   Transaction = 'transaction',
 }
+
+export interface GetBarsInput {
+  exchange: string;
+  symbol: string;
+  resolution: string;
+  start: number;
+  end: number;
+}
+
+export interface RealtimeInput {
+  exchange: string;
+  symbol: string;
+  channel: IntelChannel;
+}

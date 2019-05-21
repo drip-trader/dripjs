@@ -1,12 +1,13 @@
 {
   "name": "@dripjs/common",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "dripjs common module",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "build:prod": "yarn build:preprocess && yarn tsc",
+    "build:prod": "yarn build:preprocess && yarn tsc && yarn cp:ws",
     "build:preprocess": "rm -rf dist",
+    "cp:ws": "cp -rf websocket/ws dist/websocket/",
     "prepublishOnly": "yarn build:prod",
     "postpublish": "yarn build:preprocess",
     "tsc": "tsc -p tsconfig.json"
