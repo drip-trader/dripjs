@@ -1,8 +1,15 @@
-import { Bar, ConfigIntelServer, Depth, SupportedExchange, Symbol, Ticker, Transaction } from '@dripjs/types';
+import { isPositive, sleep } from '@dripjs/common';
+import { Bar, ConfigIntelServer, SupportedExchange, Symbol } from '@dripjs/types';
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import * as io from 'socket.io-client';
 
+import {
+  assertExisitingColumns,
+  isOrderSide,
+  overrideTimestampColumns,
+  overrideValue,
+} from '../../../modules/exchanges/crypto/bitmex/common/test-helpers';
 import { Resolution } from '../core';
 import { ApplicationModule } from './app.module';
 import { IntelChannel, IntelRealtimeResponse } from './types';
@@ -14,6 +21,7 @@ describe('app.module', () => {
   let app: INestApplication;
   let socket: SocketIOClient.Socket;
   const exchange = SupportedExchange.Bitmex;
+  const symbol = 'XBTUSD';
 
   beforeAll(async () => {
     const serverPort = config.port + 1;
@@ -40,74 +48,83 @@ describe('app.module', () => {
     socket.close();
   });
 
-  it('getSymbols', async (done) => {
-    socket.on('exception', (e: any) => {
-      console.log(JSON.stringify(e));
-    });
-    socket.emit('symbols', exchange, (symbols: Symbol[]) => {
-      expect(symbols.length).toBeGreaterThan(0);
-      done();
-    });
+  it('getSymbols', async () => {
+    let data: Symbol[] = [];
+    socket.emit('symbols', exchange, (symbols: Symbol[]) => (data = symbols));
+    await sleep(3000);
+    expect(data.length).toBeGreaterThan(10);
   });
 
-  it('getBars', async (done) => {
-    const pair = 'XBTUSD';
+  it('getBars', async () => {
     const resolution = Resolution.day;
     const end = Date.now();
     const start = end - 1000 * 60 * 60 * 24 * 60;
-    socket.emit('getBars', exchange, pair, resolution, start, end, (bars: Bar[]) => {
-      expect(bars.length).toBeGreaterThan(0);
-      done();
-    });
+    let data: Bar[] = [];
+    socket.emit('bars', { exchange, symbol, resolution, start, end }, (bars: Bar[]) => (data = bars));
+    await sleep(3000);
+    expect(data.length).toEqual(60);
   });
 
-  describe.skip('subscribe', () => {
-    const pair = 'XBTUSD';
-
-    afterAll(async () => {});
-
-    it('ticker', (done) => {
-      try {
-        const channel = IntelChannel.Ticker;
-        socket.on('tick', (res: IntelRealtimeResponse) => {
-          expect(res.channel).toEqual(channel);
-          expect(res.data).toBeDefined();
-          expect((<Ticker>res.data).ask).toBeGreaterThan(0);
-          expect((<Ticker>res.data).bid).toBeGreaterThan(0);
-          socket.emit('unsubscribe', exchange, pair, channel);
-          done();
-        });
-        socket.emit('subscribe', exchange, pair, channel);
-      } catch (e) {
-        console.error(e.message);
-      }
+  describe('subscribe', () => {
+    it('ticker', async () => {
+      let data: IntelRealtimeResponse;
+      const channel = IntelChannel.Ticker;
+      socket.on(channel, (res: IntelRealtimeResponse) => (data = res));
+      socket.emit('subscribe', { exchange, symbol, channel });
+      await sleep(3000);
+      expect(() =>
+        assertExisitingColumns(overrideTimestampColumns(data), {
+          channel,
+          data: {
+            ask: isPositive,
+            bid: isPositive,
+            high: 0,
+            low: 0,
+            last: isPositive,
+            volume: isPositive,
+            time: overrideValue,
+          },
+        }),
+      ).not.toThrow();
+      socket.emit('unsubscribe', { exchange, symbol, channel });
     });
 
-    it('depth', (done) => {
+    it('depth', async () => {
+      let data: IntelRealtimeResponse;
       const channel = IntelChannel.Depth;
-      socket.on('depth', (res: IntelRealtimeResponse) => {
-        expect(res.channel).toEqual(channel);
-        expect(res.data).toBeDefined();
-        expect((<Depth>res.data).asks.length).toBeGreaterThan(20);
-        expect((<Depth>res.data).bids.length).toBeGreaterThan(20);
-        socket.emit('unsubscribe', exchange, pair, channel);
-        done();
-      });
-      socket.emit('subscribe', exchange, pair, channel);
+      socket.on(channel, (res: IntelRealtimeResponse) => (data = res));
+      socket.emit('subscribe', { exchange, symbol, channel });
+      await sleep(3000);
+      expect(() =>
+        assertExisitingColumns(overrideTimestampColumns(data), {
+          channel,
+          data: {
+            asks: [[isPositive, isPositive]],
+            bids: [[isPositive, isPositive]],
+          },
+        }),
+      ).not.toThrow();
+      socket.emit('unsubscribe', { exchange, symbol, channel });
     });
 
-    it('transaction', (done) => {
+    it('transaction', async () => {
+      let data: IntelRealtimeResponse;
       const channel = IntelChannel.Transaction;
-      socket.on('transaction', (res: IntelRealtimeResponse) => {
-        expect(res.channel).toEqual(channel);
-        expect(res.data).toBeDefined();
-        expect((<Transaction>res.data).amount).toBeGreaterThan(0);
-        expect((<Transaction>res.data).price).toBeGreaterThan(0);
-        expect((<Transaction>res.data).time).toBeGreaterThan(0);
-        socket.emit('unsubscribe', exchange, pair, channel);
-        done();
-      });
-      socket.emit('subscribe', exchange, pair, channel);
+      socket.on(channel, (res: IntelRealtimeResponse) => (data = res));
+      socket.emit('subscribe', { exchange, symbol, channel });
+      await sleep(3000);
+      expect(() =>
+        assertExisitingColumns(overrideTimestampColumns(data), {
+          channel,
+          data: {
+            time: overrideValue,
+            side: isOrderSide,
+            price: isPositive,
+            amount: isPositive,
+          },
+        }),
+      ).not.toThrow();
+      socket.emit('unsubscribe', { exchange, symbol, channel });
     });
   });
 });

@@ -14,6 +14,10 @@ describe('Bitmex RestInsider Position', () => {
     position = new Position(testnetConfig);
   });
 
+  afterAll(async () => {
+    await position.removeAll();
+  });
+
   it('create position', async () => {
     const side = OrderSide.Buy;
     const res = await position.create(pair, side, amount);
@@ -22,7 +26,7 @@ describe('Bitmex RestInsider Position', () => {
         ratelimit: {
           remaining: isPositive,
           reset: overrideValue,
-          limit: 300,
+          limit: isPositive,
         },
         orders: [
           {
@@ -60,7 +64,7 @@ describe('Bitmex RestInsider Position', () => {
         ratelimit: {
           remaining: isPositive,
           reset: overrideValue,
-          limit: 300,
+          limit: isPositive,
         },
         orders: [
           {
@@ -94,7 +98,7 @@ describe('Bitmex RestInsider Position', () => {
         ratelimit: {
           remaining: isPositive,
           reset: overrideValue,
-          limit: 300,
+          limit: isPositive,
         },
         orders: [
           {
@@ -115,6 +119,22 @@ describe('Bitmex RestInsider Position', () => {
             timestamp: overrideValue,
           },
         ],
+        error: undefined,
+      }),
+    ).not.toThrow();
+  });
+
+  it('remove all position', async () => {
+    await position.removeAll();
+    const res = await position.fetch({ filter: { isOpen: true } });
+    expect(() =>
+      assertExisitingColumns(overrideTimestampColumns(res), {
+        ratelimit: {
+          remaining: isPositive,
+          reset: overrideValue,
+          limit: isPositive,
+        },
+        orders: [],
         error: undefined,
       }),
     ).not.toThrow();

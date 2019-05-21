@@ -1,6 +1,6 @@
 {
   "name": "dripjs",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "用于构建高效且可扩展的交易程序的渐进式Node.js开源量化框架",
   "engines": {
     "node": ">= 10.15.0",
@@ -11,12 +11,13 @@
   "typings": "dist/index.d.ts",
   "scripts": {
     "bdd": "yarn jest --watch --onlyChanged",
-    "build:prod": "yarn build:preprocess && yarn tsc:app",
+    "build:prod": "yarn build:preprocess && yarn tsc:app && yarn cp:ws",
     "build:preprocess": "rm -rf dist",
     "build:typedoc": "rm -rf type-docs && typedoc --tsconfig ./tsconfig.typedoc.json",
     "build:modules": "yarn build:prod && yarn :build:modules:preprocess && yarn :build:modules:process",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "cp:docs": "yarn build:typedoc && cp -rf type-docs/* ../dripjs-docs",
+    "cp:ws": "cp -rf modules/common/websocket/ws dist/modules/common/websocket/",
     "coverage": "jest -c jest.config.js --collectCoverage",
     "ci:build-check": "yarn run tsc:app --noEmit",
     "ci:coverage": "jest -c jest.config.js --coverage --coverageReporters=text-lcov | coveralls",

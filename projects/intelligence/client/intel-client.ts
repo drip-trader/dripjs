@@ -40,7 +40,7 @@ export class IntelClient {
 
   async getBars(exchange: SupportedExchange, barRequest: BarRequest): Promise<Bar[]> {
     return new Promise((resolve) => {
-      this.ioRxjs.emit('bars', [exchange, barRequest.symbol, barRequest.resolution, barRequest.start, barRequest.end], resolve);
+      this.ioRxjs.emit('bars', { exchange, ...barRequest }, resolve);
     });
   }
 
@@ -79,12 +79,12 @@ export class IntelClient {
 
   private subscribe(channel: IntelChannel, exchange: SupportedExchange, symbol: string): Observable<IntelRealtimeResponse> {
     this.ioRxjs.socket.on(channel, (res: IntelRealtimeResponse) => this.ioRxjs.next(res));
-    this.ioRxjs.emit('subscribe', exchange, symbol, channel);
+    this.ioRxjs.emit('subscribe', { exchange, symbol, channel });
 
     return this.ioRxjs.message$.pipe(filter((res: IntelRealtimeResponse) => res.channel === channel));
   }
 
   private unsubscribe(channel: IntelChannel, exchange: SupportedExchange, symbol: string): void {
-    this.ioRxjs.emit('unsubscribe', exchange, symbol, channel);
+    this.ioRxjs.emit('unsubscribe', { exchange, symbol, channel });
   }
 }

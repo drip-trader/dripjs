@@ -1,5 +1,7 @@
+import { isPositive } from '@dripjs/common';
 import { testnetConfig, testnetReadonlyConfig } from '@dripjs/testing';
 
+import { assertExisitingColumns, isUuid, overrideTimestampColumns, overrideValue } from '../../../../common/test-helpers';
 import { OrderSide, OrderStatus, OrderType } from '../../../../types';
 import { RestFetchOrderRequest, RestOrderRequest } from '../../../types';
 import { Orderbook } from '../../public/orderbook';
@@ -28,8 +30,48 @@ describe('Bitmex RestInsider Order', () => {
 
     const res = await order.create(request);
     orderId = res.order.orderID;
-    expect(res.order).toBeDefined();
-    expect(res.ratelimit.limit).toEqual(300);
+    expect(() =>
+      assertExisitingColumns(overrideTimestampColumns(res), {
+        ratelimit: {
+          remaining: isPositive,
+          reset: overrideValue,
+          limit: isPositive,
+        },
+        order: {
+          orderID: isUuid,
+          account: isPositive,
+          symbol: 'XBTUSD',
+          side: 'Buy',
+          simpleOrderQty: null,
+          orderQty: 25,
+          price: isPositive,
+          displayQty: null,
+          stopPx: null,
+          pegOffsetValue: null,
+          pegPriceType: '',
+          currency: 'USD',
+          settlCurrency: 'XBt',
+          ordType: 'Limit',
+          timeInForce: 'GoodTillCancel',
+          execInst: '',
+          contingencyType: '',
+          exDestination: 'XBME',
+          ordStatus: 'New',
+          triggered: '',
+          workingIndicator: true,
+          ordRejReason: '',
+          simpleLeavesQty: null,
+          leavesQty: 25,
+          simpleCumQty: null,
+          cumQty: 0,
+          avgPx: null,
+          multiLegReportingType: 'SingleSecurity',
+          text: 'Submitted via API.',
+          transactTime: overrideValue,
+          timestamp: overrideValue,
+        },
+      }),
+    ).not.toThrow();
   });
 
   it('fetch order', async () => {
@@ -41,8 +83,52 @@ describe('Bitmex RestInsider Order', () => {
     };
 
     const res = await order.fetch(request);
-    expect(res.orders[0].price).toEqual(price);
-    expect(res.ratelimit.limit).toEqual(300);
+    expect(() =>
+      assertExisitingColumns(overrideTimestampColumns(res), {
+        ratelimit: {
+          remaining: isPositive,
+          reset: overrideValue,
+          limit: isPositive,
+        },
+        orders: [
+          {
+            orderID: isUuid,
+            clOrdID: '',
+            clOrdLinkID: '',
+            account: isPositive,
+            symbol: 'XBTUSD',
+            side: 'Buy',
+            simpleOrderQty: null,
+            orderQty: 25,
+            price,
+            displayQty: null,
+            stopPx: null,
+            pegOffsetValue: null,
+            pegPriceType: '',
+            currency: 'USD',
+            settlCurrency: 'XBt',
+            ordType: 'Limit',
+            timeInForce: 'GoodTillCancel',
+            execInst: '',
+            contingencyType: '',
+            exDestination: 'XBME',
+            ordStatus: 'New',
+            triggered: '',
+            workingIndicator: true,
+            ordRejReason: '',
+            simpleLeavesQty: null,
+            leavesQty: 25,
+            simpleCumQty: null,
+            cumQty: 0,
+            avgPx: null,
+            multiLegReportingType: 'SingleSecurity',
+            text: 'Submitted via API.',
+            transactTime: overrideValue,
+            timestamp: overrideValue,
+          },
+        ],
+      }),
+    ).not.toThrow();
   });
 
   it('update order', async () => {
@@ -53,7 +139,6 @@ describe('Bitmex RestInsider Order', () => {
 
     const res = await order.update(request);
     expect(res.order.price).toEqual(price - 1);
-    expect(res.ratelimit.limit).toEqual(300);
   });
 
   it('cancel order', async () => {
@@ -62,6 +147,5 @@ describe('Bitmex RestInsider Order', () => {
     };
     const res = await order.cancel(request);
     expect(res.order.ordStatus).toEqual(OrderStatus.Canceled);
-    expect(res.ratelimit.limit).toEqual(300);
   });
 });

@@ -23,13 +23,11 @@
   },
   "devDependencies": {
     "@types/node": "11.11.3",
-    "@types/ws": "6.0.1",
-    "ts-node": "8.0.3",
-    "tslint": "5.14.0"
+    "@types/ws": "6.0.1"
   },
   "dependencies": {
     "@dripjs/common": "^0.1.15",
-    "@dripjs/exchanges": "^0.1.16",
+    "@dripjs/exchanges": "^0.1.17",
     "@dripjs/types": "^0.1.14",
     "@nestjs/common": "5.7.4",
     "@nestjs/core": "5.7.4",
@@ -42,7 +40,7 @@
     "json-value-replacer": "0.1.1",
     "moment": "2.24.0",
     "reflect-metadata": "0.1.13",
-    "rxjs": "6.4.0",
+    "rxjs": "^6.4.0",
     "typescript": "3.3.3333",
     "ws": "6.2.0"
   }

@@ -6,12 +6,8 @@ import { map } from 'rxjs/operators';
 
 import { IntelServiceExceptionFilter } from '../exceptions';
 import { AuthGuard } from '../guards';
-import { IntelChannel, IntelRealtimeResponse } from '../types';
+import { GetBarsInput, IntelRealtimeResponse, RealtimeInput } from '../types';
 import { IntelService } from './intel.service';
-
-type GetBarsInputData = [string, string, string, number, number];
-
-type RealtimeInputData = [string, string, IntelChannel];
 
 @WebSocketGateway()
 @UseGuards(AuthGuard)
@@ -29,17 +25,17 @@ export class IntelGateway implements OnGatewayDisconnect {
   }
 
   @SubscribeMessage('bars')
-  async bars(_: any, args: GetBarsInputData): Promise<Bar[]> {
-    return this.interService.getBars(...args);
+  async bars(_: any, input: GetBarsInput): Promise<Bar[]> {
+    return this.interService.getBars(input);
   }
 
   @SubscribeMessage('subscribe')
-  subscribe(_: any, args: RealtimeInputData): Observable<WsResponse<IntelRealtimeResponse>> {
-    return this.interService.data$(...args).pipe(map((res) => ({ event: args[2], data: res })));
+  subscribe(_: any, input: RealtimeInput): Observable<WsResponse<IntelRealtimeResponse>> {
+    return this.interService.data$(input).pipe(map((res) => ({ event: input.channel, data: res })));
   }
 
   @SubscribeMessage('unsubscribe')
-  unsubscribe(_: any, args: RealtimeInputData): void {
-    this.interService.stopData(...args);
+  unsubscribe(_: any, input: RealtimeInput): void {
+    this.interService.stopData(input.exchange, input.symbol, input.channel);
   }
 }

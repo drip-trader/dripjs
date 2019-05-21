@@ -7,6 +7,7 @@ import { IntelService } from './intel.service';
 
 describe('IntelService', () => {
   let intelService: IntelService;
+  const symbol = 'XBTUSD';
 
   beforeAll(() => {
     intelService = new IntelService();
@@ -30,13 +31,12 @@ describe('IntelService', () => {
   });
 
   describe('getBars', () => {
-    const pair = 'XBTUSD';
     const resolution = Resolution.day;
     const end = Date.now();
     const start = end - 1000 * 60 * 60 * 24 * 60;
     it('is not supported', async () => {
       const exchange = 'testEx';
-      await expect(intelService.getBars(exchange, pair, resolution, start, end)).rejects.toEqual(
+      await expect(intelService.getBars({ exchange, symbol, resolution, start, end })).rejects.toEqual(
         new IntelServiceException(
           `Exchange ${exchange} is not supported, now lists of supported exchanges: ${Object.values(SupportedExchange)}`,
         ),
@@ -45,59 +45,58 @@ describe('IntelService', () => {
 
     it('return bars', async () => {
       const exchange = SupportedExchange.Bitmex;
-      const bars = await intelService.getBars(exchange, pair, resolution, start, end);
+      const bars = await intelService.getBars({ exchange, symbol, resolution, start, end });
       expect(bars.length).toBeGreaterThan(0);
     });
   });
 
   describe('subscribe', () => {
     const exchange = SupportedExchange.Bitmex;
-    const pair = 'XBTUSD';
 
     afterAll(() => {
-      intelService.stopData(exchange, pair);
+      intelService.stopData(exchange, symbol);
       intelService.close();
     });
 
     it('ticker', (done) => {
-      const type = IntelChannel.Ticker;
-      intelService.data$(exchange, pair, type).subscribe((res) => {
-        expect(res.channel).toEqual(type);
+      const channel = IntelChannel.Ticker;
+      intelService.data$({ exchange, symbol, channel }).subscribe((res) => {
+        expect(res.channel).toEqual(channel);
         expect(res.data).toBeDefined();
         expect((<Ticker>res.data).ask).toBeGreaterThan(0);
         expect((<Ticker>res.data).bid).toBeGreaterThan(0);
-        intelService.stopData(exchange, pair, type);
+        intelService.stopData(exchange, symbol, channel);
         done();
       });
     });
 
     it('depth', async (done) => {
-      const type = IntelChannel.Depth;
-      intelService.data$(exchange, pair, type).subscribe((res) => {
-        expect(res.channel).toEqual(type);
+      const channel = IntelChannel.Depth;
+      intelService.data$({ exchange, symbol, channel }).subscribe((res) => {
+        expect(res.channel).toEqual(channel);
         expect(res.data).toBeDefined();
         expect((<Depth>res.data).asks.length).toBeGreaterThan(20);
         expect((<Depth>res.data).bids.length).toBeGreaterThan(20);
-        intelService.stopData(exchange, pair, type);
+        intelService.stopData(exchange, symbol, channel);
         done();
       });
     });
 
     it('transaction', (done) => {
-      const type = IntelChannel.Transaction;
-      intelService.data$(exchange, pair, type).subscribe((res) => {
-        expect(res.channel).toEqual(type);
+      const channel = IntelChannel.Transaction;
+      intelService.data$({ exchange, symbol, channel }).subscribe((res) => {
+        expect(res.channel).toEqual(channel);
         expect(res.data).toBeDefined();
         expect((<Transaction>res.data).price).toBeGreaterThan(0);
         expect((<Transaction>res.data).time).toBeGreaterThan(0);
-        intelService.stopData(exchange, pair, type);
+        intelService.stopData(exchange, symbol, channel);
         done();
       });
     });
 
     it('not found spy implemention', () => {
-      expect(() => intelService.data$(exchange, pair, <any>'test')).toThrowError(
-        new IntelServiceException(`not found spy implemention, for exchange: ${exchange}, symbol: ${pair}, channel: test`),
+      expect(() => intelService.data$({ exchange, symbol, channel: <any>'test' })).toThrowError(
+        new IntelServiceException(`not found spy implemention, for exchange: ${exchange}, symbol: ${symbol}, channel: test`),
       );
     });
   });

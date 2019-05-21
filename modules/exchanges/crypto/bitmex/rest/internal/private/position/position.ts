@@ -56,4 +56,11 @@ export class Position extends RestInsider {
       },
     });
   }
+
+  async removeAll(): Promise<void> {
+    const res = await this.fetch({ filter: { isOpen: true } });
+    for (const position of res.orders) {
+      await this.remove(position.symbol);
+    }
+  }
 }

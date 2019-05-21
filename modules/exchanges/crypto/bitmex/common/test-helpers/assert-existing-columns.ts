@@ -46,15 +46,3 @@ export function assertExisitingColumns<T extends any>(source: T, assertion: Asse
     }
   }
 }
-
-function overrideProperties(object: { [key: string]: any }, valueToOverride: any, targetColumns: string[]): void {
-  Object.keys(object).forEach((key) => {
-    if (isObject(object[key])) {
-      overrideProperties(object[key], valueToOverride, targetColumns);
-    } else {
-      if (targetColumns.includes(key)) {
-        object[key] = valueToOverride;
-      }
-    }
-  });
-}
