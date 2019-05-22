@@ -1,4 +1,4 @@
-import { testnetConfig } from '@dripjs/testing';
+import { corsProxy, testnetConfig } from '@dripjs/testing';
 import * as moment from 'moment';
 
 import { receiveOrderData } from '../common/test-helpers';
@@ -20,6 +20,18 @@ describe('Bitmex Rest', () => {
 
     const res = await rest.fetchOrderbook(request);
     price = +res.orderbook.bids[4][0];
+    expect(res.orderbook.bids.length).toEqual(25);
+    expect(res.orderbook.asks.length).toEqual(25);
+  });
+
+  it('fetch orderbook for proxy', async () => {
+    const restProxy = new Rest({ ...testnetConfig, corsProxy });
+
+    const request: RestOrderbookRequest = {
+      symbol: pair,
+      depth: 25,
+    };
+    const res = await restProxy.fetchOrderbook(request);
     expect(res.orderbook.bids.length).toEqual(25);
     expect(res.orderbook.asks.length).toEqual(25);
   });
