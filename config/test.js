@@ -15,6 +15,6 @@ config.database = {
 };
 config.log = {
   typeorm: false,
-}
+};
 
 module.exports = config;

@@ -38,7 +38,14 @@ export function getWSAuthQuery(apiKey: string, apiSecret: string): string {
   return stringify(query);
 }
 
-export function getRestAuthHeaders(method: HttpMethod, endpoint: string, apiKey: string, apiSecret: string, data?: any): AuthHeaders {
+export function getRestAuthHeaders(
+  method: HttpMethod,
+  baseUrl: string,
+  endpoint: string,
+  apiKey: string,
+  apiSecret: string,
+  data?: any,
+): AuthHeaders {
   const query = method === HttpMethod.GET && Object.keys(data).length !== 0 ? `?${stringify(data)}` : '';
   const url = `${apiBasePath}${endpoint}${query}`;
   // 3min timeout
@@ -47,6 +54,7 @@ export function getRestAuthHeaders(method: HttpMethod, endpoint: string, apiKey:
   const signature = signMessage(apiSecret, method, url, expires, body);
 
   return {
+    Origin: baseUrl,
     'Content-Type': 'application/json',
     accept: 'application/json',
     'api-expires': String(expires),
@@ -56,6 +64,7 @@ export function getRestAuthHeaders(method: HttpMethod, endpoint: string, apiKey:
 }
 
 export interface AuthHeaders {
+  Origin: string;
   'Content-Type': string;
   accept: string;
   'api-expires': string;

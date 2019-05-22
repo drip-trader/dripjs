@@ -30,7 +30,7 @@ module.exports = {
       port: 6531,
       username: 'test',
       password: 'test',
-    }
+    },
   },
   exchange: {
     crypto: {
@@ -42,7 +42,7 @@ module.exports = {
         apiKey: process.env.SPEC_BITMEX_TEST_API_KEY,
         apiSecret: process.env.SPEC_BITMEX_TEST_API_SECRET,
       },
-    }
+    },
   },
   log: {
     typeorm: true,

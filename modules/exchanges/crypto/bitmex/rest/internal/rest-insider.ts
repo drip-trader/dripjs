@@ -35,7 +35,8 @@ export class RestInsider {
       };
     }
 
-    const authHeaders = getRestAuthHeaders(method, this.endpoint, this.config.apiKey, this.config.apiSecret, data);
+    const baseUrl = this.config.testnet ? endpoints.testnet : endpoints.production;
+    const authHeaders = getRestAuthHeaders(method, baseUrl, this.endpoint, this.config.apiKey, this.config.apiSecret, data);
     const request: AxiosRequestConfig = {
       method,
       headers: {
@@ -48,8 +49,10 @@ export class RestInsider {
     } else {
       query = Object.keys(data).length !== 0 ? `?${stringify(data)}` : '';
     }
-    const baseUrl = this.config.testnet ? endpoints.testnet : endpoints.production;
-    const url = `${baseUrl}${apiBasePath}${this.endpoint}${query}`;
+    let url = `${baseUrl}${apiBasePath}${this.endpoint}${query}`;
+    if (this.config.corsProxy) {
+      url = `${this.config.corsProxy}${url}`;
+    }
 
     try {
       const response = await Axios(url, request);

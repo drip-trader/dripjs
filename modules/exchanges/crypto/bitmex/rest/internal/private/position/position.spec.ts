@@ -106,7 +106,6 @@ describe('Bitmex RestInsider Position', () => {
             symbol: pair,
             leverage: isPositive,
             crossMargin: false,
-            isOpen: false,
             markPrice: null,
             lastPrice: null,
             avgCostPrice: null,

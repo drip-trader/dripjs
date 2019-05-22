@@ -1,4 +1,4 @@
-import { Config, ExecInst, OrderType } from '../types';
+import { Config, ExecInst, OrderStatus, OrderType } from '../types';
 import { RestBase } from './rest-base';
 import { RestOrderRequest, RestOrderResponse, RestOrdersResponse } from './types';
 
@@ -53,6 +53,7 @@ export class Rest extends RestBase {
     return this.fetchOrder({
       symbol,
       filter: {
+        ordStatus: OrderStatus.New,
         ordType: OrderType.Stop,
       },
     });
