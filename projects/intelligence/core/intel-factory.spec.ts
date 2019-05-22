@@ -40,7 +40,7 @@ describe('Intel factory', () => {
       setTimeout(() => {
         bitmex.stopTicker(pair);
         done();
-      }, 2000);
+      }, 3000);
     });
 
     it('bitmex getDepth$', async (done) => {
