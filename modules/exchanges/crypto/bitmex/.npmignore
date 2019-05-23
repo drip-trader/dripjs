@@ -9,6 +9,9 @@
 
 # configuration
 tsconfig.json
+rollup.config
+rollup.tsconfig.json
+
 
 # misc
 npm-debug.log*

@@ -1,7 +1,9 @@
 import { fixByDigits } from '@dripjs/common';
-import { CandlestickEntity, CandlestickEntityCreateParams, CandlestickRepository, EntityTestBed } from '@dripjs/models';
-import { getCandlestickDefaultData } from '@dripjs/testing';
+import { CandlestickEntity, CandlestickEntityCreateParams, CandlestickRepository } from '@dripjs/models';
 import { Timestamp } from '@dripjs/types';
+
+import { getCandlestickDefaultData } from '../../common/testing/data/models';
+import { EntityTestBed } from '../../common/testing/entity-test-bed';
 
 describe('candlestick.repository', () => {
   let candlestickReposity: CandlestickRepository;

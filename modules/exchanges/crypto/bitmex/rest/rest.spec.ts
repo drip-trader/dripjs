@@ -1,4 +1,4 @@
-import { isPositive } from '@dripjs/common';
+import { isPositive, sleep } from '@dripjs/common';
 import { assertExisitingColumns, corsProxy, isUuid, overrideTimestampColumns, overrideValue, testnetConfig } from '@dripjs/testing';
 import * as moment from 'moment';
 
@@ -453,6 +453,7 @@ describe('Bitmex Rest', () => {
   });
 
   it('create/fetch position ', async () => {
+    await sleep(2000);
     const res = await rest.createPosition(pair, OrderSide.Buy, 25);
     expect(() =>
       assertExisitingColumns(overrideTimestampColumns(res), {

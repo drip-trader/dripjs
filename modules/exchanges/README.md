@@ -1,1 +1,1 @@
-# dripjs-exchanges
+# @dripjs/exchanges

@@ -22,26 +22,28 @@
     "tsc": "tsc -p tsconfig.json"
   },
   "devDependencies": {
-    "@types/node": "11.11.3",
+    "@types/node": "^12.0.2",
     "@types/ws": "6.0.1"
   },
   "dependencies": {
     "@dripjs/common": "^0.1.15",
     "@dripjs/exchanges": "^0.1.17",
     "@dripjs/types": "^0.1.14",
-    "@nestjs/common": "5.7.4",
-    "@nestjs/core": "5.7.4",
-    "@nestjs/microservices": "5.7.4",
-    "@nestjs/testing": "5.7.4",
-    "@nestjs/websockets": "5.7.4",
-    "class-transformer": "0.2.0",
-    "class-validator": "0.9.1",
-    "config": "3.0.1",
+    "@nestjs/common": "^6.2.4",
+    "@nestjs/core": "^6.2.4",
+    "@nestjs/microservices": "^6.2.4",
+    "@nestjs/platform-express": "^6.2.4",
+    "@nestjs/platform-socket.io": "^6.2.4",
+    "@nestjs/testing": "^6.2.4",
+    "@nestjs/websockets": "^6.2.4",
+    "class-transformer": "^0.2.3",
+    "class-validator": "^0.9.1",
+    "config": "^3.1.0",
     "json-value-replacer": "0.1.1",
     "moment": "2.24.0",
     "reflect-metadata": "0.1.13",
     "rxjs": "^6.4.0",
-    "typescript": "3.3.3333",
-    "ws": "6.2.0"
+    "typescript": "^3.4.5",
+    "ws": "^7.0.0"
   }
 }

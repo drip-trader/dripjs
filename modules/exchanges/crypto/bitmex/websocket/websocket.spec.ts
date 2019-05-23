@@ -1,8 +1,17 @@
-import { isPositive } from '@dripjs/common';
-import { isOrderSide, isUuid, testnetConfig } from '@dripjs/testing';
+import { isPositive, sleep } from '@dripjs/common';
+import { assertExisitingColumns, isOrderSide, isUuid, overrideTimestampColumns, overrideValue, testnetConfig } from '@dripjs/testing';
 
 import { Rest, RestOrderRequest } from '../rest';
-import { OrderResponse, OrderSide, OrderStatus, OrderType, SettlementResponse, TimeInForce, TradeResponse } from '../types';
+import {
+  OrderResponse,
+  OrderSide,
+  OrderStatus,
+  OrderType,
+  OrderbookL2Response,
+  SettlementResponse,
+  TimeInForce,
+  TradeResponse,
+} from '../types';
 import { Websocket } from './websocket';
 
 // get unique list by pair
@@ -33,33 +42,42 @@ describe('BitmexWS', () => {
   afterAll(() => {
     bitmexWS.destroy();
   });
-  it('subscribe orderbook', (done) => {
+  it('subscribe orderbook', async () => {
+    let data: OrderbookL2Response;
     bitmexWS.orderbook$(pair).subscribe((orderbook) => {
-      expect(orderbook.asks.length).toBeGreaterThan(0);
-      expect(orderbook.bids.length).toBeGreaterThan(0);
-      bitmexWS.stopOrderbook(pair);
+      data = orderbook;
     });
-    setTimeout(() => {
-      done();
-    }, 5000);
+    await sleep(5000);
+    expect(data.asks.length).toEqual(25);
+    expect(data.bids.length).toEqual(25);
+    bitmexWS.stopOrderbook(pair);
   });
 
   describe('subscribe trade', () => {
-    it('subscribe single trade', async (done) => {
+    it('subscribe single trade', async () => {
+      let data: TradeResponse;
       bitmexWS.trade$(pair).subscribe((trade) => {
-        expect(isOrderSide(trade.side)).toBeTruthy();
-        expect(isPositive(trade.amount)).toBeTruthy();
-        expect(isPositive(trade.price)).toBeTruthy();
-        expect(isPositive(trade.timestamp)).toBeTruthy();
-        bitmexWS.stopTrade(pair);
-        done();
+        data = trade;
       });
+      await sleep(3000);
+      expect(() =>
+        assertExisitingColumns(overrideTimestampColumns(data), {
+          symbol: 'XBTUSD',
+          side: isOrderSide,
+          price: isPositive,
+          amount: isPositive,
+          timestamp: overrideValue,
+        }),
+      ).not.toThrow();
+      bitmexWS.stopTrade(pair);
     });
 
     it('subscribe multiple trade', async (done) => {
       const receivedMessages: TradeResponse[] = [];
       bitmexWS.trade$([pair, pair2]).subscribe((trade) => {
-        receivedMessages.push(trade);
+        if (!receivedMessages.find((o) => o.symbol === trade.symbol)) {
+          receivedMessages.push(trade);
+        }
         if (receivedMessages.length === 2) {
           expect(receivedMessages.map((o) => o.symbol)).toEqual([pair, pair2]);
           bitmexWS.stopTrade([pair, pair2]);
@@ -142,7 +160,6 @@ describe('BitmexWS', () => {
       expect(order.price).toEqual(snapshot.price);
       expect(order.orderQty).toEqual(snapshot.orderQty);
       expect(order.ordType).toEqual(snapshot.ordType);
-      expect(order.timeInForce).toEqual(snapshot.timeInForce);
       expect(order.ordStatus).toEqual(OrderStatus.New);
     };
 

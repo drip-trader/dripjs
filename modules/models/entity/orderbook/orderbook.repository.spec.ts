@@ -1,6 +1,8 @@
-import { EntityTestBed, OrderbookEntity, OrderbookEntityParams, OrderbookRepository } from '@dripjs/models';
-import { getOrderbookDefaultData } from '@dripjs/testing';
+import { OrderbookEntity, OrderbookEntityParams, OrderbookRepository } from '@dripjs/models';
 import { Timestamp } from '@dripjs/types';
+
+import { getOrderbookDefaultData } from '../../common/testing/data/models';
+import { EntityTestBed } from '../../common/testing/entity-test-bed';
 
 describe('orderbook.repository', () => {
   let orderbookReposity: OrderbookRepository;

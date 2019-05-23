@@ -1,7 +1,9 @@
 import { fixByDigits } from '@dripjs/common';
-import { EntityTestBed, TickerEntity, TickerEntityCreateParams, TickerRepository } from '@dripjs/models';
-import { getTickerDefaultData } from '@dripjs/testing';
+import { TickerEntity, TickerEntityCreateParams, TickerRepository } from '@dripjs/models';
 import { Timestamp } from '@dripjs/types';
+
+import { getTickerDefaultData } from '../../common/testing/data/models';
+import { EntityTestBed } from '../../common/testing/entity-test-bed';
 
 describe('ticker.repository', () => {
   let tickerReposity: TickerRepository;

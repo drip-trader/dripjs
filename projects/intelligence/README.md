@@ -3,7 +3,7 @@
 ## use
 
 ```bash
-import { IntelFactory, BitmexSpy } from 'dripjs-intelligence';
+import { IntelFactory, BitmexSpy } from '@dripjs/intelligence';
 
 const bitmexSpy = IntelFactory.create(BitmexSpy, {
   apiKey: `your apiKey`,

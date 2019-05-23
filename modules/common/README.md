@@ -1,1 +1,1 @@
-# dripjs-common
+# @dripjs/common

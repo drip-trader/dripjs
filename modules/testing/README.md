@@ -1,1 +1,1 @@
-# dripjs-types
+# @dripjs/types

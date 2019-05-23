@@ -11,6 +11,7 @@ describe('Bitmex RestInsider Position', () => {
 
   beforeAll(async () => {
     position = new Position(testnetConfig);
+    await position.removeAll();
   });
 
   afterAll(async () => {
@@ -105,7 +106,6 @@ describe('Bitmex RestInsider Position', () => {
             symbol: pair,
             leverage: isPositive,
             crossMargin: false,
-            markPrice: null,
             lastPrice: null,
             avgCostPrice: null,
             avgEntryPrice: null,

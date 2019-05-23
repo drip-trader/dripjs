@@ -1,6 +1,6 @@
 {
   "name": "@dripjs/common",
-  "version": "0.1.15",
+  "version": "0.1.20",
   "description": "dripjs common module",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",

@@ -1,5 +1,7 @@
-import { EntityTestBed, MasterPairEntity, MasterPairEntityCreateParams, MasterPairRepository } from '@dripjs/models';
-import { getPairDefaultData } from '@dripjs/testing';
+import { MasterPairEntity, MasterPairEntityCreateParams, MasterPairRepository } from '@dripjs/models';
+
+import { getPairDefaultData } from '../../common/testing/data/models';
+import { EntityTestBed } from '../../common/testing/entity-test-bed';
 
 describe('master-pair.repository', () => {
   let masterPairReposity: MasterPairRepository;

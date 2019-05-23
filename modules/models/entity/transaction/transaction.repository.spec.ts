@@ -1,8 +1,10 @@
 import { equalStrictly, isPositive } from '@dripjs/common';
-import { EntityTestBed, TransactionEntityCreateParams, TransactionRepository } from '@dripjs/models';
-import { getTransactionDefaultData } from '@dripjs/testing';
+import { TransactionEntityCreateParams, TransactionRepository } from '@dripjs/models';
 import { OrderSide, Timestamp } from '@dripjs/types';
 import * as moment from 'moment';
+
+import { getTransactionDefaultData } from '../../common/testing/data/models';
+import { EntityTestBed } from '../../common/testing/entity-test-bed';
 
 describe('trade.repository', () => {
   let transactionReposity: TransactionRepository;
@@ -52,7 +54,6 @@ describe('trade.repository', () => {
       });
 
       EntityTestBed.assertEntity(insertedTransaction[0], {
-        id: '2',
         exchange: 'bitbank',
         symbol: pair,
         side: OrderSide.Buy,
