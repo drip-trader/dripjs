@@ -1,0 +1,33 @@
+{
+  "name": "@dripjs/testing",
+  "version": "0.1.14",
+  "description": "dripjs testing",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "build:prod": "yarn build:preprocess && yarn tsc",
+    "build:preprocess": "rm -rf dist",
+    "prepublishOnly": "yarn build:prod",
+    "postpublish": "yarn build:preprocess",
+    "tsc": "tsc -p tsconfig.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drip-trader/dripjs.git"
+  },
+  "keywords": [
+    "drip",
+    "dripjs",
+    "drip testing",
+    "dripjs testing"
+  ],
+  "author": "zlq4863947@gmail.com",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/drip-trader/dripjs/issues"
+  },
+  "homepage": "https://github.com/drip-trader/dripjs/tree/master/modules/testing#readme"
+}
