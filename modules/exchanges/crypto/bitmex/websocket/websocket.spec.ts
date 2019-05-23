@@ -1,7 +1,6 @@
 import { isPositive } from '@dripjs/common';
-import { testnetConfig } from '@dripjs/testing';
+import { isOrderSide, isUuid, testnetConfig } from '@dripjs/testing';
 
-import { isOrderSide, isUuid } from '../common/test-helpers';
 import { Rest, RestOrderRequest } from '../rest';
 import { OrderResponse, OrderSide, OrderStatus, OrderType, SettlementResponse, TimeInForce, TradeResponse } from '../types';
 import { Websocket } from './websocket';

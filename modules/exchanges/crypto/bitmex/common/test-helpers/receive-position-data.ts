@@ -1,6 +1,6 @@
 import { sleep } from '@dripjs/common';
+import { testnetConfig } from '@dripjs/testing';
 
-import { testnetConfig } from '../../../../../testing/data/exchanges';
 import { Position } from '../../rest/internal/private/position';
 import { OrderSide, PositionResponse } from '../../types';
 

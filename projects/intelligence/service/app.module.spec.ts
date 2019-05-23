@@ -1,15 +1,10 @@
 import { isPositive, sleep } from '@dripjs/common';
+import { assertExisitingColumns, isOrderSide, overrideTimestampColumns, overrideValue } from '@dripjs/testing';
 import { Bar, ConfigIntelServer, SupportedExchange, Symbol } from '@dripjs/types';
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import * as io from 'socket.io-client';
 
-import {
-  assertExisitingColumns,
-  isOrderSide,
-  overrideTimestampColumns,
-  overrideValue,
-} from '../../../modules/exchanges/crypto/bitmex/common/test-helpers';
 import { Resolution } from '../core';
 import { ApplicationModule } from './app.module';
 import { IntelChannel, IntelRealtimeResponse } from './types';

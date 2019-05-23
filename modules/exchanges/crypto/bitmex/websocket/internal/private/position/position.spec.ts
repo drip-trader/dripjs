@@ -1,7 +1,7 @@
 import { isPositive, sleep } from '@dripjs/common';
-import { testnetConfig } from '@dripjs/testing';
+import { assertExisitingColumns, overrideTimestampColumns, overrideValue, testnetConfig } from '@dripjs/testing';
 
-import { assertExisitingColumns, overrideTimestampColumns, overrideValue, receivePositionData } from '../../../../common/test-helpers';
+import { receivePositionData } from '../../../../common/test-helpers';
 import { OrderSide, PositionResponse } from '../../../../types';
 import { WebsocketInsider } from '../../websocket-insider';
 import { Position } from './position';

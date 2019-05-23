@@ -1,7 +1,6 @@
 import { isPositive } from '@dripjs/common';
-import { testnetConfig } from '@dripjs/testing';
+import { assertExisitingColumns, overrideTimestampColumns, overrideValue, testnetConfig } from '@dripjs/testing';
 
-import { assertExisitingColumns, overrideTimestampColumns, overrideValue } from '../../../../common/test-helpers';
 import { OrderSide } from '../../../../types';
 import { Position } from './position';
 

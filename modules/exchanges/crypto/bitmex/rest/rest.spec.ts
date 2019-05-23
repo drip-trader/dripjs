@@ -1,8 +1,7 @@
 import { isPositive } from '@dripjs/common';
-import { corsProxy, testnetConfig } from '@dripjs/testing';
+import { assertExisitingColumns, corsProxy, isUuid, overrideTimestampColumns, overrideValue, testnetConfig } from '@dripjs/testing';
 import * as moment from 'moment';
 
-import { assertExisitingColumns, isUuid, overrideTimestampColumns, overrideValue } from '../common/test-helpers';
 import { OrderResponse, OrderSide, OrderStatus, OrderType, Resolution } from '../types';
 import { Rest } from './rest';
 import { RestFetchOrderRequest, RestOrderRequest, RestOrderbookRequest } from './types';
