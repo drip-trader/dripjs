@@ -1,7 +1,6 @@
 import { isPositive } from '@dripjs/common';
-import { testnetConfig } from '@dripjs/testing';
+import { assertExisitingColumns, overrideTimestampColumns, overrideValue, testnetConfig } from '@dripjs/testing';
 
-import { assertExisitingColumns, overrideTimestampColumns, overrideValue } from '../../../../common/test-helpers';
 import { OrderSide } from '../../../../types';
 import { Position } from './position';
 
@@ -12,6 +11,7 @@ describe('Bitmex RestInsider Position', () => {
 
   beforeAll(async () => {
     position = new Position(testnetConfig);
+    await position.removeAll();
   });
 
   afterAll(async () => {
@@ -106,7 +106,6 @@ describe('Bitmex RestInsider Position', () => {
             symbol: pair,
             leverage: isPositive,
             crossMargin: false,
-            markPrice: null,
             lastPrice: null,
             avgCostPrice: null,
             avgEntryPrice: null,

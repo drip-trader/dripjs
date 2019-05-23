@@ -1,4 +1,5 @@
-import { testnetConfig } from '../../../../../testing/data/exchanges';
+import { testnetConfig } from '@dripjs/testing';
+
 import { Order } from '../../rest/internal/private/order';
 import { Orderbook } from '../../rest/internal/public/orderbook';
 import { OrderResponse, OrderSide, OrderType } from '../../types';

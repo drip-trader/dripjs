@@ -41,7 +41,7 @@ npm install dripjs
 
 ```shell
 // 假设想要使用bitmex api模块时
-npm install dripjs-bitmex
+npm install @dripjs/bitmex
 ```
 
 ## 使用
@@ -95,12 +95,12 @@ setTimeout(() => {
 
 ## 模块列表
 
-| 模块名                                                       | 描述                                                 |
-| ------------------------------------------------------------ | ---------------------------------------------------- |
-| [dripjs](https://www.npmjs.com/package/dripjs)               | 框架主模块，可使用全部子模块                         |
-| [dripjs-common](https://www.npmjs.com/package/dripjs-common) | 通用函数模块                                         |
-| [dripjs-types](https://www.npmjs.com/package/dripjs-types)   | 类型定义模块                                         |
-| [dripjs-bitmex](https://www.npmjs.com/package/dripjs-bitmex) | bitmex 交易接口模块(包含 rest 接口和 websocket 接口) |
+| 模块名                                                         | 描述                                                 |
+| -------------------------------------------------------------- | ---------------------------------------------------- |
+| [dripjs](https://www.npmjs.com/package/dripjs)                 | 框架主模块，可使用全部子模块                         |
+| [@dripjs/common](https://www.npmjs.com/package/@dripjs/common) | 通用函数模块                                         |
+| [@dripjs/types](https://www.npmjs.com/package/@dripjs/types)   | 类型定义模块                                         |
+| [@dripjs/bitmex](https://www.npmjs.com/package/@dripjs/bitmex) | bitmex 交易接口模块(包含 rest 接口和 websocket 接口) |
 
 ## 参考文档
 

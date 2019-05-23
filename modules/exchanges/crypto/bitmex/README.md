@@ -1,11 +1,11 @@
-# dripjs-bitmex
+# @dripjs/bitmex
 
 > dripjs bitmex api wapper, support for rest api and websocket
 
 <p>
-<a href="https://www.npmjs.com/package/dripjs-bitmex"><img src="https://img.shields.io/npm/v/dripjs-bitmex.svg" alt="NPM Version" />
+<a href="https://www.npmjs.com/package/@dripjs/bitmex"><img src="https://img.shields.io/npm/v/@dripjs/bitmex.svg" alt="NPM Version" />
 <a href="https://www.npmjs.com/package/dripjs"><img src="https://img.shields.io/badge/license-GPL_3.0-green.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/package/dripjs-bitmex"><img src="https://img.shields.io/npm/dm/dripjs-bitmex.svg" alt="NPM Downloads" /></a>
+<a href="https://www.npmjs.com/package/@dripjs/bitmex"><img src="https://img.shields.io/npm/dm/@dripjs/bitmex.svg" alt="NPM Downloads" /></a>
 <a href="https://travis-ci.com/drip-trader/dripjs"><img src="https://travis-ci.com/drip-trader/dripjs.svg?branch=master&t=5" alt="Tiavis" /></a>
 <a href="https://coveralls.io/github/drip-trader/dripjs?branch=master"><img src="https://coveralls.io/repos/github/drip-trader/dripjs/badge.svg?branch=master&t=5" alt="Coverage" /></a>
 <a href="https://gitter.im/drip-js/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img src="https://badges.gitter.im/drip-js.svg" alt="Gitter" /></a>
@@ -15,7 +15,7 @@
 ## Install
 
 ```shell
-npm install dripjs-bitmex
+npm install @dripjs/bitmex
 ```
 
 ## Use
@@ -23,7 +23,7 @@ npm install dripjs-bitmex
 ### require
 
 ```typescript
-var bitmex = require('dripjs-bitmex');
+var bitmex = require('@dripjs/bitmex');
 
 var bitmexWS = new bitmex.BitmexWS({
   apiKey: `apiKey`,
@@ -38,7 +38,7 @@ bitmexWS.orderbook$('XBTUSD').subscribe((orderbook) => {
 ### import
 
 ```typescript
-import { BitmexWS, BitmexRest } from 'dripjs-bitmex';
+import { BitmexWS, BitmexRest } from '@dripjs/bitmex';
 
 const bitmexWS = new BitmexWS({
   apiKey: `apiKey`,

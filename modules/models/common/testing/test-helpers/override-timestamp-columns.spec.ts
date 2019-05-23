@@ -1,4 +1,4 @@
-import { overrideTimestampColumns } from '@dripjs/models';
+import { overrideTimestampColumns } from '@dripjs/testing';
 
 describe('overrideTimestampColumns', () => {
   describe('When shallow object', () => {

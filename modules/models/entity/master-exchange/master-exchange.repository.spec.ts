@@ -1,5 +1,7 @@
-import { EntityTestBed, MasterExchangeEntity, MasterExchangeEntityCreateParams, MasterExchangeRepository } from '@dripjs/models';
-import { getExchangeDefaultData } from '@dripjs/testing';
+import { MasterExchangeEntity, MasterExchangeEntityCreateParams, MasterExchangeRepository } from '@dripjs/models';
+
+import { getExchangeDefaultData } from '../../common/testing/data/models';
+import { EntityTestBed } from '../../common/testing/entity-test-bed';
 
 describe('master-exchange.repository', () => {
   let masterExchangeReposity: MasterExchangeRepository;

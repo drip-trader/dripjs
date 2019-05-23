@@ -1,8 +1,7 @@
-import { isPositive } from '@dripjs/common';
-import { corsProxy, testnetConfig } from '@dripjs/testing';
+import { isPositive, sleep } from '@dripjs/common';
+import { assertExisitingColumns, corsProxy, isUuid, overrideTimestampColumns, overrideValue, testnetConfig } from '@dripjs/testing';
 import * as moment from 'moment';
 
-import { assertExisitingColumns, isUuid, overrideTimestampColumns, overrideValue } from '../common/test-helpers';
 import { OrderResponse, OrderSide, OrderStatus, OrderType, Resolution } from '../types';
 import { Rest } from './rest';
 import { RestFetchOrderRequest, RestOrderRequest, RestOrderbookRequest } from './types';
@@ -454,6 +453,7 @@ describe('Bitmex Rest', () => {
   });
 
   it('create/fetch position ', async () => {
+    await sleep(2000);
     const res = await rest.createPosition(pair, OrderSide.Buy, 25);
     expect(() =>
       assertExisitingColumns(overrideTimestampColumns(res), {

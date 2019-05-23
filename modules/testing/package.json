@@ -1,7 +1,7 @@
 {
-  "name": "@dripjs/exchanges",
+  "name": "@dripjs/testing",
   "version": "0.1.20",
-  "description": "dripjs exchanges api wapper, support for rest api and websocket",
+  "description": "dripjs testing",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
@@ -21,32 +21,20 @@
   "keywords": [
     "drip",
     "dripjs",
-    "dripjs exchange",
-    "dripjs exchanges",
-    "drip exchanges",
-    "bitmex api",
-    "bitmex websocket",
-    "bitmex rest api",
-    "bitmex",
-    "BitMEX"
+    "drip testing",
+    "dripjs testing"
   ],
   "author": "zlq4863947@gmail.com",
   "license": "GPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/drip-trader/dripjs/issues"
   },
-  "homepage": "https://github.com/drip-trader/dripjs/tree/master/modules/exchanges#readme",
-  "devDependencies": {
-    "@types/qs": "^6.5.3",
-    "@types/ws": "6.0.1"
-  },
+  "homepage": "https://github.com/drip-trader/dripjs/tree/master/modules/testing#readme",
   "dependencies": {
-    "@dripjs/common": "^0.1.20",
-    "@dripjs/types": "^0.1.20",
-    "axios": "^0.18.0",
-    "create-hmac": "^1.1.7",
-    "qs": "^6.6.0",
-    "rxjs": "^6.4.0",
-    "ws": "^7.0.0"
+    "lodash": "^4.17.11"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.130",
+    "dotenv": "^8.0.0"
   }
 }

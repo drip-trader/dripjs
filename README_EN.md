@@ -36,7 +36,7 @@ npm install dripjs
 If you only want to use a submodule in the framework
 
 ```shell
-npm install dripjs-bitmex
+npm install @dripjs/bitmex
 ```
 
 ## Use
@@ -61,12 +61,12 @@ setTimeout(() => {
 
 ## Module list
 
-| Module Name                                                  | Description                                                                        |
-| ------------------------------------------------------------ | ---------------------------------------------------------------------------------- |
-| [dripjs](https://www.npmjs.com/package/dripjs)               | Frame main module, all submodules can be used                                      |
-| [dripjs-common](https://www.npmjs.com/package/dripjs-common) | General function module                                                            |
-| [dripjs-types](https://www.npmjs.com/package/dripjs-types)   | Type definition module                                                             |
-| [dripjs-bitmex](https://www.npmjs.com/package/dripjs-bitmex) | Bitmex trading interface module (including rest interface and websocket interface) |
+| Module Name                                                    | Description                                                                        |
+| -------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| [dripjs](https://www.npmjs.com/package/dripjs)                 | Frame main module, all submodules can be used                                      |
+| [@dripjs/common](https://www.npmjs.com/package/@dripjs/common) | General function module                                                            |
+| [@dripjs/types](https://www.npmjs.com/package/@dripjs/types)   | Type definition module                                                             |
+| [@dripjs/bitmex](https://www.npmjs.com/package/@dripjs/bitmex) | Bitmex trading interface module (including rest interface and websocket interface) |
 
 ## Reference document
 

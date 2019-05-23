@@ -8,17 +8,7 @@
 !*.d.ts
 
 # configuration
-tsconfig.json
-rollup.config
-rollup.tsconfig.json
-
-
-# misc
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-assets
-yarn.lock
+tsconfig*
 
 # System Files
 .DS_Store
