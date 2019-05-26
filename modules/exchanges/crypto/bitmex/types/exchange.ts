@@ -3,6 +3,7 @@ export interface Config {
   apiSecret: string;
   testnet?: boolean;
   corsProxy?: string;
+  apiUrl?: string;
 }
 
 export interface RateLimit {

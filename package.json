@@ -151,9 +151,9 @@
     "@dripjs/types": "^0.1.20",
     "@nestjs/common": "^6.2.4",
     "@nestjs/core": "^6.2.4",
-    "@nestjs/websockets": "^6.2.4",
     "@nestjs/platform-express": "^6.2.4",
     "@nestjs/platform-socket.io": "^6.2.4",
+    "@nestjs/websockets": "^6.2.4",
     "axios": "^0.18.0",
     "bignumber.js": "^8.1.1",
     "config": "^3.0.1",
@@ -166,6 +166,7 @@
     "rxjs": "^6.4.0",
     "socket.io-client": "^2.2.0",
     "typeorm": "^0.2.17",
+    "url-join": "^4.0.0",
     "uuid": "^3.3.2",
     "ws": "^7.0.0"
   }

@@ -2,9 +2,13 @@ import { HttpMethod } from '@dripjs/types';
 import { stringify } from 'qs';
 
 import { apiBasePath } from '../rest/types';
+import { isNodeJs } from './helpers';
 
 // tslint:disable-next-line:no-var-requires
 const createHmac = require('create-hmac');
+
+// tslint:disable-next-line:no-var-requires
+const urljoin = require('url-join');
 
 /**
  * Sign a message. hex( HMAC_SHA256(secret, verb + url + nonce + data) )
@@ -47,24 +51,30 @@ export function getRestAuthHeaders(
   data?: any,
 ): AuthHeaders {
   const query = method === HttpMethod.GET && Object.keys(data).length !== 0 ? `?${stringify(data)}` : '';
-  const url = `${apiBasePath}${endpoint}${query}`;
+  const url = urljoin(apiBasePath, endpoint, query);
   // 3min timeout
   const expires = Math.round(Date.now() / 1000) + 60 * 3;
   const body = method === HttpMethod.GET ? '' : data;
   const signature = signMessage(apiSecret, method, url, expires, body);
 
-  return {
-    Origin: baseUrl,
+  const authHeaders: AuthHeaders = {
     'Content-Type': 'application/json',
     accept: 'application/json',
     'api-expires': String(expires),
     'api-key': apiKey,
     'api-signature': signature,
   };
+  // 当前环境为node时
+  if (isNodeJs()) {
+    // 设置Origin
+    authHeaders.Origin = baseUrl;
+  }
+
+  return authHeaders;
 }
 
 export interface AuthHeaders {
-  Origin: string;
+  Origin?: string;
   'Content-Type': string;
   accept: string;
   'api-expires': string;

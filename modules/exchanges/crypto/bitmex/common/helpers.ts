@@ -1,6 +1,7 @@
 import { HttpHeaders } from '@dripjs/types';
 
-import { RateLimit } from '../types';
+import { endpoints } from '../rest/types';
+import { Config, RateLimit } from '../types';
 
 export function getRateLimit(headers: HttpHeaders): RateLimit {
   return {
@@ -44,4 +45,27 @@ export function getChannelName(params: { pair?: string | string[]; endPoint: str
   }
 
   return subStr;
+}
+
+/**
+ * 获取api的url
+ * @param cfg
+ */
+export function getRestApiUrl(cfg: Config): string {
+  if (cfg.apiUrl) {
+    return cfg.apiUrl;
+  }
+
+  if (cfg.testnet) {
+    return endpoints.testnet;
+  }
+
+  return endpoints.production;
+}
+
+/**
+ * 判断是否为node.js环境
+ */
+export function isNodeJs(): boolean {
+  return typeof process === 'object' && typeof process.versions === 'object' && typeof process.versions.node !== 'undefined';
 }

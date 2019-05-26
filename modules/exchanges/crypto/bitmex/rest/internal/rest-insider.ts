@@ -2,9 +2,12 @@ import { HttpHeaders, HttpMethod } from '@dripjs/types';
 import Axios, { AxiosRequestConfig } from 'axios';
 import { stringify } from 'qs';
 
-import { getRateLimit, getRestAuthHeaders } from '../../common';
+import { getRateLimit, getRestApiUrl, getRestAuthHeaders } from '../../common';
 import { Config, ErrorResponse, RestResponse } from '../../types';
-import { PrivateEndPoints, PublicEndPoints, apiBasePath, endpoints } from '../types';
+import { PrivateEndPoints, PublicEndPoints, apiBasePath } from '../types';
+
+// tslint:disable-next-line:no-var-requires
+const urljoin = require('url-join');
 
 export class RestInsider {
   /**可用请求数 */
@@ -35,7 +38,7 @@ export class RestInsider {
       };
     }
 
-    const baseUrl = this.config.testnet ? endpoints.testnet : endpoints.production;
+    const baseUrl = getRestApiUrl(this.config);
     const authHeaders = getRestAuthHeaders(method, baseUrl, this.endpoint, this.config.apiKey, this.config.apiSecret, data);
     const request: AxiosRequestConfig = {
       method,
@@ -49,9 +52,10 @@ export class RestInsider {
     } else {
       query = Object.keys(data).length !== 0 ? `?${stringify(data)}` : '';
     }
-    let url = `${baseUrl}${apiBasePath}${this.endpoint}${query}`;
+
+    let url = urljoin(baseUrl, apiBasePath, this.endpoint, query);
     if (this.config.corsProxy) {
-      url = `${this.config.corsProxy}${url}`;
+      url = urljoin(this.config.corsProxy, url);
     }
 
     try {

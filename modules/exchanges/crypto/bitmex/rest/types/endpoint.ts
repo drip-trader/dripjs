@@ -1,6 +1,6 @@
 export const endpoints = {
-  production: 'https://www.bitmex.com',
-  testnet: 'https://testnet.bitmex.com',
+  production: 'https://www.bitmex.com/',
+  testnet: 'https://testnet.bitmex.com/',
 };
 
 export const apiBasePath = '/api/v1/';
