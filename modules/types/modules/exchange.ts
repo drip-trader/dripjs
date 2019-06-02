@@ -1,5 +1,3 @@
-import { Depth, Ticker, Transaction } from '.';
-
 export interface Exchange {
   name: string;
   type: ExchangeType;
@@ -56,5 +54,3 @@ export interface Credential {
   apiKey: string;
   apiSecret: string;
 }
-
-export type RealtimeType = Ticker | Depth | Transaction;

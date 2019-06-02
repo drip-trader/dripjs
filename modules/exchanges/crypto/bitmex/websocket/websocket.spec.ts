@@ -43,7 +43,7 @@ describe('BitmexWS', () => {
     bitmexWS.destroy();
   });
   it('subscribe orderbook', async () => {
-    let data: OrderbookL2Response;
+    let data: OrderbookL2Response = null;
     bitmexWS.orderbook$(pair).subscribe((orderbook) => {
       data = orderbook;
     });

@@ -1,13 +1,12 @@
 import { isPositive, sleep } from '@dripjs/common';
 import { assertExisitingColumns, isOrderSide, overrideTimestampColumns, overrideValue } from '@dripjs/testing';
-import { Bar, ConfigIntelServer, SupportedExchange, Symbol } from '@dripjs/types';
+import { Bar, ConfigIntelServer, IntelChannel, IntelRealtimeResponse, SupportedExchange, Symbol } from '@dripjs/types';
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import * as io from 'socket.io-client';
 
 import { Resolution } from '../core';
 import { ApplicationModule } from './app.module';
-import { IntelChannel, IntelRealtimeResponse } from './types';
 
 // tslint:disable-next-line
 const config: ConfigIntelServer = require('config').container.intelService;
@@ -27,13 +26,10 @@ describe('app.module', () => {
     await app.listenAsync(serverPort);
 
     socket = io(`http://localhost:${serverPort}`, {
-      transportOptions: {
-        polling: {
-          extraHeaders: {
-            username: config.username,
-            password: config.password,
-          },
-        },
+      transports: ['websocket'],
+      query: {
+        username: config.username,
+        password: config.password,
       },
     });
   });

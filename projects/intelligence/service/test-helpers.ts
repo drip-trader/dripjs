@@ -9,6 +9,7 @@ export function getSwitchToWs(params: {
   noPassword?: boolean;
   username?: string;
   password?: string;
+  query?: boolean;
 }): jest.Mock<WsArgumentsHost, []> {
   let un: string | undefined = config.username;
   let pwd: string | undefined = config.password;
@@ -26,14 +27,25 @@ export function getSwitchToWs(params: {
   return jest.fn(() => {
     return <WsArgumentsHost>{
       getClient: () => {
-        return {
-          handshake: {
-            headers: {
-              username: un,
-              password: pwd,
+        if (params.query) {
+          return {
+            handshake: {
+              query: {
+                username: un,
+                password: pwd,
+              },
             },
-          },
-        };
+          };
+        } else {
+          return {
+            handshake: {
+              headers: {
+                username: un,
+                password: pwd,
+              },
+            },
+          };
+        }
       },
     };
   });

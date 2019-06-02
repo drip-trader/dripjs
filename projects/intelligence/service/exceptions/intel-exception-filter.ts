@@ -1,6 +1,6 @@
+import { IntelError } from '@dripjs/types';
 import { ArgumentsHost, Catch, ExceptionFilter } from '@nestjs/common';
 
-import { IntelError } from '../types';
 import { IntelServiceException } from './intel-exception';
 
 @Catch(IntelServiceException)
