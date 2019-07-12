@@ -25,7 +25,6 @@ function overrideProperties(object: { [key: string]: any }, valueToOverride: any
     if (isObject(object[key])) {
       overrideProperties(object[key], valueToOverride);
     } else {
-      // all column names that exists in @bronx/core-models.
       switch (key) {
         case 'createdAt':
         case 'updatedAt':
