@@ -1,5 +1,5 @@
 import { SocketIORxjs } from '@dripjs/common';
-import { Bar, BarRequest, IntelChannel, IntelClientOptions, IntelRealtimeResponse, SupportedExchange } from '@dripjs/types';
+import { Bar, BarRequest, IntelChannel, IntelClientOptions, IntelRealtimeResponse, SupportedExchange, Symbol } from '@dripjs/types';
 import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
@@ -7,15 +7,11 @@ export class IntelClient {
   private readonly ioRxjs: SocketIORxjs;
 
   constructor(private readonly options: IntelClientOptions) {
-    this.ioRxjs = new SocketIORxjs(`http://${this.options.ip}:${this.options.port}`, {
+    this.ioRxjs = new SocketIORxjs(`ws://${this.options.ip}:${this.options.port}`, {
       transports: ['websocket'],
-      transportOptions: {
-        polling: {
-          extraHeaders: {
-            username: this.options.username,
-            password: this.options.password,
-          },
-        },
+      query: {
+        username: this.options.username,
+        password: this.options.password,
       },
     });
   }

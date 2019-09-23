@@ -92,6 +92,7 @@ export class BitmexSpy extends Intel {
       binSize: request.resolution as Bitmex.Resolution,
       startTime: moment(request.start).toISOString(),
       endTime: moment(request.end).toISOString(),
+      count: 750,
     });
     let bars: Bar[] = [];
     if (res.bars.length > 0) {

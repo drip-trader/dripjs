@@ -1,11 +1,11 @@
-import { ConfigIntelServer } from '@dripjs/types';
+import { ConfigIntelServer, IntelError } from '@dripjs/types';
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class WsAuthGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
+    const client = context.switchToWs().getClient();
     try {
-      const client = context.switchToWs().getClient();
       const username = client.handshake.query['username'];
       const password = client.handshake.query['password'];
 
@@ -18,8 +18,11 @@ export class WsAuthGuard implements CanActivate {
         throw new Error('Authentication failed.');
       }
     } catch (e) {
-      // TODO: output log
-      // console.error(e.message);
+      const errorRespsonse: IntelError = {
+        name: e.name,
+        message: e.message,
+      };
+      client.emit('message', errorRespsonse);
       return false;
     }
 
