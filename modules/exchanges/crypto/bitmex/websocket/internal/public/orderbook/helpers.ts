@@ -1,4 +1,5 @@
 import { OrderbookL2Response, OrderbookResponse } from '../../../../types';
+import { WsPublicEndPoints } from '../../../types';
 import { WebsocketData } from '../../websocket-insider';
 
 /**

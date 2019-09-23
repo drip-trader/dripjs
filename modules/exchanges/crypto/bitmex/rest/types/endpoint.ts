@@ -1,14 +1,14 @@
-export const endpoints = {
-  production: 'https://www.bitmex.com/',
-  testnet: 'https://testnet.bitmex.com/',
+export const restEndpoints = {
+  production: 'https://www.bitmex.com',
+  testnet: 'https://testnet.bitmex.com',
 };
 
-export const apiBasePath = '/api/v1/';
+export const restApiBasePath = '/api/v1/';
 
 /**
  * 无需身份验证的连接端点集
  */
-export enum PublicEndPoints {
+export enum RestPublicEndPoints {
   /** 产品更新，包括交易量以及报价 */
   Instrument = 'instrument',
   /** 可交易合约 */
@@ -20,10 +20,14 @@ export enum PublicEndPoints {
 }
 
 //  要求进行身份验证的连接端点集
-export enum PrivateEndPoints {
+export enum RestPrivateEndPoints {
   /** 邀请人状态，已邀请用户及分红比率 */
   /** 你委托的更新 */
   Order = 'order',
+  /** 复数订单 */
+  OrderBulk = 'order/bulk',
+  /** 全部订单 */
+  OrderAll = 'order/all',
   /** 你仓位的更新 */
   Position = 'position',
 }

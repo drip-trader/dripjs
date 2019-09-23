@@ -1,4 +1,4 @@
-import { Config, ExecInst, OrderStatus, OrderType } from '../types';
+import { Config, ErrorResponse, ExecInst, OrderType } from '../types';
 import { RestBase } from './rest-base';
 import { RestOrderRequest, RestOrderResponse, RestOrdersResponse } from './types';
 
@@ -7,7 +7,7 @@ export class Rest extends RestBase {
     super(config);
   }
 
-  async createLimitOrder(request: Partial<RestOrderRequest>): Promise<RestOrderResponse> {
+  async createLimitOrder(request: Partial<RestOrderRequest>): Promise<RestOrderResponse | ErrorResponse> {
     return this.createOrder({
       ...request,
       ordType: OrderType.Limit,
@@ -19,28 +19,28 @@ export class Rest extends RestBase {
    * @param request
    * @Return Promise<RestOrderResponse>
    */
-  async createLimitOrderParticipateDoNotInitiate(request: Partial<RestOrderRequest>): Promise<RestOrderResponse> {
+  async createLimitOrderParticipateDoNotInitiate(request: Partial<RestOrderRequest>): Promise<RestOrderResponse | ErrorResponse> {
     return this.createLimitOrder({
       ...request,
       execInst: ExecInst.ParticipateDoNotInitiate,
     });
   }
 
-  async createStopOrder(request: Partial<RestOrderRequest>): Promise<RestOrderResponse> {
+  async createStopOrder(request: Partial<RestOrderRequest>): Promise<RestOrderResponse | ErrorResponse> {
     return this.createOrder({
       ...request,
       ordType: OrderType.Stop,
     });
   }
 
-  async createStopOrderLastPriceReduceOnly(request: Partial<RestOrderRequest>): Promise<RestOrderResponse> {
+  async createStopOrderLastPriceReduceOnly(request: Partial<RestOrderRequest>): Promise<RestOrderResponse | ErrorResponse> {
     return this.createStopOrder({
       ...request,
       execInst: `${ExecInst.LastPrice},${ExecInst.ReduceOnly}`,
     });
   }
 
-  async getOrderById(symbol: string, orderID: string): Promise<RestOrdersResponse> {
+  async getOrderById(symbol: string, orderID: string): Promise<RestOrdersResponse | ErrorResponse> {
     return this.fetchOrder({
       symbol,
       filter: {
@@ -49,11 +49,10 @@ export class Rest extends RestBase {
     });
   }
 
-  async getStopOrder(symbol: string): Promise<RestOrdersResponse> {
+  async getStopOrder(symbol: string): Promise<RestOrdersResponse | ErrorResponse> {
     return this.fetchOrder({
       symbol,
       filter: {
-        ordStatus: OrderStatus.New,
         ordType: OrderType.Stop,
       },
     });

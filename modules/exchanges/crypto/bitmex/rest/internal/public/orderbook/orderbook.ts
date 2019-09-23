@@ -1,22 +1,19 @@
 import { HttpMethod } from '@dripjs/types';
 
-import { Config, OrderbookResponse } from '../../../../types';
-import { PublicEndPoints, RestOrderbookL2Response, RestOrderbookRequest } from '../../../types';
+import { Config, ErrorResponse, OrderbookResponse } from '../../../../types';
+import { RestOrderbookL2Response, RestOrderbookRequest, RestPublicEndPoints } from '../../../types';
+import { makeResultByHandle } from '../../function';
 import { RestInsider } from '../../rest-insider';
 import { transform } from './helpers';
 
 export class Orderbook extends RestInsider {
   constructor(config: Config) {
-    super(config, PublicEndPoints.OrderBookL2);
+    super(config, RestPublicEndPoints.OrderBookL2);
   }
 
-  async fetch(request: RestOrderbookRequest): Promise<RestOrderbookL2Response> {
-    const res = await this.request(HttpMethod.GET, request);
+  async fetch(request: RestOrderbookRequest): Promise<RestOrderbookL2Response | ErrorResponse> {
+    const res = await this.request<OrderbookResponse[]>(HttpMethod.GET, request);
 
-    return {
-      ratelimit: res.ratelimit,
-      orderbook: transform(<OrderbookResponse[]>res.body),
-      error: res.error,
-    };
+    return makeResultByHandle(res, transform);
   }
 }

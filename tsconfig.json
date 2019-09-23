@@ -15,10 +15,7 @@
     "resolveJsonModule": true,
     "baseUrl": "./",
     "paths": {
-      "@dripjs/common": ["modules/common"],
-      "@dripjs/types": ["modules/types"],
       "@dripjs/models": ["modules/models"],
-      "@dripjs/exchanges": ["modules/exchanges"],
       "@dripjs/testing": ["modules/testing"]
     },
     "sourceMap": true

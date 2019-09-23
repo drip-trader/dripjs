@@ -1,6 +1,6 @@
 {
   "name": "@dripjs/bitmex",
-  "version": "0.1.21",
+  "version": "0.2.0",
   "description": "dripjs bitmex api wapper, support for rest api and websocket",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",

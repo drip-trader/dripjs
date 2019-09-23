@@ -1,17 +1,8 @@
-import { isPositive, sleep } from '@dripjs/common';
-import { assertExisitingColumns, isOrderSide, isUuid, overrideTimestampColumns, overrideValue, testnetConfig } from '@dripjs/testing';
-
-import { Rest, RestOrderRequest } from '../rest';
-import {
-  OrderResponse,
-  OrderSide,
-  OrderStatus,
-  OrderType,
-  OrderbookL2Response,
-  SettlementResponse,
-  TimeInForce,
-  TradeResponse,
-} from '../types';
+import { isPositive } from '../../../common';
+import { testnetConfig } from '../common';
+import { isOrderSide, isUuid } from '../common/test-helpers';
+import { Rest, RestOrderRequest, RestOrderbookL2Response } from '../rest';
+import { OrderResponse, OrderSide, OrderStatus, OrderType, SettlementResponse, TimeInForce, TradeResponse } from '../types';
 import { Websocket } from './websocket';
 
 // get unique list by pair
@@ -42,42 +33,33 @@ describe('BitmexWS', () => {
   afterAll(() => {
     bitmexWS.destroy();
   });
-  it('subscribe orderbook', async () => {
-    let data: OrderbookL2Response;
+  it('subscribe orderbook', (done) => {
     bitmexWS.orderbook$(pair).subscribe((orderbook) => {
-      data = orderbook;
+      expect(orderbook.asks.length).toBeGreaterThan(0);
+      expect(orderbook.bids.length).toBeGreaterThan(0);
+      bitmexWS.stopOrderbook(pair);
     });
-    await sleep(5000);
-    expect(data.asks.length).toEqual(25);
-    expect(data.bids.length).toEqual(25);
-    bitmexWS.stopOrderbook(pair);
+    setTimeout(() => {
+      done();
+    }, 5000);
   });
 
   describe('subscribe trade', () => {
-    it('subscribe single trade', async () => {
-      let data: TradeResponse;
+    it('subscribe single trade', async (done) => {
       bitmexWS.trade$(pair).subscribe((trade) => {
-        data = trade;
+        expect(isOrderSide(trade.side)).toBeTruthy();
+        expect(isPositive(trade.amount)).toBeTruthy();
+        expect(isPositive(trade.price)).toBeTruthy();
+        expect(isPositive(trade.timestamp)).toBeTruthy();
+        bitmexWS.stopTrade(pair);
+        done();
       });
-      await sleep(3000);
-      expect(() =>
-        assertExisitingColumns(overrideTimestampColumns(data), {
-          symbol: 'XBTUSD',
-          side: isOrderSide,
-          price: isPositive,
-          amount: isPositive,
-          timestamp: overrideValue,
-        }),
-      ).not.toThrow();
-      bitmexWS.stopTrade(pair);
     });
 
     it('subscribe multiple trade', async (done) => {
       const receivedMessages: TradeResponse[] = [];
       bitmexWS.trade$([pair, pair2]).subscribe((trade) => {
-        if (!receivedMessages.find((o) => o.symbol === trade.symbol)) {
-          receivedMessages.push(trade);
-        }
+        receivedMessages.push(trade);
         if (receivedMessages.length === 2) {
           expect(receivedMessages.map((o) => o.symbol)).toEqual([pair, pair2]);
           bitmexWS.stopTrade([pair, pair2]);
@@ -90,7 +72,7 @@ describe('BitmexWS', () => {
       const receivedMessages: TradeResponse[] = [];
       bitmexWS.trade$().subscribe((trade) => {
         receivedMessages.push(trade);
-        if (receivedMessages.length > 10) {
+        if (receivedMessages.length > 5) {
           const list = removeDuplicates(receivedMessages);
           expect(list.length).toBeGreaterThan(2);
           bitmexWS.stopTrade();
@@ -160,21 +142,22 @@ describe('BitmexWS', () => {
       expect(order.price).toEqual(snapshot.price);
       expect(order.orderQty).toEqual(snapshot.orderQty);
       expect(order.ordType).toEqual(snapshot.ordType);
+      expect(order.timeInForce).toEqual(snapshot.timeInForce);
       expect(order.ordStatus).toEqual(OrderStatus.New);
     };
 
     it('subscribe single order', async (done) => {
       const bitmexRest = new Rest(testnetConfig);
-      const orderbookRes = await bitmexRest.fetchOrderbook({
+      const orderbookRes = (await bitmexRest.fetchOrderbook({
         symbol: pair,
         depth: 5,
-      });
-      newOrder.price = +orderbookRes.orderbook.bids[4][0];
+      })) as RestOrderbookL2Response;
+      newOrder.price = +orderbookRes.data.bids[4][0];
       bitmexWS.order$(pair).subscribe(async (order) => {
-        checkOrder(newOrder, order);
+        checkOrder(newOrder, order[0]);
         bitmexWS.stopOrder(pair);
         await bitmexRest.cancelOrder({
-          orderID: order.orderID,
+          orderID: order[0].orderID,
         });
         done();
       });
@@ -183,21 +166,21 @@ describe('BitmexWS', () => {
 
     it.skip('subscribe multiple order', async (done) => {
       const bitmexRest = new Rest(testnetConfig);
-      const orderbookRes = await bitmexRest.fetchOrderbook({
+      const orderbookRes = (await bitmexRest.fetchOrderbook({
         symbol: pair,
         depth: 5,
-      });
-      newOrder.price = +orderbookRes.orderbook.bids[4][0];
+      })) as RestOrderbookL2Response;
+      newOrder.price = +orderbookRes.data.bids[4][0];
 
-      const orderbookRes2 = await bitmexRest.fetchOrderbook({
+      const orderbookRes2 = (await bitmexRest.fetchOrderbook({
         symbol: pair2,
         depth: 5,
-      });
-      newOrder2.price = +orderbookRes2.orderbook.bids[4][0];
+      })) as RestOrderbookL2Response;
+      newOrder2.price = +orderbookRes2.data.bids[4][0];
 
-      const receivedMessages: OrderResponse[] = [];
+      let receivedMessages: OrderResponse[] = [];
       bitmexWS.order$([pair, pair2]).subscribe(async (order) => {
-        receivedMessages.push(order);
+        receivedMessages = receivedMessages.concat(order);
         if (receivedMessages.length === 2) {
           bitmexWS.stopOrder([pair, pair2]);
           for (const msg of receivedMessages) {
@@ -215,21 +198,21 @@ describe('BitmexWS', () => {
 
     it.skip('subscribe all order', async (done) => {
       const rest = new Rest(testnetConfig);
-      const orderbookRes = await rest.fetchOrderbook({
+      const orderbookRes = (await rest.fetchOrderbook({
         symbol: pair,
         depth: 5,
-      });
-      newOrder.price = +orderbookRes.orderbook.bids[4][0];
+      })) as RestOrderbookL2Response;
+      newOrder.price = +orderbookRes.data.bids[4][0];
 
-      const orderbookRes2 = await rest.fetchOrderbook({
+      const orderbookRes2 = (await rest.fetchOrderbook({
         symbol: pair2,
         depth: 5,
-      });
-      newOrder2.price = +orderbookRes2.orderbook.bids[4][0];
+      })) as RestOrderbookL2Response;
+      newOrder2.price = +orderbookRes2.data.bids[4][0];
 
-      const receivedMessages: OrderResponse[] = [];
+      let receivedMessages: OrderResponse[] = [];
       bitmexWS.order$().subscribe(async (order) => {
-        receivedMessages.push(order);
+        receivedMessages = receivedMessages.concat(order);
         if (receivedMessages.length === 2) {
           bitmexWS.stopOrder();
           for (const msg of receivedMessages) {

@@ -2,6 +2,7 @@ import { testnetConfig } from '@dripjs/testing';
 
 import { Order } from '../../rest/internal/private/order';
 import { Orderbook } from '../../rest/internal/public/orderbook';
+import { RestOrderResponse, RestOrderbookL2Response } from '../../rest/types';
 import { OrderResponse, OrderSide, OrderType } from '../../types';
 
 /**
@@ -13,21 +14,21 @@ import { OrderResponse, OrderSide, OrderType } from '../../types';
 export const receiveOrderData = async <T>(symbol: string, handler: (order: OrderResponse) => Promise<any> = async () => {}): Promise<T> => {
   const order = new Order(testnetConfig);
   const orderbook = new Orderbook(testnetConfig);
-  const obRes = await orderbook.fetch({
+  const obRes = (await orderbook.fetch({
     symbol,
     depth: 10,
-  });
-  const price = +obRes.orderbook.bids[4][0];
-  const odRes = await order.create({
+  })) as RestOrderbookL2Response;
+  const price = +obRes.data.bids[4][0];
+  const odRes = (await order.create({
     symbol,
     side: OrderSide.Buy,
     price,
     orderQty: 25,
     ordType: OrderType.Limit,
-  });
-  const result = await handler(odRes.order);
+  })) as RestOrderResponse;
+  const result = await handler(odRes.data);
   await order.cancel({
-    orderID: odRes.order.orderID,
+    orderID: odRes.data.orderID,
   });
 
   return result;

@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 
 import { Config, OrderResponse, OrderbookL2Response, PositionResponse, QuoteResponse, SettlementResponse, TradeResponse } from '../types';
 import { Order, Orderbook, Position, Quote, Settlement, Trade, WebsocketInsider } from './internal';
+import { BestOrderbook, BestOrderbookPrice, BestTop5OrderbookPrice } from './types';
 
 export class WebsocketBase {
   private readonly ws: WebsocketInsider;
@@ -39,6 +40,26 @@ export class WebsocketBase {
   // realtime orderbook
   orderbook$(pair?: string | string[]): Observable<OrderbookL2Response> {
     return this.orderbook.orderbookL2T25$(pair);
+  }
+
+  bestOrderbook$(pair?: string | string[]): Observable<BestOrderbook> {
+    return this.orderbook.bestOrderbook$(pair);
+  }
+
+  bestOrderbookPrice$(pair?: string | string[]): Observable<BestOrderbookPrice> {
+    return this.orderbook.bestOrderbookPrice$(pair);
+  }
+
+  bestTop5OrderbookPrice$(pair?: string | string[]): Observable<BestTop5OrderbookPrice> {
+    return this.orderbook.bestTop5OrderbookPrice$(pair);
+  }
+
+  bestTop5BidsOrderbookPrice$(pair?: string | string[]): Observable<string[]> {
+    return this.orderbook.bestTop5BidsOrderbookPrice$(pair);
+  }
+
+  bestTop5AsksOrderbookPrice$(pair?: string | string[]): Observable<string[]> {
+    return this.orderbook.bestTop5AsksOrderbookPrice$(pair);
   }
 
   // stop realtime orderbook
@@ -82,7 +103,7 @@ export class WebsocketBase {
     this.settlement.stopSettlement(pair);
   }
 
-  order$(pair?: string | string[]): Observable<OrderResponse> {
+  order$(pair?: string | string[]): Observable<OrderResponse[]> {
     return this.order.order$(pair);
   }
 
@@ -92,6 +113,10 @@ export class WebsocketBase {
 
   position$(pair?: string | string[]): Observable<PositionResponse[]> {
     return this.position.position$(pair);
+  }
+
+  openPosition$(pair?: string | string[]): Observable<PositionResponse[]> {
+    return this.position.openPosition$(pair);
   }
 
   stopPosition(pair?: string | string[]): void {

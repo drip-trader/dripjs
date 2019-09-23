@@ -1,6 +1,6 @@
 import { getChannelName } from '../../../../common';
 import { OrderbookResponse } from '../../../../types';
-import { PublicEndPoints } from '../../../types';
+import { WsPublicEndPoints } from '../../../types';
 import { WebsocketData } from '../../websocket-insider';
 import { transform, update } from './helpers';
 
@@ -120,7 +120,7 @@ describe('BitmexWS orderbook helpers', () => {
 
   it('getChannel', () => {
     const pair = 'XBTUSD';
-    const endPoint = PublicEndPoints.OrderBook10;
+    const endPoint = WsPublicEndPoints.OrderBook10;
     const channel = getChannelName({ pair, endPoint });
     expect(channel).toEqual(`${endPoint}:${pair}`);
   });

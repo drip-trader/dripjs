@@ -1,31 +1,23 @@
-import { isPositive } from '@dripjs/common';
-import {
-  assertExisitingColumns,
-  isUuid,
-  overrideTimestampColumns,
-  overrideValue,
-  testnetConfig,
-  testnetReadonlyConfig,
-} from '@dripjs/testing';
-
+import { testnetConfig } from '../../../../common';
+import { MAX_REMAINING_NUM } from '../../../../constants';
 import { OrderSide, OrderStatus, OrderType } from '../../../../types';
-import { RestFetchOrderRequest, RestOrderRequest } from '../../../types';
+import { RestFetchOrderRequest, RestOrderRequest, RestOrderResponse, RestOrderbookL2Response, RestOrdersResponse } from '../../../types';
 import { Orderbook } from '../../public/orderbook';
 import { Order } from './order';
 
-describe('Bitmex RestInsider Order', () => {
+describe('Bitmex Rest Position', () => {
   const pair = 'XBTUSD';
   const order = new Order(testnetConfig);
-  const orderbook = new Orderbook(testnetReadonlyConfig);
+  const orderbook = new Orderbook(testnetConfig);
   let orderId: string;
   let price: number;
 
   it('create order', async () => {
-    const orderbookRes = await orderbook.fetch({
+    const orderbookRes = (await orderbook.fetch({
       symbol: pair,
       depth: 5,
-    });
-    price = +orderbookRes.orderbook.bids[4][0];
+    })) as RestOrderbookL2Response;
+    price = +orderbookRes.data.bids[4][0];
     const request: Partial<RestOrderRequest> = {
       symbol: pair,
       side: OrderSide.Buy,
@@ -34,50 +26,10 @@ describe('Bitmex RestInsider Order', () => {
       ordType: OrderType.Limit,
     };
 
-    const res = await order.create(request);
-    orderId = res.order.orderID;
-    expect(() =>
-      assertExisitingColumns(overrideTimestampColumns(res), {
-        ratelimit: {
-          remaining: isPositive,
-          reset: overrideValue,
-          limit: isPositive,
-        },
-        order: {
-          orderID: isUuid,
-          account: isPositive,
-          symbol: 'XBTUSD',
-          side: 'Buy',
-          simpleOrderQty: null,
-          orderQty: 25,
-          price: isPositive,
-          displayQty: null,
-          stopPx: null,
-          pegOffsetValue: null,
-          pegPriceType: '',
-          currency: 'USD',
-          settlCurrency: 'XBt',
-          ordType: 'Limit',
-          timeInForce: 'GoodTillCancel',
-          execInst: '',
-          contingencyType: '',
-          exDestination: 'XBME',
-          ordStatus: 'New',
-          triggered: '',
-          workingIndicator: true,
-          ordRejReason: '',
-          simpleLeavesQty: null,
-          leavesQty: 25,
-          simpleCumQty: null,
-          cumQty: 0,
-          avgPx: null,
-          multiLegReportingType: 'SingleSecurity',
-          text: 'Submitted via API.',
-          transactTime: overrideValue,
-          timestamp: overrideValue,
-        },
-      }),
-    ).not.toThrow();
+    const res = (await order.create(request)) as RestOrderResponse;
+    orderId = res.data.orderID;
+    expect(res.data).toBeDefined();
+    expect(res.ratelimit.limit).toEqual(MAX_REMAINING_NUM);
   });
 
   it('fetch order', async () => {
@@ -88,53 +40,9 @@ describe('Bitmex RestInsider Order', () => {
       },
     };
 
-    const res = await order.fetch(request);
-    expect(() =>
-      assertExisitingColumns(overrideTimestampColumns(res), {
-        ratelimit: {
-          remaining: isPositive,
-          reset: overrideValue,
-          limit: isPositive,
-        },
-        orders: [
-          {
-            orderID: isUuid,
-            clOrdID: '',
-            clOrdLinkID: '',
-            account: isPositive,
-            symbol: 'XBTUSD',
-            side: 'Buy',
-            simpleOrderQty: null,
-            orderQty: 25,
-            price,
-            displayQty: null,
-            stopPx: null,
-            pegOffsetValue: null,
-            pegPriceType: '',
-            currency: 'USD',
-            settlCurrency: 'XBt',
-            ordType: 'Limit',
-            timeInForce: 'GoodTillCancel',
-            execInst: '',
-            contingencyType: '',
-            exDestination: 'XBME',
-            ordStatus: 'New',
-            triggered: '',
-            workingIndicator: true,
-            ordRejReason: '',
-            simpleLeavesQty: null,
-            leavesQty: 25,
-            simpleCumQty: null,
-            cumQty: 0,
-            avgPx: null,
-            multiLegReportingType: 'SingleSecurity',
-            text: 'Submitted via API.',
-            transactTime: overrideValue,
-            timestamp: overrideValue,
-          },
-        ],
-      }),
-    ).not.toThrow();
+    const res = (await order.fetch(request)) as RestOrdersResponse;
+    expect(res.data[0].price).toEqual(price);
+    expect(res.ratelimit.limit).toEqual(MAX_REMAINING_NUM);
   });
 
   it('update order', async () => {
@@ -143,15 +51,17 @@ describe('Bitmex RestInsider Order', () => {
       price: price - 1,
     };
 
-    const res = await order.update(request);
-    expect(res.order.price).toEqual(price - 1);
+    const res = (await order.update(request)) as RestOrderResponse;
+    expect(res.data.price).toEqual(price - 1);
+    expect(res.ratelimit.limit).toEqual(MAX_REMAINING_NUM);
   });
 
   it('cancel order', async () => {
     const request: Partial<RestOrderRequest> = {
       orderID: orderId,
     };
-    const res = await order.cancel(request);
-    expect(res.order.ordStatus).toEqual(OrderStatus.Canceled);
+    const res = (await order.cancel(request)) as RestOrdersResponse;
+    expect(res.data[0].ordStatus).toEqual(OrderStatus.Canceled);
+    expect(res.ratelimit.limit).toEqual(MAX_REMAINING_NUM);
   });
 });

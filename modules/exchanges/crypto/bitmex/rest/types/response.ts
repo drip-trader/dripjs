@@ -1,37 +1,38 @@
 import {
   BarResponse,
-  ErrorResponse,
   InstrumentResponse,
   OrderResponse,
   OrderbookL2Response,
   PositionResponse,
   RateLimit,
+  ResponseType,
 } from '../../types';
 
-export interface RestRateLimitResponse extends ErrorResponse {
+export interface RestRateLimitResponse {
+  type: ResponseType.Rest;
   ratelimit: RateLimit;
 }
 
 export interface RestInstrumentResponse extends RestRateLimitResponse {
-  instruments: InstrumentResponse[];
+  data: InstrumentResponse[];
 }
 
 export interface RestBarResponse extends RestRateLimitResponse {
-  bars: BarResponse[];
+  data: BarResponse[];
 }
 
 export interface RestOrderResponse extends RestRateLimitResponse {
-  order: OrderResponse;
+  data: OrderResponse;
 }
 
 export interface RestOrdersResponse extends RestRateLimitResponse {
-  orders: OrderResponse[];
+  data: OrderResponse[];
 }
 
 export interface RestPositionsResponse extends RestRateLimitResponse {
-  orders: PositionResponse[];
+  data: PositionResponse[];
 }
 
 export interface RestOrderbookL2Response extends RestRateLimitResponse {
-  orderbook: OrderbookL2Response;
+  data: OrderbookL2Response;
 }

@@ -5,7 +5,7 @@ import { WebsocketData } from '../websocket-insider';
 
 export function transformSourceData<T, U>(params: {
   source$: Observable<WebsocketData<T>>;
-  update?: (originSource: WebsocketData<T>, updateSource: WebsocketData<T>) => WebsocketData<T>;
+  update: (originSource: WebsocketData<T>, updateSource: WebsocketData<T>) => WebsocketData<T>;
   transform: (source: WebsocketData<T>) => U;
 }): Observable<U> {
   const { source$, update, transform } = params;
@@ -20,10 +20,8 @@ export function transformSourceData<T, U>(params: {
     filter((orderbookData) => orderbookData.action === 'update' || orderbookData.action === 'insert' || orderbookData.action === 'delete'),
   );
 
-  return update
-    ? concat(snapshot$, update$).pipe(
-        scan(update),
-        map(transform),
-      )
-    : snapshot$.pipe(map(transform));
+  return concat(snapshot$, update$).pipe(
+    scan(update),
+    map(transform),
+  );
 }

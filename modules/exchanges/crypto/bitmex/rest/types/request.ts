@@ -11,12 +11,23 @@ export interface RestOrderRequest {
   clOrdLinkID?: string;
   pegOffsetValue?: number;
   pegPriceType?: string;
-  ordType: OrderType;
+  ordType: OrderType | OrderType[];
   timeInForce?: TimeInForce;
   orderID?: string;
   execInst: ExecInst | string;
   ordStatus: OrderStatus;
   text: string;
+}
+
+export interface RestMultipleOrderRquest {
+  orders: Partial<RestOrderRequest>[];
+}
+
+export interface RestCancelMultipleOrdewrRequest {
+  symbol: string;
+  filter: Partial<RestOrderRequest>;
+  /** cancellation annotation. e.g. 'Spread Exceeded */
+  text: number;
 }
 
 export interface RestFetchOrderRequest {

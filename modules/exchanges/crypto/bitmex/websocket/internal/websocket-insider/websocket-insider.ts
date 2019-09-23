@@ -2,7 +2,7 @@ import { Observable, ReplaySubject } from 'rxjs';
 import { v4 as uuid } from 'uuid';
 
 import { Config } from '../../../types';
-import { PrivateEndPoints, PublicEndPoints } from '../../types';
+import { WsPrivateEndPoints, WsPublicEndPoints } from '../../types';
 import { WebsocketData, WebsocketRequest, WebsocketResponse } from './types';
 import { WebsocketInsiderBase } from './websocket-insider-base';
 
@@ -50,6 +50,10 @@ export class WebsocketInsider extends WebsocketInsiderBase<WebsocketRequest, Web
     return this.fetchOrNewStream(channel);
   }
 
+  first<T>(val: T): T {
+    return val;
+  }
+
   /**
    * Unsubscribe channel
    *
@@ -85,7 +89,7 @@ export class WebsocketInsider extends WebsocketInsiderBase<WebsocketRequest, Web
     // complete all unique streams
     for (const steamData of uniqueStreamData) {
       steamData.stream.complete();
-      this.send({ op: 'unsubscribe', args: name });
+      this.send({ op: 'unsubscribe', args: steamData.name });
     }
     // clear stream table
     this.streamTable = [];
@@ -154,7 +158,7 @@ export class WebsocketInsider extends WebsocketInsiderBase<WebsocketRequest, Web
       }
     } else {
       // 查找是否退订频道的全部商品
-      const ep = [...Object.values(PrivateEndPoints), ...Object.values(PublicEndPoints)].find((endpoint) => endpoint === streamName);
+      const ep = [...Object.values(WsPrivateEndPoints), ...Object.values(WsPublicEndPoints)].find((endpoint) => endpoint === streamName);
       if (ep) {
         for (const [index, data] of this.streamTable.entries()) {
           if (data.name.includes(ep)) {

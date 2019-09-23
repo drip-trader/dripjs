@@ -1,34 +1,32 @@
-import { isPositive } from '@dripjs/common';
-import { assertExisitingColumns, overrideTimestampColumns, overrideValue, testnetConfig } from '@dripjs/testing';
-
-import { OrderSide } from '../../../../types';
+import { isPositive } from '../../../../../../common/big-number-util';
+import { testnetConfig } from '../../../../common';
+import { assertExisitingColumns, overrideTimestampColumns, overrideValue } from '../../../../common/test-helpers';
+import { MAX_REMAINING_NUM } from '../../../../constants';
+import { OrderSide, ResponseType } from '../../../../types';
+import { RestPositionsResponse } from '../../../types';
 import { Position } from './position';
 
-describe('Bitmex RestInsider Position', () => {
+describe('Bitmex Rest Position', () => {
   const pair = 'XBTUSD';
   const amount = 25;
   let position: Position;
 
   beforeAll(async () => {
     position = new Position(testnetConfig);
-    await position.removeAll();
-  });
-
-  afterAll(async () => {
-    await position.removeAll();
   });
 
   it('create position', async () => {
     const side = OrderSide.Buy;
-    const res = await position.create(pair, side, amount);
+    const res = (await position.create(pair, side, amount)) as RestPositionsResponse;
     expect(() =>
       assertExisitingColumns(overrideTimestampColumns(res), {
+        type: ResponseType.Rest,
         ratelimit: {
           remaining: isPositive,
           reset: overrideValue,
-          limit: isPositive,
+          limit: MAX_REMAINING_NUM,
         },
-        orders: [
+        data: [
           {
             account: isPositive,
             symbol: pair,
@@ -48,25 +46,25 @@ describe('Bitmex RestInsider Position', () => {
             timestamp: overrideValue,
           },
         ],
-        error: undefined,
       }),
     ).not.toThrow();
   });
 
   it('fetch position', async () => {
-    const res = await position.fetch({
+    const res = (await position.fetch({
       filter: {
         symbol: pair,
       },
-    });
+    })) as RestPositionsResponse;
     expect(() =>
       assertExisitingColumns(overrideTimestampColumns(res), {
+        type: ResponseType.Rest,
         ratelimit: {
           remaining: isPositive,
           reset: overrideValue,
-          limit: isPositive,
+          limit: MAX_REMAINING_NUM,
         },
-        orders: [
+        data: [
           {
             account: isPositive,
             symbol: pair,
@@ -86,26 +84,28 @@ describe('Bitmex RestInsider Position', () => {
             timestamp: overrideValue,
           },
         ],
-        error: undefined,
       }),
     ).not.toThrow();
   });
 
   it('remove position', async () => {
-    const res = await position.remove(pair);
+    const res = (await position.remove(pair)) as RestPositionsResponse;
     expect(() =>
       assertExisitingColumns(overrideTimestampColumns(res), {
+        type: ResponseType.Rest,
         ratelimit: {
           remaining: isPositive,
           reset: overrideValue,
-          limit: isPositive,
+          limit: MAX_REMAINING_NUM,
         },
-        orders: [
+        data: [
           {
             account: isPositive,
             symbol: pair,
             leverage: isPositive,
             crossMargin: false,
+            isOpen: false,
+            markPrice: null,
             lastPrice: null,
             avgCostPrice: null,
             avgEntryPrice: null,
@@ -117,23 +117,6 @@ describe('Bitmex RestInsider Position', () => {
             timestamp: overrideValue,
           },
         ],
-        error: undefined,
-      }),
-    ).not.toThrow();
-  });
-
-  it('remove all position', async () => {
-    await position.removeAll();
-    const res = await position.fetch({ filter: { isOpen: true } });
-    expect(() =>
-      assertExisitingColumns(overrideTimestampColumns(res), {
-        ratelimit: {
-          remaining: isPositive,
-          reset: overrideValue,
-          limit: isPositive,
-        },
-        orders: [],
-        error: undefined,
       }),
     ).not.toThrow();
   });

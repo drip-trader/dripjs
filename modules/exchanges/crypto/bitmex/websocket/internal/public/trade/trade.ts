@@ -3,7 +3,7 @@ import { map } from 'rxjs/operators';
 
 import { getChannelName } from '../../../../common';
 import { TradeResponse } from '../../../../types';
-import { PublicEndPoints } from '../../../types';
+import { WsPublicEndPoints } from '../../../types';
 import { WebsocketInsider } from '../../websocket-insider';
 import { transform } from './helpers';
 import { TradeSource } from './types';
@@ -17,18 +17,18 @@ export class Trade {
    * @param pair
    */
   trade$(pair?: string | string[]): Observable<TradeResponse> {
-    const channel = getChannelName({ pair, endPoint: PublicEndPoints.Trade });
+    const channel = getChannelName({ pair, endPoint: WsPublicEndPoints.Trade });
 
     return this.ws.subscribe<TradeSource>(channel).pipe(map((wsData) => transform(wsData.data[0])));
   }
 
   stopTrade(pair?: string | string[]): void {
-    const channel = getChannelName({ pair, endPoint: PublicEndPoints.Trade });
+    const channel = getChannelName({ pair, endPoint: WsPublicEndPoints.Trade });
     this.ws.unsubscribe(channel);
   }
 
   tradeBin1d$(pair?: string | string[]): Observable<TradeResponse> {
-    const channel = getChannelName({ pair, endPoint: PublicEndPoints.TradeBin1d });
+    const channel = getChannelName({ pair, endPoint: WsPublicEndPoints.TradeBin1d });
 
     return this.ws.subscribe<TradeSource>(channel).pipe(
       map(
@@ -39,7 +39,7 @@ export class Trade {
   }
 
   stopTradeBin1d(pair?: string | string[]): void {
-    const channel = getChannelName({ pair, endPoint: PublicEndPoints.TradeBin1d });
+    const channel = getChannelName({ pair, endPoint: WsPublicEndPoints.TradeBin1d });
     this.ws.unsubscribe(channel);
   }
 }

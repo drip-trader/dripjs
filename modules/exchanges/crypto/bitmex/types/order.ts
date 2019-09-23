@@ -69,3 +69,9 @@ export enum TimeInForce {
   ImmediateOrCancel = 'ImmediateOrCancel',
   FillOrKill = 'FillOrKill',
 }
+
+export enum Triggered {
+  StopOrderTriggered = 'StopOrderTriggered',
+}
+
+export type OrderTriggered = Triggered | '';

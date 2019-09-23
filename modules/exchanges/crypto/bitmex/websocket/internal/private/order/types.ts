@@ -68,4 +68,5 @@ export interface OrderSource {
   text: string;
   transactTime: Date;
   timestamp: string;
+  error: string;
 }

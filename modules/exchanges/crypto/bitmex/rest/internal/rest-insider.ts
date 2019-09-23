@@ -2,44 +2,51 @@ import { HttpHeaders, HttpMethod } from '@dripjs/types';
 import Axios, { AxiosRequestConfig } from 'axios';
 import { stringify } from 'qs';
 
-import { getRateLimit, getRestApiUrl, getRestAuthHeaders } from '../../common';
-import { Config, ErrorResponse, RestResponse } from '../../types';
-import { PrivateEndPoints, PublicEndPoints, apiBasePath } from '../types';
-
-// tslint:disable-next-line:no-var-requires
-const urljoin = require('url-join');
+import { getRateLimit, getRestAuthHeaders } from '../../common';
+import { MAX_REMAINING_NUM } from '../../constants';
+import { Config, ErrorResponse, ResponseType, RestResponse } from '../../types';
+import { RestPrivateEndPoints, RestPublicEndPoints, restApiBasePath, restEndpoints } from '../types';
+import { makeErrorResponse, validateRemaining } from './function';
 
 export class RestInsider {
   /**可用请求数 */
-  private remaining = 300;
+  private remaining = MAX_REMAINING_NUM;
 
-  constructor(private readonly config: Config, private readonly endpoint: PrivateEndPoints | PublicEndPoints) {
+  constructor(private readonly config: Config, private readonly endpoint: RestPrivateEndPoints | RestPublicEndPoints) {
     if (!this.config.apiKey || this.config.apiKey === 'undefined') {
       this.config.apiKey = '';
     }
     if (!this.config.apiSecret || this.config.apiSecret === 'undefined') {
       this.config.apiSecret = '';
     }
-    // 每30分钟重置remaining
-    setTimeout(() => (this.remaining = 300), 30 * 60 * 1000);
+    setInterval(() => {
+      this.remaining = 60;
+    }, 60 * 1000);
   }
 
-  protected async request(method: HttpMethod, data: any): Promise<RestResponse> {
-    const validate = this.validate();
-    if (validate.error) {
+  protected async request<T>(method: HttpMethod, data: any): Promise<RestResponse<T> | ErrorResponse> {
+    return this.requestWithEndpoint(this.endpoint, method, data);
+  }
+
+  protected async requestWithEndpoint<T>(
+    endpoint: RestPrivateEndPoints | RestPublicEndPoints,
+    method: HttpMethod,
+    data: any,
+  ): Promise<RestResponse<T> | ErrorResponse> {
+    const error = validateRemaining(this.remaining);
+    if (error) {
       return {
         ratelimit: {
           remaining: this.remaining,
           reset: 0,
-          limit: 300,
+          limit: 60,
         },
-        body: {},
-        error: validate.error,
+        error,
+        type: ResponseType.Error,
       };
     }
 
-    const baseUrl = getRestApiUrl(this.config);
-    const authHeaders = getRestAuthHeaders(method, baseUrl, this.endpoint, this.config.apiKey, this.config.apiSecret, data);
+    const authHeaders = getRestAuthHeaders(method, endpoint, this.config.apiKey, this.config.apiSecret, data);
     const request: AxiosRequestConfig = {
       method,
       headers: {
@@ -52,11 +59,8 @@ export class RestInsider {
     } else {
       query = Object.keys(data).length !== 0 ? `?${stringify(data)}` : '';
     }
-
-    let url = urljoin(baseUrl, apiBasePath, this.endpoint, query);
-    if (this.config.corsProxy) {
-      url = urljoin(this.config.corsProxy, url);
-    }
+    const baseUrl = this.config.testnet ? restEndpoints.testnet : restEndpoints.production;
+    const url = `${baseUrl}${restApiBasePath}${endpoint}${query}`;
 
     try {
       const response = await Axios(url, request);
@@ -65,27 +69,12 @@ export class RestInsider {
       this.remaining = ratelimit.remaining;
 
       return {
+        type: ResponseType.Rest,
         ratelimit,
-        body: response.data,
+        data: response.data,
       };
     } catch (error) {
-      return {
-        ratelimit: getRateLimit(<HttpHeaders>error.response.headers),
-        body: {},
-        error: error.response.data.error,
-      };
+      return makeErrorResponse(error);
     }
-  }
-
-  private validate(): ErrorResponse {
-    const errorRes: ErrorResponse = {};
-    if (this.remaining < 20) {
-      errorRes.error = {
-        name: 'validate failed (remaining)',
-        message: 'The remaining is less than 20',
-      };
-    }
-
-    return errorRes;
   }
 }

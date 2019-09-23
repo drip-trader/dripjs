@@ -1,8 +1,8 @@
 import { sleep } from '@dripjs/common';
 import { HttpMethod } from '@dripjs/types';
 
-import { Config, ExecInst, OrderSide, OrderType, PositionResponse } from '../../../../types';
-import { PrivateEndPoints, RestFetchPositionRequest, RestOrderRequest, RestPositionsResponse } from '../../../types';
+import { Config, ErrorResponse, ExecInst, OrderSide, OrderType, PositionResponse } from '../../../../types';
+import { RestFetchPositionRequest, RestOrderRequest, RestPositionsResponse, RestPrivateEndPoints } from '../../../types';
 import { RestInsider } from '../../rest-insider';
 import { Order } from '../order';
 
@@ -10,21 +10,15 @@ export class Position extends RestInsider {
   private readonly order: Order;
 
   constructor(config: Config) {
-    super(config, PrivateEndPoints.Position);
+    super(config, RestPrivateEndPoints.Position);
     this.order = new Order(config);
   }
 
-  async fetch(request: Partial<RestFetchPositionRequest>): Promise<RestPositionsResponse> {
-    const res = await this.request(HttpMethod.GET, request);
-
-    return {
-      ratelimit: res.ratelimit,
-      orders: <PositionResponse[]>res.body,
-      error: res.error,
-    };
+  async fetch(request: Partial<RestFetchPositionRequest>): Promise<RestPositionsResponse | ErrorResponse> {
+    return this.request<PositionResponse[]>(HttpMethod.GET, request);
   }
 
-  async create(pair: string, side: OrderSide, amount: number): Promise<RestPositionsResponse> {
+  async create(pair: string, side: OrderSide, amount: number): Promise<RestPositionsResponse | ErrorResponse> {
     const orderParams: Partial<RestOrderRequest> = {
       symbol: pair,
       side,
@@ -41,7 +35,7 @@ export class Position extends RestInsider {
     });
   }
 
-  async remove(pair: string): Promise<RestPositionsResponse> {
+  async remove(pair: string): Promise<RestPositionsResponse | ErrorResponse> {
     const orderParams: Partial<RestOrderRequest> = {
       symbol: pair,
       ordType: OrderType.Market,
@@ -55,12 +49,5 @@ export class Position extends RestInsider {
         symbol: pair,
       },
     });
-  }
-
-  async removeAll(): Promise<void> {
-    const res = await this.fetch({ filter: { isOpen: true } });
-    for (const position of res.orders) {
-      await this.remove(position.symbol);
-    }
   }
 }

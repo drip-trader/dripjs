@@ -1,7 +1,7 @@
-import { isPositive, sleep } from '@dripjs/common';
-import { assertExisitingColumns, overrideTimestampColumns, overrideValue, testnetConfig } from '@dripjs/testing';
-
-import { receivePositionData } from '../../../../common/test-helpers';
+import { sleep } from '../../../../../../common';
+import { isPositive } from '../../../../../../common/big-number-util';
+import { testnetConfig } from '../../../../common';
+import { assertExisitingColumns, overrideTimestampColumns, overrideValue, receivePositionData } from '../../../../common/test-helpers';
 import { OrderSide, PositionResponse } from '../../../../types';
 import { WebsocketInsider } from '../../websocket-insider';
 import { Position } from './position';
@@ -42,6 +42,16 @@ describe('BitmexWS private position', () => {
   afterEach(async () => {
     position.stopPosition();
     await sleep(1000);
+  });
+
+  it('subscribe open position', async () => {
+    position.position$(pair).subscribe((o) => {
+      console.log(`position$: ${JSON.stringify(o)}`);
+    });
+    position.openPosition$(pair).subscribe((o) => {
+      console.log(`openPosition$: ${JSON.stringify(o)}`);
+    });
+    await sleep(80000000);
   });
 
   it('subscribe position', async () => {

@@ -1,4 +1,4 @@
-export const endpoints = {
+export const wsEndpoints = {
   production: 'wss://www.bitmex.com/realtime',
   testnet: 'wss://testnet.bitmex.com/realtime',
 };
@@ -6,7 +6,7 @@ export const endpoints = {
 /**
  * 无需身份验证的连接端点集
  */
-export enum PublicEndPoints {
+export enum WsPublicEndPoints {
   /** 前 25 层的 Level 2 委托列表 */
   OrderBookL2T25 = 'orderBookL2_25',
   /** 完整的 level 2 委托列表 */
@@ -24,7 +24,7 @@ export enum PublicEndPoints {
 }
 
 //  要求进行身份验证的连接端点集
-export enum PrivateEndPoints {
+export enum WsPrivateEndPoints {
   /** 邀请人状态，已邀请用户及分红比率 */
   /** 你委托的更新 */
   Order = 'order',

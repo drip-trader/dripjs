@@ -1,11 +1,13 @@
-import { Config, OrderSide } from '../types';
-import { Bar, Instrument, Order, Orderbook, Position } from './internal';
+import { Config, ErrorResponse, OrderSide } from '../types';
+import { Bar, Instrument, MultipleOrder, Order, Orderbook, Position } from './internal';
 import {
   RestBarRequest,
   RestBarResponse,
+  RestCancelMultipleOrdewrRequest,
   RestFetchOrderRequest,
   RestFetchPositionRequest,
   RestInstrumentResponse,
+  RestMultipleOrderRquest,
   RestOrderRequest,
   RestOrderResponse,
   RestOrderbookL2Response,
@@ -17,6 +19,7 @@ import {
 export class RestBase {
   protected readonly instrument: Instrument;
   protected readonly order: Order;
+  protected readonly multipleOrder: MultipleOrder;
   protected readonly orderbook: Orderbook;
   protected readonly bar: Bar;
   protected readonly position: Position;
@@ -30,48 +33,61 @@ export class RestBase {
     };
     this.instrument = new Instrument(cfg);
     this.order = new Order(cfg);
+    this.multipleOrder = new MultipleOrder(cfg);
     this.orderbook = new Orderbook(cfg);
     this.bar = new Bar(cfg);
     this.position = new Position(cfg);
   }
 
-  async createOrder(request: Partial<RestOrderRequest>): Promise<RestOrderResponse> {
+  async createOrder(request: Partial<RestOrderRequest>): Promise<RestOrderResponse | ErrorResponse> {
     return this.order.create(request);
   }
 
-  async fetchOrder(request: Partial<RestFetchOrderRequest>): Promise<RestOrdersResponse> {
+  async createMultipleOrder(request: RestMultipleOrderRquest): Promise<RestOrdersResponse | ErrorResponse> {
+    return this.multipleOrder.create(request);
+  }
+
+  async fetchOrder(request: Partial<RestFetchOrderRequest>): Promise<RestOrdersResponse | ErrorResponse> {
     return this.order.fetch(request);
   }
 
-  async updateOrder(request: Partial<RestOrderRequest>): Promise<RestOrderResponse> {
+  async updateOrder(request: Partial<RestOrderRequest>): Promise<RestOrderResponse | ErrorResponse> {
     return this.order.update(request);
   }
 
-  async cancelOrder(request: Partial<RestOrderRequest>): Promise<RestOrderResponse> {
+  async updateMultipleOrder(request: RestMultipleOrderRquest): Promise<RestOrdersResponse | ErrorResponse> {
+    return this.multipleOrder.update(request);
+  }
+
+  async cancelOrder(request: Partial<RestOrderRequest>): Promise<RestOrdersResponse | ErrorResponse> {
     return this.order.cancel(request);
   }
 
-  async fetchOrderbook(request: RestOrderbookRequest): Promise<RestOrderbookL2Response> {
+  async cancelMultipleOrder(request: Partial<RestCancelMultipleOrdewrRequest>): Promise<RestOrdersResponse | ErrorResponse> {
+    return this.multipleOrder.cancel(request);
+  }
+
+  async fetchOrderbook(request: RestOrderbookRequest): Promise<RestOrderbookL2Response | ErrorResponse> {
     return this.orderbook.fetch(request);
   }
 
-  async fetchInstrument(): Promise<RestInstrumentResponse> {
+  async fetchInstrument(): Promise<RestInstrumentResponse | ErrorResponse> {
     return this.instrument.fetch();
   }
 
-  async fetchBar(request: RestBarRequest): Promise<RestBarResponse> {
+  async fetchBar(request: RestBarRequest): Promise<RestBarResponse | ErrorResponse> {
     return this.bar.fetch(request);
   }
 
-  async fetchPosition(request: Partial<RestFetchPositionRequest>): Promise<RestPositionsResponse> {
+  async fetchPosition(request: Partial<RestFetchPositionRequest>): Promise<RestPositionsResponse | ErrorResponse> {
     return this.position.fetch(request);
   }
 
-  async createPosition(symbol: string, side: OrderSide, amount: number): Promise<RestPositionsResponse> {
+  async createPosition(symbol: string, side: OrderSide, amount: number): Promise<RestPositionsResponse | ErrorResponse> {
     return this.position.create(symbol, side, amount);
   }
 
-  async removePosition(symbol: string): Promise<RestPositionsResponse> {
+  async removePosition(symbol: string): Promise<RestPositionsResponse | ErrorResponse> {
     return this.position.remove(symbol);
   }
 }

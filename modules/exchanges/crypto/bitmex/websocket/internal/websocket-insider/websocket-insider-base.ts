@@ -2,7 +2,7 @@ import { WebSocketRxJs } from '@dripjs/common';
 
 import { getWSAuthQuery } from '../../../common';
 import { Config } from '../../../types';
-import { endpoints } from '../../types';
+import { wsEndpoints } from '../../types';
 
 /**
  * Abstract class for websocket api
@@ -45,7 +45,7 @@ export abstract class WebsocketInsiderBase<T, U> {
   }
 
   private makeRequestUrl(): string {
-    let endpoint = this.config.testnet ? endpoints.testnet : endpoints.production;
+    let endpoint = this.config.testnet ? wsEndpoints.testnet : wsEndpoints.production;
     if (this.config.apiKey && this.config.apiSecret) {
       endpoint += `?${getWSAuthQuery(this.config.apiKey, this.config.apiSecret)}`;
     }
