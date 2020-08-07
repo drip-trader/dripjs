@@ -36,7 +36,7 @@
     "@nestjs/platform-socket.io": "^6.2.4",
     "@nestjs/testing": "^6.2.4",
     "@nestjs/websockets": "^6.2.4",
-    "class-transformer": "^0.2.3",
+    "class-transformer": "^0.3.1",
     "class-validator": "^0.9.1",
     "config": "^3.1.0",
     "json-value-replacer": "0.1.1",
