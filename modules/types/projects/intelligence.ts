@@ -1,4 +1,4 @@
-import { OrderSide } from './order';
+import { OrderSide } from '../modules/order';
 
 export interface Ticker {
   ask: number;
@@ -45,4 +45,43 @@ export interface Transaction {
   side: OrderSide;
   price: number;
   amount: number;
+}
+
+export type RealtimeType = Ticker | Depth | Transaction;
+
+export interface IntelError {
+  name: string;
+  message: string;
+}
+
+export interface IntelRealtimeResponse {
+  channel: IntelChannel;
+  data: RealtimeType;
+}
+
+export enum IntelChannel {
+  Ticker = 'tick',
+  Depth = 'depth',
+  Transaction = 'transaction',
+}
+
+export interface GetBarsInput {
+  exchange: string;
+  symbol: string;
+  resolution: string;
+  start: number;
+  end: number;
+}
+
+export interface RealtimeInput {
+  exchange: string;
+  symbol: string;
+  channel: IntelChannel;
+}
+
+export interface IntelClientOptions {
+  ip: string;
+  port: number;
+  username: string;
+  password: string;
 }

@@ -1,4 +1,14 @@
-import { Bar, Config, ExchangeCryptoAuthConfig, SupportedExchange, Symbol } from '@dripjs/types';
+import {
+  Bar,
+  Config,
+  ExchangeCryptoAuthConfig,
+  GetBarsInput,
+  IntelChannel,
+  IntelRealtimeResponse,
+  RealtimeInput,
+  SupportedExchange,
+  Symbol,
+} from '@dripjs/types';
 import { Injectable, Logger } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -6,7 +16,6 @@ import { map } from 'rxjs/operators';
 import { Spy } from '../../core';
 import { findSpy, transform } from '../common';
 import { IntelServiceException } from '../exceptions';
-import { GetBarsInput, IntelChannel, IntelRealtimeResponse, RealtimeInput } from '../types';
 
 // tslint:disable-next-line
 const jsonValueReplacer = require('json-value-replacer');

@@ -1,29 +1,17 @@
 import { SocketIORxjs } from '@dripjs/common';
-import { Bar, BarRequest, SupportedExchange } from '@dripjs/types';
+import { Bar, BarRequest, IntelChannel, IntelClientOptions, IntelRealtimeResponse, SupportedExchange, Symbol } from '@dripjs/types';
 import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
-
-import { IntelChannel, IntelRealtimeResponse } from '../service';
-
-export interface IntelClientOptions {
-  ip: string;
-  port: number;
-  username: string;
-  password: string;
-}
 
 export class IntelClient {
   private readonly ioRxjs: SocketIORxjs;
 
   constructor(private readonly options: IntelClientOptions) {
-    this.ioRxjs = new SocketIORxjs(`http://${this.options.ip}:${this.options.port}`, {
-      transportOptions: {
-        polling: {
-          extraHeaders: {
-            username: this.options.username,
-            password: this.options.password,
-          },
-        },
+    this.ioRxjs = new SocketIORxjs(`ws://${this.options.ip}:${this.options.port}`, {
+      transports: ['websocket'],
+      query: {
+        username: this.options.username,
+        password: this.options.password,
       },
     });
   }

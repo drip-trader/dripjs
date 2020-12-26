@@ -1,21 +1,20 @@
-import { Bar, Symbol } from '@dripjs/types';
-import { UseFilters, UseGuards } from '@nestjs/common';
-import { OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WsResponse } from '@nestjs/websockets';
+import { Bar, GetBarsInput, IntelRealtimeResponse, RealtimeInput, Symbol } from '@dripjs/types';
+import { OnModuleDestroy, UseFilters, UseGuards } from '@nestjs/common';
+import { SubscribeMessage, WebSocketGateway, WsResponse } from '@nestjs/websockets';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { IntelServiceExceptionFilter } from '../exceptions';
-import { AuthGuard } from '../guards';
-import { GetBarsInput, IntelRealtimeResponse, RealtimeInput } from '../types';
+import { WsAuthGuard } from '../guards';
 import { IntelService } from './intel.service';
 
 @WebSocketGateway()
-@UseGuards(AuthGuard)
+@UseGuards(WsAuthGuard)
 @UseFilters(IntelServiceExceptionFilter)
-export class IntelGateway implements OnGatewayDisconnect {
+export class IntelGateway implements OnModuleDestroy {
   constructor(private readonly interService: IntelService) {}
 
-  handleDisconnect(_: any): void {
+  onModuleDestroy(): void {
     this.interService.close();
   }
 

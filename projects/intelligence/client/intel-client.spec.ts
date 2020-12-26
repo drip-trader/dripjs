@@ -1,9 +1,9 @@
-import { ConfigIntelServer, Depth, SupportedExchange, Ticker, Transaction } from '@dripjs/types';
+import { ConfigIntelServer, Depth, IntelChannel, SupportedExchange, Ticker, Transaction } from '@dripjs/types';
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 
 import { Resolution } from '../core';
-import { ApplicationModule, IntelChannel } from '../service';
+import { ApplicationModule } from '../service';
 import { IntelClient } from './intel-client';
 
 // tslint:disable-next-line

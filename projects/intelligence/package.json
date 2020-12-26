@@ -1,6 +1,6 @@
 {
   "name": "@dripjs/intelligence",
-  "version": "0.1.15",
+  "version": "0.1.16",
   "description": "dripjs data acquisition service",
   "license": "GPL-3.0-or-later",
   "main": "dist/index.js",
@@ -12,23 +12,34 @@
     "access": "public"
   },
   "scripts": {
-    "build:prod": "yarn build:preprocess && yarn tsc && yarn make:config",
-    "build:preprocess": "rm -rf dist config",
+    "build:rollup": "yarn build:preprocess && yarn tsc:rollup",
+    "build:prod": "yarn build:preprocess && yarn tsc",
+    "build:preprocess": "rm -rf dist",
+    "rollup": "ENV=production yarn rollup:dev",
+    "rollup:dev": "yarn build:rollup && rollup -c rollup.config.js",
     "prestart:prod": "tsc",
-    "prepublishOnly": "mv -f config preconfig && yarn build:prod",
+    "prepublishOnly": "mv -f config preconfig && yarn build:prod  && yarn make:config",
     "postpublish": "yarn build:preprocess && mv -f preconfig config",
     "service": "ts-node service/main.ts",
     "make:config": "mkdir -p config && ts-node tools/make-config.ts",
-    "tsc": "tsc -p tsconfig.json"
+    "tsc": "tsc -p tsconfig.json",
+    "tsc:rollup": "tsc -p rollup.tsconfig.json"
   },
   "devDependencies": {
-    "@types/node": "^12.0.2",
-    "@types/ws": "6.0.1"
+    "@types/node": "^12.0.3",
+    "@types/ws": "6.0.1",
+    "rollup": "^1.12.5",
+    "rollup-plugin-commonjs": "^10.0.0",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-globals": "^1.4.0",
+    "rollup-plugin-node-resolve": "^5.0.0",
+    "rollup-plugin-terser": "^5.0.0"
   },
   "dependencies": {
     "@dripjs/common": "^0.1.15",
     "@dripjs/exchanges": "^0.1.17",
-    "@dripjs/types": "^0.1.14",
+    "@dripjs/types": "^0.1.21",
     "@nestjs/common": "^6.2.4",
     "@nestjs/core": "^6.2.4",
     "@nestjs/microservices": "^6.2.4",
@@ -43,7 +54,7 @@
     "moment": "2.24.0",
     "reflect-metadata": "0.1.13",
     "rxjs": "^6.4.0",
-    "typescript": "^3.4.5",
+    "typescript": "^3.5.1",
     "ws": "^7.0.0"
   }
 }
