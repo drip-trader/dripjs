@@ -1,66 +1,71 @@
-import { sleep } from '@dripjs/common';
 import { HttpMethod } from '@dripjs/types';
+import { Observable, Subject } from 'rxjs';
+import { delay, flatMap, take } from 'rxjs/operators';
 
-import { Config, ExecInst, OrderSide, OrderType, PositionResponse } from '../../../../types';
-import { PrivateEndPoints, RestFetchPositionRequest, RestOrderRequest, RestPositionsResponse } from '../../../types';
+import { Config, ExecInst, OrderSide, OrderType, PositionResponse, RestResponse } from '../../../../types';
+import { PrivateEndPoints } from '../../../constants';
+import { RestFetchPositionRequest, RestLeverageRequest, RestOrderRequest } from '../../../types';
 import { RestInsider } from '../../rest-insider';
 import { Order } from '../order';
 
 export class Position extends RestInsider {
   private readonly order: Order;
 
-  constructor(config: Config) {
-    super(config, PrivateEndPoints.Position);
-    this.order = new Order(config);
+  constructor(config: Config, remaining$: Subject<number>) {
+    super(config, PrivateEndPoints.Position, remaining$);
+    this.order = new Order(config, remaining$);
   }
 
-  async fetch(request: Partial<RestFetchPositionRequest>): Promise<RestPositionsResponse> {
-    const res = await this.request(HttpMethod.GET, request);
-
-    return {
-      ratelimit: res.ratelimit,
-      orders: <PositionResponse[]>res.body,
-      error: res.error,
-    };
+  fetch(request: Partial<RestFetchPositionRequest>): Observable<RestResponse<PositionResponse[]>> {
+    return this.request<PositionResponse[]>(HttpMethod.GET, request);
   }
 
-  async create(pair: string, side: OrderSide, amount: number): Promise<RestPositionsResponse> {
+  create(pair: string, side: OrderSide, amount: number): Observable<RestResponse<PositionResponse[]>> {
     const orderParams: Partial<RestOrderRequest> = {
       symbol: pair,
       side,
       ordType: OrderType.Market,
       orderQty: amount,
     };
-    await this.order.create(orderParams);
-    await sleep(500);
 
-    return this.fetch({
-      filter: {
-        symbol: pair,
-      },
-    });
+    return this.order.create(orderParams).pipe(
+      take(1),
+      delay(500),
+      flatMap(() =>
+        this.fetch({
+          filter: {
+            symbol: pair,
+          },
+        }),
+      ),
+    );
   }
 
-  async remove(pair: string): Promise<RestPositionsResponse> {
+  /**
+   * 利用市场价触发后平仓
+   * @param pair
+   */
+  remove(pair: string): Observable<RestResponse<PositionResponse[]>> {
     const orderParams: Partial<RestOrderRequest> = {
       symbol: pair,
       ordType: OrderType.Market,
       execInst: ExecInst.Close,
     };
-    await this.order.create(orderParams);
-    await sleep(500);
 
-    return this.fetch({
-      filter: {
-        symbol: pair,
-      },
-    });
+    return this.order.create(orderParams).pipe(
+      take(1),
+      delay(500),
+      flatMap(() =>
+        this.fetch({
+          filter: {
+            symbol: pair,
+          },
+        }),
+      ),
+    );
   }
 
-  async removeAll(): Promise<void> {
-    const res = await this.fetch({ filter: { isOpen: true } });
-    for (const position of res.orders) {
-      await this.remove(position.symbol);
-    }
+  updateLeverage(request: RestLeverageRequest): Observable<RestResponse<PositionResponse>> {
+    return this.requestWithEndpoint<PositionResponse>(PrivateEndPoints.PositionLeverage, HttpMethod.POST, request);
   }
 }

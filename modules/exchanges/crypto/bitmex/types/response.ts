@@ -1,13 +1,9 @@
 import { RateLimit } from './exchange';
 import { OrderSide } from './order';
 
-export interface ErrorResponse {
-  error?: Error;
-}
-
-export interface RestResponse extends ErrorResponse {
-  ratelimit: RateLimit;
-  body: { [attr: string]: any };
+export interface RestResponse<T> {
+  rateLimit: RateLimit;
+  data: T;
 }
 
 export interface TradeResponse {
@@ -25,6 +21,13 @@ export interface QuoteResponse {
   bidPrice: number;
   askAmount: number;
   askPrice: number;
+}
+
+export interface MarginResponse {
+  // 钱包余额
+  walletBalance: number;
+  // 杠杆倍数
+  leverage: number;
 }
 
 export interface SettlementResponse {
@@ -161,6 +164,7 @@ export interface OrderResponse {
   text: string;
   transactTime: Date;
   timestamp: string;
+  error: string;
 }
 
 export interface PositionResponse {
@@ -173,7 +177,13 @@ export interface PositionResponse {
   initMarginReq: number;
   maintMarginReq: number;
   riskLimit: number;
+  /**
+   * 杠杆倍数
+   */
   leverage: number;
+  /**
+   * 是否全仓
+   */
   crossMargin: boolean;
   deleveragePercentile: number | null;
   rebalancedPnl: number;
@@ -230,6 +240,9 @@ export interface PositionResponse {
   varMargin: number;
   realisedGrossPnl: number;
   realisedTax: number;
+  /**
+   * 已实现盈亏
+   */
   realisedPnl: number;
   unrealisedGrossPnl: number;
   longBankrupt: number;
@@ -238,14 +251,29 @@ export interface PositionResponse {
   indicativeTaxRate: number;
   indicativeTax: number;
   unrealisedTax: number;
+  /**
+   * 未实现盈亏
+   */
   unrealisedPnl: number;
+  /**
+   * 未实现盈亏比
+   */
   unrealisedPnlPcnt: number;
   unrealisedRoePcnt: number;
+  /**
+   * 平均成本价
+   */
   avgCostPrice: number;
+  /**
+   * 平均价格
+   */
   avgEntryPrice: number;
   breakEvenPrice: number;
   marginCallPrice: number;
   liquidationPrice: number;
+  /**
+   * 强平价格
+   */
   bankruptPrice: number;
   timestamp: number;
   lastPrice: number;

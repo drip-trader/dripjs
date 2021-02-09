@@ -1,13 +1,15 @@
-import { Config, ExecInst, OrderStatus, OrderType } from '../types';
+import { Observable } from 'rxjs';
+
+import { Config, ExecInst, OrderResponse, OrderType, RestResponse } from '../types';
 import { RestBase } from './rest-base';
-import { RestOrderRequest, RestOrderResponse, RestOrdersResponse } from './types';
+import { RestOrderRequest } from './types';
 
 export class Rest extends RestBase {
   constructor(config: Config) {
     super(config);
   }
 
-  async createLimitOrder(request: Partial<RestOrderRequest>): Promise<RestOrderResponse> {
+  createLimitOrder(request: Partial<RestOrderRequest>): Observable<RestResponse<OrderResponse>> {
     return this.createOrder({
       ...request,
       ordType: OrderType.Limit,
@@ -19,28 +21,28 @@ export class Rest extends RestBase {
    * @param request
    * @Return Promise<RestOrderResponse>
    */
-  async createLimitOrderParticipateDoNotInitiate(request: Partial<RestOrderRequest>): Promise<RestOrderResponse> {
+  createLimitOrderParticipateDoNotInitiate(request: Partial<RestOrderRequest>): Observable<RestResponse<OrderResponse>> {
     return this.createLimitOrder({
       ...request,
       execInst: ExecInst.ParticipateDoNotInitiate,
     });
   }
 
-  async createStopOrder(request: Partial<RestOrderRequest>): Promise<RestOrderResponse> {
+  createStopOrder(request: Partial<RestOrderRequest>): Observable<RestResponse<OrderResponse>> {
     return this.createOrder({
       ...request,
       ordType: OrderType.Stop,
     });
   }
 
-  async createStopOrderLastPriceReduceOnly(request: Partial<RestOrderRequest>): Promise<RestOrderResponse> {
+  createStopOrderLastPriceReduceOnly(request: Partial<RestOrderRequest>): Observable<RestResponse<OrderResponse>> {
     return this.createStopOrder({
       ...request,
       execInst: `${ExecInst.LastPrice},${ExecInst.ReduceOnly}`,
     });
   }
 
-  async getOrderById(symbol: string, orderID: string): Promise<RestOrdersResponse> {
+  getOrderById(symbol: string, orderID: string | string[]): Observable<RestResponse<OrderResponse[]>> {
     return this.fetchOrder({
       symbol,
       filter: {
@@ -49,12 +51,21 @@ export class Rest extends RestBase {
     });
   }
 
-  async getStopOrder(symbol: string): Promise<RestOrdersResponse> {
+  getStopOrder(symbol: string): Observable<RestResponse<OrderResponse[]>> {
     return this.fetchOrder({
       symbol,
       filter: {
-        ordStatus: OrderStatus.New,
         ordType: OrderType.Stop,
+      },
+    }
+  });
+
+  getActiveStopLimitOrder(symbol: string): Observable<RestResponse<OrderResponse[]>> {
+    return this.fetchOrder({
+      symbol,
+      filter: {
+        ordType: OrderType.StopLimit,
+        open: true,
       },
     });
   }
