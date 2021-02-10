@@ -1,39 +1,29 @@
 import { isPositive } from '@dripjs/common';
 import { assertExisitingColumns, overrideTimestampColumns, overrideValue, testnetConfig } from '@dripjs/testing';
+import { Subject } from 'rxjs';
 
 import { OrderSide } from '../../../../types';
 import { Position } from './position';
 
-describe('Bitmex RestInsider Position', () => {
+describe('Bitmex Rest Position', () => {
   const pair = 'XBTUSD';
   const amount = 25;
   let position: Position;
+  const remaining$ = new Subject<number>();
 
   beforeAll(async () => {
-    position = new Position(testnetConfig);
-    await position.removeAll();
+    position = new Position(testnetConfig, remaining$);
   });
 
-  afterAll(async () => {
-    await position.removeAll();
-  });
-
-  it('create position', async () => {
+  it('create position', (done) => {
     const side = OrderSide.Buy;
-    const res = await position.create(pair, side, amount);
-    expect(() =>
-      assertExisitingColumns(overrideTimestampColumns(res), {
-        ratelimit: {
-          remaining: isPositive,
-          reset: overrideValue,
-          limit: isPositive,
-        },
-        orders: [
+    position.create(pair, side, amount).subscribe((res) => {
+      expect(() =>
+        assertExisitingColumns(overrideTimestampColumns(res.data), [
           {
             account: isPositive,
             symbol: pair,
             leverage: isPositive,
-            crossMargin: false,
             currentQty: amount,
             isOpen: true,
             markPrice: isPositive,
@@ -47,65 +37,67 @@ describe('Bitmex RestInsider Position', () => {
             openingTimestamp: overrideValue,
             timestamp: overrideValue,
           },
-        ],
-        error: undefined,
-      }),
-    ).not.toThrow();
-  });
-
-  it('fetch position', async () => {
-    const res = await position.fetch({
-      filter: {
-        symbol: pair,
-      },
+        ]),
+      ).not.toThrow();
+      done();
     });
-    expect(() =>
-      assertExisitingColumns(overrideTimestampColumns(res), {
-        ratelimit: {
-          remaining: isPositive,
-          reset: overrideValue,
-          limit: isPositive,
-        },
-        orders: [
-          {
-            account: isPositive,
-            symbol: pair,
-            leverage: isPositive,
-            crossMargin: false,
-            currentQty: amount,
-            isOpen: true,
-            markPrice: isPositive,
-            lastPrice: isPositive,
-            avgCostPrice: isPositive,
-            avgEntryPrice: isPositive,
-            marginCallPrice: isPositive,
-            liquidationPrice: isPositive,
-            bankruptPrice: isPositive,
-            currentTimestamp: overrideValue,
-            openingTimestamp: overrideValue,
-            timestamp: overrideValue,
-          },
-        ],
-        error: undefined,
-      }),
-    ).not.toThrow();
   });
 
-  it('remove position', async () => {
-    const res = await position.remove(pair);
-    expect(() =>
-      assertExisitingColumns(overrideTimestampColumns(res), {
-        ratelimit: {
-          remaining: isPositive,
-          reset: overrideValue,
-          limit: isPositive,
+  it('fetch position', (done) => {
+    position
+      .fetch({
+        filter: {
+          symbol: pair,
         },
-        orders: [
+      })
+      .subscribe((res) => {
+        expect(() =>
+          assertExisitingColumns(overrideTimestampColumns(res.data), [
+            {
+              account: isPositive,
+              symbol: pair,
+              leverage: isPositive,
+              currentQty: amount,
+              isOpen: true,
+              markPrice: isPositive,
+              lastPrice: isPositive,
+              avgCostPrice: isPositive,
+              avgEntryPrice: isPositive,
+              marginCallPrice: isPositive,
+              liquidationPrice: isPositive,
+              bankruptPrice: isPositive,
+              currentTimestamp: overrideValue,
+              openingTimestamp: overrideValue,
+              timestamp: overrideValue,
+            },
+          ]),
+        ).not.toThrow();
+        done();
+      });
+  });
+
+  it('update position leverage', (done) => {
+    position
+      .updateLeverage({
+        symbol: pair,
+        leverage: 4.15,
+      })
+      .subscribe((res) => {
+        console.log(res);
+        done();
+      });
+  });
+
+  it('remove position', (done) => {
+    position.remove(pair).subscribe((res) => {
+      expect(() =>
+        assertExisitingColumns(overrideTimestampColumns(res.data), [
           {
             account: isPositive,
             symbol: pair,
             leverage: isPositive,
-            crossMargin: false,
+            isOpen: false,
+            markPrice: null,
             lastPrice: null,
             avgCostPrice: null,
             avgEntryPrice: null,
@@ -116,25 +108,9 @@ describe('Bitmex RestInsider Position', () => {
             openingTimestamp: overrideValue,
             timestamp: overrideValue,
           },
-        ],
-        error: undefined,
-      }),
-    ).not.toThrow();
-  });
-
-  it('remove all position', async () => {
-    await position.removeAll();
-    const res = await position.fetch({ filter: { isOpen: true } });
-    expect(() =>
-      assertExisitingColumns(overrideTimestampColumns(res), {
-        ratelimit: {
-          remaining: isPositive,
-          reset: overrideValue,
-          limit: isPositive,
-        },
-        orders: [],
-        error: undefined,
-      }),
-    ).not.toThrow();
+        ]),
+      ).not.toThrow();
+      done();
+    });
   });
 });

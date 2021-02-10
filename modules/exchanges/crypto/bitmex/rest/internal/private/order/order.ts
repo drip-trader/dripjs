@@ -1,51 +1,29 @@
 import { HttpMethod } from '@dripjs/types';
+import { Observable, Subject } from 'rxjs';
 
-import { Config, OrderResponse } from '../../../../types';
-import { PrivateEndPoints, RestFetchOrderRequest, RestOrderRequest, RestOrderResponse, RestOrdersResponse } from '../../../types';
+import { Config, OrderResponse, RestResponse } from '../../../../types';
+import { PrivateEndPoints } from '../../../constants';
+import { RestFetchOrderRequest, RestOrderRequest } from '../../../types';
 import { RestInsider } from '../../rest-insider';
 
 export class Order extends RestInsider {
-  constructor(config: Config) {
-    super(config, PrivateEndPoints.Order);
+  constructor(config: Config, remaining$: Subject<number>) {
+    super(config, PrivateEndPoints.Order, remaining$);
   }
 
-  async create(request: Partial<RestOrderRequest>): Promise<RestOrderResponse> {
-    const res = await this.request(HttpMethod.POST, request);
-
-    return {
-      ratelimit: res.ratelimit,
-      order: <OrderResponse>res.body,
-      error: res.error,
-    };
+  create(request: Partial<RestOrderRequest>): Observable<RestResponse<OrderResponse>> {
+    return this.request<OrderResponse>(HttpMethod.POST, request);
   }
 
-  async fetch(request: Partial<RestFetchOrderRequest>): Promise<RestOrdersResponse> {
-    const res = await this.request(HttpMethod.GET, request);
-
-    return {
-      ratelimit: res.ratelimit,
-      orders: <OrderResponse[]>res.body,
-      error: res.error,
-    };
+  fetch(request: Partial<RestFetchOrderRequest>): Observable<RestResponse<OrderResponse[]>> {
+    return this.request<OrderResponse[]>(HttpMethod.GET, request);
   }
 
-  async update(request: Partial<RestOrderRequest>): Promise<RestOrderResponse> {
-    const res = await this.request(HttpMethod.PUT, request);
-
-    return {
-      ratelimit: res.ratelimit,
-      order: <OrderResponse>res.body,
-      error: res.error,
-    };
+  update(request: Partial<RestOrderRequest>): Observable<RestResponse<OrderResponse>> {
+    return this.request<OrderResponse>(HttpMethod.PUT, request);
   }
 
-  async cancel(request: Partial<RestOrderRequest>): Promise<RestOrderResponse> {
-    const res = await this.request(HttpMethod.DELETE, request);
-
-    return {
-      ratelimit: res.ratelimit,
-      order: <OrderResponse>res.body[0],
-      error: res.error,
-    };
+  cancel(request: Partial<RestOrderRequest>): Observable<RestResponse<OrderResponse[]>> {
+    return this.request<OrderResponse[]>(HttpMethod.DELETE, request);
   }
 }

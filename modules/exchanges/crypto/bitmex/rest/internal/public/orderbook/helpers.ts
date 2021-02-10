@@ -1,25 +1,13 @@
-import { OrderbookL2Response, OrderbookResponse } from '../../../../types';
+import { transformOrderbook } from '../../../../common';
+import { OrderbookL2Response, OrderbookResponse, RestResponse } from '../../../../types';
 
 /**
  * transform raw websocket data to OrderbookL2Response
  * @param source raw websocket data
  */
-export function transform(source: OrderbookResponse[]): OrderbookL2Response {
-  const orderbook: OrderbookL2Response = {
-    bids: [],
-    asks: [],
+export function transform(source: RestResponse<OrderbookResponse[]>): RestResponse<OrderbookL2Response> {
+  return {
+    rateLimit: source.rateLimit,
+    data: transformOrderbook(source.data),
   };
-
-  for (const item of source) {
-    const orderbookItem: [string, string] = [`${item.price}`, `${item.size}`];
-    if (item.side === 'Sell') {
-      orderbook.asks.push(orderbookItem);
-    } else {
-      orderbook.bids.push(orderbookItem);
-    }
-  }
-
-  orderbook.asks.reverse();
-
-  return orderbook;
 }

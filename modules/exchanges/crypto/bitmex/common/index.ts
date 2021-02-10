@@ -1,2 +1,3 @@
 export * from './authentication';
-export * from './helpers';
+export * from './get-channel-name';
+export * from './transform-orderbook';

@@ -1,77 +1,115 @@
-import { Config, OrderSide } from '../types';
-import { Bar, Instrument, Order, Orderbook, Position } from './internal';
+import { Observable, Subject, interval } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
+import {
+  BarResponse,
+  Config,
+  InstrumentResponse,
+  OrderResponse,
+  OrderSide,
+  OrderbookL2Response,
+  PositionResponse,
+  RestResponse,
+} from '../types';
+import { Bar, Instrument, MultipleOrder, Order, Orderbook, Position } from './internal';
 import {
   RestBarRequest,
-  RestBarResponse,
+  RestCancelMultipleOrderRequest,
   RestFetchOrderRequest,
   RestFetchPositionRequest,
-  RestInstrumentResponse,
+  RestLeverageRequest,
+  RestMultipleOrderRequest,
   RestOrderRequest,
-  RestOrderResponse,
-  RestOrderbookL2Response,
   RestOrderbookRequest,
-  RestOrdersResponse,
-  RestPositionsResponse,
 } from './types';
 
+/**
+ * rest请求处理基础类
+ *
+ * 用于处理请求基础方法
+ */
 export class RestBase {
   protected readonly instrument: Instrument;
   protected readonly order: Order;
+  protected readonly multipleOrder: MultipleOrder;
   protected readonly orderbook: Orderbook;
   protected readonly bar: Bar;
   protected readonly position: Position;
 
+  private readonly remaining$ = new Subject<number>();
+  private readonly disposer$ = new Subject<void>();
+
   constructor(config: Config) {
-    const cfg = {
-      apiKey: '',
-      apiSecret: '',
-      testnet: false,
-      ...config,
-    };
-    this.instrument = new Instrument(cfg);
-    this.order = new Order(cfg);
-    this.orderbook = new Orderbook(cfg);
-    this.bar = new Bar(cfg);
-    this.position = new Position(cfg);
+    this.instrument = new Instrument(config, this.remaining$);
+    this.order = new Order(config, this.remaining$);
+    this.multipleOrder = new MultipleOrder(config, this.remaining$);
+    this.orderbook = new Orderbook(config, this.remaining$);
+    this.bar = new Bar(config, this.remaining$);
+    this.position = new Position(config, this.remaining$);
+    // 每分钟重置可用余额为60
+    interval(60 * 1000)
+      .pipe(takeUntil(this.disposer$))
+      .subscribe(() => this.remaining$.next(60));
   }
 
-  async createOrder(request: Partial<RestOrderRequest>): Promise<RestOrderResponse> {
+  createOrder(request: Partial<RestOrderRequest>): Observable<RestResponse<OrderResponse>> {
     return this.order.create(request);
   }
 
-  async fetchOrder(request: Partial<RestFetchOrderRequest>): Promise<RestOrdersResponse> {
+  createMultipleOrder(request: RestMultipleOrderRequest): Observable<RestResponse<OrderResponse[]>> {
+    return this.multipleOrder.create(request);
+  }
+
+  fetchOrder(request: Partial<RestFetchOrderRequest>): Observable<RestResponse<OrderResponse[]>> {
     return this.order.fetch(request);
   }
 
-  async updateOrder(request: Partial<RestOrderRequest>): Promise<RestOrderResponse> {
+  updateOrder(request: Partial<RestOrderRequest>): Observable<RestResponse<OrderResponse>> {
     return this.order.update(request);
   }
 
-  async cancelOrder(request: Partial<RestOrderRequest>): Promise<RestOrderResponse> {
+  updateMultipleOrder(request: RestMultipleOrderRequest): Observable<RestResponse<OrderResponse[]>> {
+    return this.multipleOrder.update(request);
+  }
+
+  cancelOrder(request: Partial<RestOrderRequest>): Observable<RestResponse<OrderResponse[]>> {
     return this.order.cancel(request);
   }
 
-  async fetchOrderbook(request: RestOrderbookRequest): Promise<RestOrderbookL2Response> {
+  cancelMultipleOrder(request: Partial<RestCancelMultipleOrderRequest>): Observable<RestResponse<OrderResponse[]>> {
+    return this.multipleOrder.cancel(request);
+  }
+
+  fetchOrderbook(request: RestOrderbookRequest): Observable<RestResponse<OrderbookL2Response>> {
     return this.orderbook.fetch(request);
   }
 
-  async fetchInstrument(): Promise<RestInstrumentResponse> {
+  fetchInstrument(): Observable<RestResponse<InstrumentResponse[]>> {
     return this.instrument.fetch();
   }
 
-  async fetchBar(request: RestBarRequest): Promise<RestBarResponse> {
+  fetchBar(request: RestBarRequest): Observable<RestResponse<BarResponse[]>> {
     return this.bar.fetch(request);
   }
 
-  async fetchPosition(request: Partial<RestFetchPositionRequest>): Promise<RestPositionsResponse> {
+  fetchPosition(request: Partial<RestFetchPositionRequest>): Observable<RestResponse<PositionResponse[]>> {
     return this.position.fetch(request);
   }
 
-  async createPosition(symbol: string, side: OrderSide, amount: number): Promise<RestPositionsResponse> {
+  createPosition(symbol: string, side: OrderSide, amount: number): Observable<RestResponse<PositionResponse[]>> {
     return this.position.create(symbol, side, amount);
   }
 
-  async removePosition(symbol: string): Promise<RestPositionsResponse> {
+  removePosition(symbol: string): Observable<RestResponse<PositionResponse[]>> {
     return this.position.remove(symbol);
+  }
+
+  updateLeverage(request: RestLeverageRequest): Observable<RestResponse<PositionResponse>> {
+    return this.position.updateLeverage(request);
+  }
+
+  destroy(): void {
+    this.disposer$.next();
+    this.disposer$.complete();
   }
 }

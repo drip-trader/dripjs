@@ -1,86 +1,52 @@
-import { isPositive } from '@dripjs/common';
-import {
-  assertExisitingColumns,
-  isUuid,
-  overrideTimestampColumns,
-  overrideValue,
-  testnetConfig,
-  testnetReadonlyConfig,
-} from '@dripjs/testing';
+import { testnetConfig } from '@dripjs/testing';
+import { Subject } from 'rxjs';
+import { flatMap } from 'rxjs/internal/operators';
+import { take } from 'rxjs/operators';
 
 import { OrderSide, OrderStatus, OrderType } from '../../../../types';
+import { MAX_REMAINING_NUM } from '../../../constants';
 import { RestFetchOrderRequest, RestOrderRequest } from '../../../types';
-import { Orderbook } from '../../public/orderbook';
+import { Orderbook } from '../../public';
 import { Order } from './order';
 
-describe('Bitmex RestInsider Order', () => {
+describe('Bitmex Rest Position', () => {
   const pair = 'XBTUSD';
-  const order = new Order(testnetConfig);
-  const orderbook = new Orderbook(testnetReadonlyConfig);
+  const remaining$ = new Subject<number>();
+  const order = new Order(testnetConfig, remaining$);
+  const orderbook = new Orderbook(testnetConfig, remaining$);
   let orderId: string;
   let price: number;
 
-  it('create order', async () => {
-    const orderbookRes = await orderbook.fetch({
-      symbol: pair,
-      depth: 5,
-    });
-    price = +orderbookRes.orderbook.bids[4][0];
-    const request: Partial<RestOrderRequest> = {
-      symbol: pair,
-      side: OrderSide.Buy,
-      price,
-      orderQty: 25,
-      ordType: OrderType.Limit,
-    };
+  it('create order', (done) => {
+    orderbook
+      .fetch({
+        symbol: pair,
+        depth: 5,
+      })
+      .pipe(
+        take(1),
+        flatMap((orderbookRes) => {
+          price = +orderbookRes.data.bids[4][0];
+          const request: Partial<RestOrderRequest> = {
+            symbol: pair,
+            side: OrderSide.Buy,
+            price,
+            orderQty: 25,
+            ordType: OrderType.Limit,
+          };
 
-    const res = await order.create(request);
-    orderId = res.order.orderID;
-    expect(() =>
-      assertExisitingColumns(overrideTimestampColumns(res), {
-        ratelimit: {
-          remaining: isPositive,
-          reset: overrideValue,
-          limit: isPositive,
-        },
-        order: {
-          orderID: isUuid,
-          account: isPositive,
-          symbol: 'XBTUSD',
-          side: 'Buy',
-          simpleOrderQty: null,
-          orderQty: 25,
-          price: isPositive,
-          displayQty: null,
-          stopPx: null,
-          pegOffsetValue: null,
-          pegPriceType: '',
-          currency: 'USD',
-          settlCurrency: 'XBt',
-          ordType: 'Limit',
-          timeInForce: 'GoodTillCancel',
-          execInst: '',
-          contingencyType: '',
-          exDestination: 'XBME',
-          ordStatus: 'New',
-          triggered: '',
-          workingIndicator: true,
-          ordRejReason: '',
-          simpleLeavesQty: null,
-          leavesQty: 25,
-          simpleCumQty: null,
-          cumQty: 0,
-          avgPx: null,
-          multiLegReportingType: 'SingleSecurity',
-          text: 'Submitted via API.',
-          transactTime: overrideValue,
-          timestamp: overrideValue,
-        },
-      }),
-    ).not.toThrow();
+          return order.create(request);
+        }),
+      )
+      .subscribe((res) => {
+        orderId = res.data.orderID;
+        expect(res.data).toBeDefined();
+        expect(res.rateLimit.limit).toEqual(MAX_REMAINING_NUM);
+        done();
+      });
   });
 
-  it('fetch order', async () => {
+  it('fetch order', (done) => {
     const request: Partial<RestFetchOrderRequest> = {
       symbol: pair,
       filter: {
@@ -88,70 +54,45 @@ describe('Bitmex RestInsider Order', () => {
       },
     };
 
-    const res = await order.fetch(request);
-    expect(() =>
-      assertExisitingColumns(overrideTimestampColumns(res), {
-        ratelimit: {
-          remaining: isPositive,
-          reset: overrideValue,
-          limit: isPositive,
-        },
-        orders: [
-          {
-            orderID: isUuid,
-            clOrdID: '',
-            clOrdLinkID: '',
-            account: isPositive,
-            symbol: 'XBTUSD',
-            side: 'Buy',
-            simpleOrderQty: null,
-            orderQty: 25,
-            price,
-            displayQty: null,
-            stopPx: null,
-            pegOffsetValue: null,
-            pegPriceType: '',
-            currency: 'USD',
-            settlCurrency: 'XBt',
-            ordType: 'Limit',
-            timeInForce: 'GoodTillCancel',
-            execInst: '',
-            contingencyType: '',
-            exDestination: 'XBME',
-            ordStatus: 'New',
-            triggered: '',
-            workingIndicator: true,
-            ordRejReason: '',
-            simpleLeavesQty: null,
-            leavesQty: 25,
-            simpleCumQty: null,
-            cumQty: 0,
-            avgPx: null,
-            multiLegReportingType: 'SingleSecurity',
-            text: 'Submitted via API.',
-            transactTime: overrideValue,
-            timestamp: overrideValue,
-          },
-        ],
-      }),
-    ).not.toThrow();
+    order.fetch(request).subscribe((res) => {
+      expect(res.data[0].price).toEqual(price);
+      done();
+    });
   });
 
-  it('update order', async () => {
+  it.skip('fetch multiple order', (done) => {
+    const order2 = new Order(testnetConfig, remaining$);
+    const request: Partial<RestFetchOrderRequest> = {
+      symbol: pair,
+      filter: {
+        orderID: ['989e9b5d-6f4c-a9fd-3f68-1e4faee265e2', '01870ed8-92b4-73fd-b47e-0b1ed8017c11'],
+      },
+    };
+
+    order2.fetch(request).subscribe((res) => {
+      expect(res.data[0].price).toEqual(price);
+      done();
+    });
+  });
+
+  it('update order', (done) => {
     const request: Partial<RestOrderRequest> = {
       orderID: orderId,
       price: price - 1,
     };
-
-    const res = await order.update(request);
-    expect(res.order.price).toEqual(price - 1);
+    order.update(request).subscribe((res) => {
+      expect(res.data.price).toEqual(price - 1);
+      done();
+    });
   });
 
-  it('cancel order', async () => {
+  it('cancel order', (done) => {
     const request: Partial<RestOrderRequest> = {
       orderID: orderId,
     };
-    const res = await order.cancel(request);
-    expect(res.order.ordStatus).toEqual(OrderStatus.Canceled);
+    order.cancel(request).subscribe((res) => {
+      expect(res.data[0].ordStatus).toEqual(OrderStatus.Canceled);
+      done();
+    });
   });
 });

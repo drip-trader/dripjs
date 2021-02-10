@@ -1,7 +1,8 @@
 import { testnetConfig } from '@dripjs/testing';
+import { Observable, Subject } from 'rxjs';
+import { mergeMap, take } from 'rxjs/operators';
 
-import { Order } from '../../rest/internal/private/order';
-import { Orderbook } from '../../rest/internal/public/orderbook';
+import { Order, Orderbook } from '../../rest/internal';
 import { OrderResponse, OrderSide, OrderType } from '../../types';
 
 /**
@@ -10,25 +11,36 @@ import { OrderResponse, OrderSide, OrderType } from '../../types';
  * @param handler 执行的特定方法
  * @return void
  */
-export const receiveOrderData = async <T>(symbol: string, handler: (order: OrderResponse) => Promise<any> = async () => {}): Promise<T> => {
-  const order = new Order(testnetConfig);
-  const orderbook = new Orderbook(testnetConfig);
-  const obRes = await orderbook.fetch({
-    symbol,
-    depth: 10,
-  });
-  const price = +obRes.orderbook.bids[4][0];
-  const odRes = await order.create({
-    symbol,
-    side: OrderSide.Buy,
-    price,
-    orderQty: 25,
-    ordType: OrderType.Limit,
-  });
-  const result = await handler(odRes.order);
-  await order.cancel({
-    orderID: odRes.order.orderID,
-  });
+export const receiveOrderData = <T>(symbol: string, handler: (order: OrderResponse) => Promise<T>): Observable<T> => {
+  const remaining$ = new Subject<number>();
+  const order = new Order(testnetConfig, remaining$);
+  const orderbook = new Orderbook(testnetConfig, remaining$);
 
-  return result;
+  return orderbook
+    .fetch({
+      symbol,
+      depth: 10,
+    })
+    .pipe(
+      take(1),
+      mergeMap((res) =>
+        order.create({
+          symbol,
+          side: OrderSide.Buy,
+          price: +res.data.bids[4][0],
+          orderQty: 25,
+          ordType: OrderType.Limit,
+        }),
+      ),
+      mergeMap(async (oRes) => {
+        const res = await handler(oRes.data);
+        await order
+          .cancel({
+            orderID: oRes.data.orderID,
+          })
+          .toPromise();
+
+        return res;
+      }),
+    );
 };

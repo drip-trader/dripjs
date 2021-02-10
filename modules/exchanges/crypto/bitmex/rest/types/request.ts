@@ -19,6 +19,17 @@ export interface RestOrderRequest {
   text: string;
 }
 
+export interface RestMultipleOrderRequest {
+  orders: Partial<RestOrderRequest>[];
+}
+
+export interface RestCancelMultipleOrderRequest {
+  symbol: string;
+  filter: Partial<RestOrderRequest>;
+  /** cancellation annotation. e.g. 'Spread Exceeded */
+  text: number;
+}
+
 export interface RestFetchOrderRequest {
   symbol: string;
   filter: { [filterKey: string]: any };
@@ -34,6 +45,11 @@ export interface RestFetchPositionRequest {
   filter: Partial<PositionResponse>;
   columns: string[];
   count: number;
+}
+
+export interface RestLeverageRequest {
+  symbol: string;
+  leverage: number;
 }
 
 export interface RestOrderbookRequest {
