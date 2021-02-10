@@ -57,8 +57,8 @@ export class Rest extends RestBase {
       filter: {
         ordType: OrderType.Stop,
       },
-    }
-  });
+    });
+  }
 
   getActiveStopLimitOrder(symbol: string): Observable<RestResponse<OrderResponse[]>> {
     return this.fetchOrder({
